@@ -38,12 +38,14 @@ public class BalanceFragment extends Fragment implements OnClickListener {
 		View v = inflater.inflate(R.layout.fragment_balance, container,
 				false);
 		
-		TextView insert = (TextView) v.findViewById(R.id.meal_plan_variable);
-		insert.setText("" + MainActivity.getMealBalance());
-		insert = (TextView)v.findViewById(R.id.flex_dollars_variable);
-		insert.setText("" + MainActivity.getFlexBalance());
-		insert = (TextView)v.findViewById(R.id.total_variable);
-		insert.setText("" + (MainActivity.getFlexBalance()+MainActivity.getMealBalance()));
+		double mealBalance = MainActivity.getMealBalance();
+		double flexBalance = MainActivity.getFlexBalance();
+		String meal = getResources().getString(R.string.meal_plan) + mealBalance;
+		String flex = getResources().getString(R.string.flex_dollars) + flexBalance;
+		String total = getResources().getString(R.string.total)+ (mealBalance + flexBalance);
+		((TextView)v.findViewById(R.id.meal_plan_label)).setText(meal);
+		((TextView)v.findViewById(R.id.flex_dollars_label)).setText(flex);
+		((TextView)v.findViewById(R.id.total_label)).setText(total);
 		
 		return v;
 	}

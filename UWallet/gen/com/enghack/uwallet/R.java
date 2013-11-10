@@ -81,29 +81,23 @@ containing a value of this type.
         public static final int uwallet2=0x7f020012;
     }
     public static final class id {
-        public static final int about_button=0x7f0a0013;
-        public static final int action_settings=0x7f0a0016;
-        public static final int balance_button=0x7f0a0011;
-        public static final int custom_font=0x7f0a0003;
-        public static final int custom_font1=0x7f0a0006;
-        public static final int custom_font2=0x7f0a0008;
-        public static final int custom_font3=0x7f0a000a;
-        public static final int flex_dollars_variable=0x7f0a0009;
+        public static final int about_button=0x7f0a000d;
+        public static final int action_settings=0x7f0a0010;
+        public static final int balance_button=0x7f0a000b;
+        public static final int custom_font=0x7f0a0002;
+        public static final int flex_dollars_label=0x7f0a0004;
         public static final int fragment_container=0x7f0a0000;
-        public static final int history_contain=0x7f0a0015;
-        public static final int imageView1=0x7f0a000c;
-        public static final int login_button=0x7f0a000f;
-        public static final int logout_button=0x7f0a0014;
-        public static final int main_menu_logo=0x7f0a0010;
-        public static final int meal_plan_variable=0x7f0a0007;
-        public static final int password_input=0x7f0a000e;
+        public static final int history_contain=0x7f0a000f;
+        public static final int imageView1=0x7f0a0006;
+        public static final int login_button=0x7f0a0009;
+        public static final int logout_button=0x7f0a000e;
+        public static final int main_menu_logo=0x7f0a000a;
+        public static final int meal_plan_label=0x7f0a0003;
+        public static final int password_input=0x7f0a0008;
         public static final int tableLayout1=0x7f0a0001;
-        public static final int tableRow1=0x7f0a0002;
-        public static final int tableRow2=0x7f0a0004;
-        public static final int tableRow3=0x7f0a0005;
-        public static final int total_variable=0x7f0a000b;
-        public static final int transactions_button=0x7f0a0012;
-        public static final int username_input=0x7f0a000d;
+        public static final int total_label=0x7f0a0005;
+        public static final int transactions_button=0x7f0a000c;
+        public static final int username_input=0x7f0a0007;
     }
     public static final class integer {
         public static final int card_flip_time_full=0x7f060001;
@@ -125,6 +119,7 @@ containing a value of this type.
         public static final int about_us=0x7f07000a;
         public static final int action_settings=0x7f070001;
         public static final int app_name=0x7f070000;
+        public static final int balance=0x7f07000e;
         public static final int flex_dollars=0x7f07000c;
         public static final int hello_world=0x7f070009;
         public static final int login_button=0x7f070007;
