@@ -1,11 +1,10 @@
 package com.enghack.uwallet;
 
-import java.util.ArrayList;
+import java.util.List;
 
 import android.app.ActionBar.LayoutParams;
 import android.app.Activity;
 import android.app.Fragment;
-import android.content.Context;
 import android.os.Bundle;
 import android.util.TypedValue;
 import android.view.Gravity;
@@ -17,6 +16,7 @@ import android.widget.TableLayout;
 import android.widget.TableRow;
 import android.widget.TextView;
 
+import com.enghack.watcard.DatabaseHandler;
 import com.enghack.watcard.Transaction;
 import com.enghack.watcard.WatcardInfo;
 
@@ -27,7 +27,7 @@ public class TransactionFragment extends Fragment implements OnClickListener {
 	
 	private Listener mListener;
 	private TableLayout table;
-	private ArrayList<Transaction> list;
+	private List<Transaction> list;
 	
 	public interface Listener {
 	}
@@ -39,8 +39,12 @@ public class TransactionFragment extends Fragment implements OnClickListener {
 	@Override
 	public void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
-		WatcardInfo watcard = (Activity)getActivity().getWatcardInstance();
-		list = watcard.getList();
+		DatabaseHandler db = new DatabaseHandler(getActivity());
+		/**
+		 * CRUD Operations
+		 * */
+		
+		list = db.getAllTransactions();
 		
 	}
 

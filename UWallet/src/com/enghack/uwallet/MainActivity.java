@@ -35,6 +35,7 @@ public class MainActivity extends Activity implements ResponseListener,
 	private int studentPIN = 0;
 	
 	private WatcardInfo person;
+	private Context context = this;
 
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
@@ -119,9 +120,23 @@ public class MainActivity extends Activity implements ResponseListener,
 		switchToFragment(mMenuFragment);
 	}
 
+	private boolean authenticate(String a, String b)
+	{
+	    try { 
+	        Integer.parseInt(a);
+	        Integer.parseInt(b);
+	    } catch(NumberFormatException e) { 
+	        return false; 
+	    }
+	    if (!this.isNetworkAvailable()) {
+	    	return false;
+	    }
+		return true;
+	}
+	
 	private void executeLogin(String URL, String ID, String PIN) {
 		try {
-			LoginTask login = new LoginTask(this);
+			LoginTask login = new LoginTask(context, this);
 			login.mListener = this;
 			login.execute(URL, ID, PIN);
 		} catch (Exception e) {
@@ -138,20 +153,6 @@ public class MainActivity extends Activity implements ResponseListener,
 				parser.parseBalance(statusDoc, 8, 14), studentID, studentPIN);
 		person.printData(); // for testing purposes
 		return;
-	}
-
-	private boolean authenticate(String a, String b)
-	{
-	    try { 
-	        Integer.parseInt(a);
-	        Integer.parseInt(b);
-	    } catch(NumberFormatException e) { 
-	        return false; 
-	    }
-	    if (!this.isNetworkAvailable()) {
-	    	return false;
-	    }
-		return true;
 	}
 	
 	private boolean isNetworkAvailable() {

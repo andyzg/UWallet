@@ -4,7 +4,6 @@ import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
 
-import org.apache.http.HttpEntity;
 import org.apache.http.HttpResponse;
 import org.apache.http.NameValuePair;
 import org.apache.http.client.ClientProtocolException;
@@ -17,8 +16,8 @@ import org.apache.http.message.BasicNameValuePair;
 import org.jsoup.Jsoup;
 import org.jsoup.nodes.Document;
 import org.jsoup.nodes.Element;
-import org.jsoup.select.Elements;
 
+import android.content.Context;
 import android.os.AsyncTask;
 
 /**
@@ -43,7 +42,7 @@ public class LoginTask extends AsyncTask<String, Void, Void>{
 		public void onResponseFinish(Element histDoc, Element statusDoc); 
 	}
 
-    public LoginTask(ResponseListener listener){
+    public LoginTask(Context context,ResponseListener listener){
         this.mListener = listener;
     }
     
