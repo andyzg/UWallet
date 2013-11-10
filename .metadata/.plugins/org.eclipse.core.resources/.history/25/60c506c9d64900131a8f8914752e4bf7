@@ -53,10 +53,11 @@ public class HTMLParser {
 		for (int i=index1; i<index2; i++)
 		{
 			Element tr = table.select("tr:eq("+i+")").first();
-			sum += Double.parseDouble(spaceFilter(tr.getElementById("oneweb_balance_information_td_amount").text()));
+			sum += Double.parseDouble(spaceFilter(tr.getElementById("oneweb_balance_information_td_price").text()));
 		}
 		System.out.println(sum);
 		return sum;
+		
 	}
 	
 	/**

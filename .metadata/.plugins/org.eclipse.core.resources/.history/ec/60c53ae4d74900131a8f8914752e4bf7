@@ -76,10 +76,10 @@ public class WatcardInfo {
 	
 	public void printData()
 	{
-		/*for (Transaction transaction: this.transList)
+		for (Transaction transaction: this.transList)
 		{
 			System.out.println(transaction._amount+" "+transaction._terminal);
-		}*/
+		}
 		System.out.println("You currently have "+this.mealBalance+" mealplan dollars");
 		System.out.println("You currently have "+this.flexBalance+" flex dollars");
 	}

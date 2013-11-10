@@ -3,7 +3,6 @@ package com.enghack.uwallet.login;
 import java.util.ArrayList;
 
 import org.jsoup.nodes.Element;
-import org.jsoup.select.Elements;
 
 import com.enghack.watcard.Transaction;
 
@@ -49,13 +48,13 @@ public class HTMLParser {
 	
 	public double parseBalance(Element table, int index1, int index2)
 	{
+		System.out.println(table.getAllElements());
 		double sum=0;
-		for (int i=index1; i<index2; i++)
+		/*for (int i=index1; i<index2; i++)
 		{
-			Element tr = table.select("tr:eq("+i+")").first();
-			sum += Double.parseDouble(spaceFilter(tr.getElementById("oneweb_balance_information_td_amount").text()));
-		}
-		System.out.println(sum);
+			System.out.println("TRY"+table.select("tr:gt(2)").select("oneweb_balance_information_td_price").text());
+			sum += Double.parseDouble(spaceFilter(table.select("tr:gt("+i+")").select("oneweb_balance_information_td_price").text()));
+		}*/
 		return sum;
 	}
 	

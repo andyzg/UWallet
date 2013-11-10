@@ -27,7 +27,7 @@ public class WatcardInfo {
 	private double mealBalance;
 	private double otherBalance;
 	
-	public WatcardInfo(ArrayList<Transaction> list,double mealBalance, double flexBalance,double otherBalance, int studentID, int PIN)
+	public WatcardInfo(ArrayList<Transaction> list,double flexBalance, double mealBalance,double otherBalance, int studentID, int PIN)
 	{
 		this.mInstance = true;
 		this.transList = list;
@@ -76,11 +76,9 @@ public class WatcardInfo {
 	
 	public void printData()
 	{
-		/*for (Transaction transaction: this.transList)
+		for (Transaction transaction: this.transList)
 		{
 			System.out.println(transaction._amount+" "+transaction._terminal);
-		}*/
-		System.out.println("You currently have "+this.mealBalance+" mealplan dollars");
-		System.out.println("You currently have "+this.flexBalance+" flex dollars");
+		}
 	}
 }

@@ -23,17 +23,15 @@ public class WatcardInfo {
 	private int studentID;
 	private int PIN;
 	
-	private double flexBalance;
-	private double mealBalance;
-	private double otherBalance;
+	private double flexDollar;
+	private double mealDollar;
 	
-	public WatcardInfo(ArrayList<Transaction> list,double mealBalance, double flexBalance,double otherBalance, int studentID, int PIN)
+	public WatcardInfo(ArrayList<Transaction> list,double flexDollar, double mealDollar, int studentID, int PIN)
 	{
 		this.mInstance = true;
 		this.transList = list;
-		this.flexBalance = flexBalance;
-		this.mealBalance = mealBalance;
-		this.otherBalance = otherBalance;
+		this.flexDollar = flexDollar;
+		this.mealDollar = mealDollar;
 		this.studentID = studentID;
 		this.PIN = PIN;
 	}
@@ -76,11 +74,9 @@ public class WatcardInfo {
 	
 	public void printData()
 	{
-		/*for (Transaction transaction: this.transList)
+		for (Transaction transaction: this.transList)
 		{
 			System.out.println(transaction._amount+" "+transaction._terminal);
-		}*/
-		System.out.println("You currently have "+this.mealBalance+" mealplan dollars");
-		System.out.println("You currently have "+this.flexBalance+" flex dollars");
+		}
 	}
 }

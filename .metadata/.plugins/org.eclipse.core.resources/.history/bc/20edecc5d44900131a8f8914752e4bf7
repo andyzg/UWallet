@@ -51,9 +51,9 @@ public class LoginFragment extends Activity implements ResponseListener, OnClick
 		WatcardInfo person = new WatcardInfo(
 				Parser.parseHist(histDoc),
 				// Indexes of each type of balance based on the website
-				Parser.parseBalance(statusDoc,2,5),
-				Parser.parseBalance(statusDoc,5,8),
-				Parser.parseBalance(statusDoc, 8, 14),
+				Parser.parseBalance(statusDoc,0,3),
+				Parser.parseBalance(statusDoc,3,6),
+				Parser.parseBalance(statusDoc, 6, 12),
 				studentID,
 				PIN);
 		person.printData(); // for testing purposes
