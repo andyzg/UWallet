@@ -188,6 +188,7 @@ public class MainActivity extends Activity implements ResponseListener,
 			errorMessage("Invalid Credentials");
 			return;
 		}
+<<<<<<< HEAD
 		try {
 			person = new WatcardInfo(parser.parseHist(histDoc),
 					parser.parseBalance(statusDoc, 2, 5), parser.parseBalance(
@@ -201,6 +202,14 @@ public class MainActivity extends Activity implements ResponseListener,
 		Log.d("STUDENT PIN2", String.format("%04d", studentPIN));
 		setShared_Preferences("studentID", String.format("%08d", studentID));
 		setShared_Preferences("studentPIN", String.format("%04d", studentPIN));
+=======
+		person = new WatcardInfo(parser.parseHist(histDoc),
+		// Indexes of each type of balance based on the website
+				parser.parseBalance(statusDoc, 2, 5), parser.parseBalance(
+						statusDoc, 5, 8),
+				parser.parseBalance(statusDoc, 8, 14), studentID, studentPIN);
+		// person.printData(); // for testing purposes
+>>>>>>> 1213b7670c9b23fe44a14bae442469d6f0b95621
 		switchToFragment(mMenuFragment, false);
 		return;
 	}
@@ -237,6 +246,7 @@ public class MainActivity extends Activity implements ResponseListener,
 		return person.getFlexBalance();
 	}
 
+<<<<<<< HEAD
 	public boolean onTouchEvent(MotionEvent event) {
 		try {
 			InputMethodManager imm = (InputMethodManager) getSystemService(Context.INPUT_METHOD_SERVICE);
@@ -246,6 +256,12 @@ public class MainActivity extends Activity implements ResponseListener,
 
 		}
 		return false;
+=======
+	public boolean onTouchEvent(MotionEvent event){
+		//InputMethodManager imm = (InputMethodManager)getSystemService(Context.INPUT_METHOD_SERVICE);
+		//imm.hideSoftInputFromWindow(getCurrentFocus().getWindowToken(),0);
+		return true;
+>>>>>>> 1213b7670c9b23fe44a14bae442469d6f0b95621
 	}
 
 	public static ArrayList<Transaction> getList() {
