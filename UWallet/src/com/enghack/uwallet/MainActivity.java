@@ -128,23 +128,6 @@ public class MainActivity extends Activity implements ResponseListener,
 		}
 	}
 
-	@Override
-	public void onResponseFinish(Element histDoc, Element statusDoc, boolean valid) {
-		if (!valid)
-		{
-			errorMessage("Invalid Credentials");
-			return;
-		}
-		person = new WatcardInfo(parser.parseHist(histDoc),
-		// Indexes of each type of balance based on the website
-				parser.parseBalance(statusDoc, 2, 5), parser.parseBalance(
-						statusDoc, 5, 8),
-				parser.parseBalance(statusDoc, 8, 14), studentID, studentPIN);
-		person.printData(); // for testing purposes
-		switchToFragment(mMenuFragment);
-		return;
-	}
-
 	private boolean authenticate(String a, String b)
 	{
 		if (a.matches("[0-9]+") && a.length() > 2 && 
@@ -165,5 +148,25 @@ public class MainActivity extends Activity implements ResponseListener,
 	private void errorMessage(String message)
 	{
 		Toast.makeText(getApplicationContext(), message, Toast.LENGTH_SHORT).show();
+	}
+
+	public void onResponseFinish(Element histDoc, Element statusDoc) {
+		// TODO Auto-generated method stub
+		
+	}
+	public void onResponseFinish(Element histDoc, Element statusDoc, boolean valid) {
+		if (!valid)
+		{
+			errorMessage("Invalid Credentials");
+			return;
+		}
+		person = new WatcardInfo(parser.parseHist(histDoc),
+		// Indexes of each type of balance based on the website
+				parser.parseBalance(statusDoc, 2, 5), parser.parseBalance(
+						statusDoc, 5, 8),
+				parser.parseBalance(statusDoc, 8, 14), studentID, studentPIN);
+		person.printData(); // for testing purposes
+		switchToFragment(mMenuFragment);
+		return;
 	}
 }
