@@ -22,7 +22,7 @@ import org.jsoup.select.Elements;
 import android.os.AsyncTask;
 
 
-public class LoginTask extends AsyncTask<String, Void, Element>{
+public class LoginTask extends AsyncTask<String,Void, Element>{
 	
 	public ResponseListener mListener;
 	Document doc;
@@ -80,7 +80,13 @@ public class LoginTask extends AsyncTask<String, Void, Element>{
         } catch (IOException e) {
             // TODO Auto-generated catch block
             e.printStackTrace();
-        }   
+        }        
+        /*try {
+			doc = loadXMLFromString(endResult);
+		} catch (Exception e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}*/
         doc = Jsoup.parseBodyFragment(endResult);
         Element table = doc.getElementById("oneweb_financial_history_table");
 		return table;

@@ -61,6 +61,6 @@ public class LoginFragment extends Activity implements ResponseListener, OnClick
 		EditText ViewPIN = (EditText)findViewById(R.id.password_input);
 		studentID = Integer.parseInt(ViewID.getText().toString());
 		PIN = Integer.parseInt(ViewPIN.getText().toString());
-		executeLogin(URL, ViewID.getText().toString(), ViewPIN.getText().toString());
+		executeLogin(URL, studentID.getText().toString(), PIN.getText().toString());
 	}
 }

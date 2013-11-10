@@ -48,7 +48,7 @@ public class LoginFragment extends Activity implements ResponseListener, OnClick
 	}
 	@Override
 	public void onResponseFinish(Element doc) {
-		WatcardInfo person = new WatcardInfo(Parser.parseHTML(doc), studentID, PIN);
+		WatcardInfo person = new WatcardInfo(Parser.parseHTML(doc), ID, PIN);
 	return;	
 	}
 
@@ -57,10 +57,8 @@ public class LoginFragment extends Activity implements ResponseListener, OnClick
 	// Currently needs validating in case bad input or bad connection
 	@Override
 	public void onClick(View view) {
-		EditText ViewID = (EditText)findViewById(R.id.username_input);
-		EditText ViewPIN = (EditText)findViewById(R.id.password_input);
-		studentID = Integer.parseInt(ViewID.getText().toString());
-		PIN = Integer.parseInt(ViewPIN.getText().toString());
-		executeLogin(URL, ViewID.getText().toString(), ViewPIN.getText().toString());
+		EditText studentID = (EditText)findViewById(R.id.username_input);
+		EditText PIN = (EditText)findViewById(R.id.password_input);
+		executeLogin(URL, studentID.getText().toString(), PIN.getText().toString());
 	}
 }

@@ -22,7 +22,7 @@ import org.jsoup.select.Elements;
 import android.os.AsyncTask;
 
 
-public class LoginTask extends AsyncTask<String, Void, Element>{
+public class LoginTask extends AsyncTask<String,Void, Element>{
 	
 	public ResponseListener mListener;
 	Document doc;

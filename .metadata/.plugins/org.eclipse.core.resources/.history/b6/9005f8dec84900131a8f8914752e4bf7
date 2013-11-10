@@ -12,16 +12,12 @@ import android.widget.EditText;
 import com.enghack.uwallet.login.HTMLParser;
 import com.enghack.uwallet.login.LoginTask;
 import com.enghack.uwallet.login.LoginTask.ResponseListener;
-import com.enghack.watcard.WatcardInfo;
 
 public class LoginFragment extends Activity implements ResponseListener, OnClickListener {
 
 	private String URL = "https://account.watcard.uwaterloo.ca/watgopher661.asp";
 	private Button submit;
 	private HTMLParser Parser;
-	private int studentID;
-	private int PIN;
-	
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
@@ -48,7 +44,7 @@ public class LoginFragment extends Activity implements ResponseListener, OnClick
 	}
 	@Override
 	public void onResponseFinish(Element doc) {
-		WatcardInfo person = new WatcardInfo(Parser.parseHTML(doc), studentID, PIN);
+		WatcardInfo person = Parser.parseHTML(doc);
 	return;	
 	}
 
@@ -57,10 +53,8 @@ public class LoginFragment extends Activity implements ResponseListener, OnClick
 	// Currently needs validating in case bad input or bad connection
 	@Override
 	public void onClick(View view) {
-		EditText ViewID = (EditText)findViewById(R.id.username_input);
-		EditText ViewPIN = (EditText)findViewById(R.id.password_input);
-		studentID = Integer.parseInt(ViewID.getText().toString());
-		PIN = Integer.parseInt(ViewPIN.getText().toString());
-		executeLogin(URL, ViewID.getText().toString(), ViewPIN.getText().toString());
+		EditText studentID = (EditText)findViewById(R.id.username_input);
+		EditText PIN = (EditText)findViewById(R.id.password_input);
+		executeLogin(URL, studentID.getText().toString(), PIN.getText().toString());
 	}
 }

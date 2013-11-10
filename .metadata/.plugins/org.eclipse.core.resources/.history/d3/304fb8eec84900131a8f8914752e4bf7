@@ -12,7 +12,7 @@ public class HTMLParser {
 		// Void Constructor
 	}
 	
-	public ArrayList<Transaction> parseHTML(Element table)
+	public void parseHTML(Element table)
 	{
 		int count = 0;
 		
@@ -30,7 +30,7 @@ public class HTMLParser {
 					tr.getElementById("oneweb_financial_history_td_terminal").text());
 			transactionList.add(trans);
 		}
-		return transactionList;
+		
 	}
 	
 	public static String spaceFilter(String a)

@@ -30,7 +30,7 @@ public class HTMLParser {
 					tr.getElementById("oneweb_financial_history_td_terminal").text());
 			transactionList.add(trans);
 		}
-		return transactionList;
+		
 	}
 	
 	public static String spaceFilter(String a)
