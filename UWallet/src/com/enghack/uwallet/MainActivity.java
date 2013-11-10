@@ -109,7 +109,8 @@ public class MainActivity extends Activity implements ResponseListener,
 		viewPIN = (EditText) (this.findViewById(R.id.password_input));
 		if (!authenticate(viewID.getText().toString(), viewPIN.getText().toString()))
 		{
-			
+			// insertToast
+			return;
 		}
 		studentID = Integer.parseInt(viewID.getText().toString());
 		studentPIN = Integer.parseInt(viewPIN.getText().toString());
@@ -120,7 +121,7 @@ public class MainActivity extends Activity implements ResponseListener,
 
 	private void executeLogin(String URL, String ID, String PIN) {
 		try {
-			LoginTask login = new LoginTask();
+			LoginTask login = new LoginTask(this);
 			login.mListener = this;
 			login.execute(URL, ID, PIN);
 		} catch (Exception e) {
