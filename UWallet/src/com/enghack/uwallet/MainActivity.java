@@ -30,19 +30,11 @@ public class MainActivity extends Activity implements ResponseListener,
 
 	private final String URL = "https://account.watcard.uwaterloo.ca/watgopher661.asp";
 	private HTMLParser parser;
-<<<<<<< HEAD
 	private EditText viewID = null;
 	private EditText viewPIN = null;
 	private int studentID = 0;
 	private int studentPIN = 0;
-	
-=======
-	private EditText viewID;
-	private EditText viewPIN;
-	private int studentID;
-	private int studentPIN;
-	private Context context = this;
->>>>>>> fragmentView
+
 	private WatcardInfo person;
 	private Context context = this;
 
@@ -119,11 +111,8 @@ public class MainActivity extends Activity implements ResponseListener,
 		viewPIN = (EditText) (this.findViewById(R.id.password_input));
 		if (!authenticate(viewID.getText().toString(), viewPIN.getText().toString()))
 		{
-<<<<<<< HEAD
-			// insertToast
-=======
+
 			errorMessage("Invalid Login");
->>>>>>> fragmentView
 			return;
 		}
 		else
@@ -134,20 +123,6 @@ public class MainActivity extends Activity implements ResponseListener,
 			executeLogin(URL, viewID.getText().toString(), viewPIN.getText()
 				.toString());
 		}
-	}
-
-	private boolean authenticate(String a, String b)
-	{
-	    try { 
-	        Integer.parseInt(a);
-	        Integer.parseInt(b);
-	    } catch(NumberFormatException e) { 
-	        return false; 
-	    }
-	    if (!this.isNetworkAvailable()) {
-	    	return false;
-	    }
-		return true;
 	}
 	
 	private void executeLogin(String URL, String ID, String PIN) {
@@ -173,11 +148,7 @@ public class MainActivity extends Activity implements ResponseListener,
 						statusDoc, 5, 8),
 				parser.parseBalance(statusDoc, 8, 14), studentID, studentPIN);
 		person.printData(); // for testing purposes
-<<<<<<< HEAD
-		mTransactionFragment.setList(person.getList());
-		return;
-	}
-=======
+
 		switchToFragment(mMenuFragment);
 		return;
 	}
@@ -191,7 +162,6 @@ public class MainActivity extends Activity implements ResponseListener,
 	    }
 		return false;
 	}
->>>>>>> fragmentView
 	
 	private boolean isNetworkAvailable() {
 	    ConnectivityManager connectivityManager 
@@ -203,5 +173,10 @@ public class MainActivity extends Activity implements ResponseListener,
 	private void errorMessage(String message)
 	{
 		Toast.makeText(getApplicationContext(), message, Toast.LENGTH_SHORT).show();
+	}
+
+	public void onResponseFinish(boolean valid) {
+		// TODO Auto-generated method stub
+		
 	}
 }
