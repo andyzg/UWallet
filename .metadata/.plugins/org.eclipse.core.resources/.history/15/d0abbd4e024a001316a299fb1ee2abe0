@@ -30,13 +30,12 @@ public class MainActivity extends Activity implements ResponseListener,
 
 	private final String URL = "https://account.watcard.uwaterloo.ca/watgopher661.asp";
 	private HTMLParser parser;
-	private EditText viewID = null;
-	private EditText viewPIN = null;
-	private int studentID = 0;
-	private int studentPIN = 0;
-
-	private WatcardInfo person;
+	private EditText viewID;
+	private EditText viewPIN;
+	private int studentID;
+	private int studentPIN;
 	private Context context = this;
+	private WatcardInfo person;
 
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
@@ -49,11 +48,7 @@ public class MainActivity extends Activity implements ResponseListener,
 		mLoginFragment = new LoginFragment();
 		mMenuFragment = new MenuFragment();
 
-		if(viewID == null){
-			switchToFragment(mLoginFragment);
-		}else{
-			switchToFragment(mMenuFragment);
-		}
+		switchToFragment(mLoginFragment);
 	}
 
 	void switchToFragment(Fragment newFrag){
@@ -95,11 +90,10 @@ public class MainActivity extends Activity implements ResponseListener,
 
 	@Override
 	public void onLogOutButtonClicked() {
-		// TODO: Use cleardata base method
 		viewID = null;
 		viewPIN = null;
-		studentID = 0;
-		studentPIN = 0;
+		studentID = (Integer) null;
+		studentPIN = (Integer) null;
 		switchToFragment(mLoginFragment);
 	}
 	
@@ -111,7 +105,6 @@ public class MainActivity extends Activity implements ResponseListener,
 		viewPIN = (EditText) (this.findViewById(R.id.password_input));
 		if (!authenticate(viewID.getText().toString(), viewPIN.getText().toString()))
 		{
-
 			errorMessage("Invalid Login");
 			return;
 		}
@@ -124,7 +117,7 @@ public class MainActivity extends Activity implements ResponseListener,
 				.toString());
 		}
 	}
-	
+
 	private void executeLogin(String URL, String ID, String PIN) {
 		try {
 			LoginTask login = new LoginTask(context, this);
@@ -148,16 +141,10 @@ public class MainActivity extends Activity implements ResponseListener,
 						statusDoc, 5, 8),
 				parser.parseBalance(statusDoc, 8, 14), studentID, studentPIN);
 		person.printData(); // for testing purposes
-
 		switchToFragment(mMenuFragment);
 		return;
 	}
 
-	public void onResponseFinish(boolean valid)
-	{
-		errorMessage("Invalid Credentials");
-	}
-	
 	private boolean authenticate(String a, String b)
 	{
 		if (a.matches("[0-9]+") && a.length() > 2 && 
@@ -179,17 +166,4 @@ public class MainActivity extends Activity implements ResponseListener,
 	{
 		Toast.makeText(getApplicationContext(), message, Toast.LENGTH_SHORT).show();
 	}
-
-<<<<<<< HEAD
-	public void onResponseFinish(boolean valid) {
-		// TODO Auto-generated method stub
-		
-	}
-=======
-	public void onResponseFinish(Element histDoc, Element statusDoc) {
-		// TODO Auto-generated method stub
-		
-	}
-
->>>>>>> fragmentView
 }

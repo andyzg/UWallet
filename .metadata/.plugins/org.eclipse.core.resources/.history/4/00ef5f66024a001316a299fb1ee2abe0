@@ -17,10 +17,7 @@ import org.jsoup.Jsoup;
 import org.jsoup.nodes.Document;
 import org.jsoup.nodes.Element;
 
-<<<<<<< HEAD
-=======
 import android.app.ProgressDialog;
->>>>>>> fragmentView
 import android.content.Context;
 import android.os.AsyncTask;
 
@@ -97,7 +94,7 @@ public class LoginTask extends AsyncTask<String, Void, Boolean>{
 	protected void onPostExecute(Boolean a) {
 		if (!a) // If there there was an error in background
 		{
-			mListener.onResponseFinish(false);
+			onResponseFinish(histDoc,statusDoc,false);
 			dialog.dismiss();
 			return;
 		}
