@@ -22,9 +22,6 @@ import com.enghack.watcard.WatcardInfo;
 
 public class TransactionFragment extends Fragment implements OnClickListener {
 
-	// To be changed depending on settings
-	private static int dateFilter = 0;
-	
 	private Listener mListener;
 	private TableLayout table;
 	private ArrayList<Transaction> list;
@@ -63,7 +60,7 @@ public class TransactionFragment extends Fragment implements OnClickListener {
 		
 		for (Transaction trans:list)
 		{
-			if (filterDate(trans))
+			if (filter(trans))
 			{	
 				TableRow row = new TableRow(getActivity());
 				TextView price, date, terminal;
@@ -101,14 +98,6 @@ public class TransactionFragment extends Fragment implements OnClickListener {
 		} catch (ClassCastException e) {
 			throw new ClassCastException(activity.toString()
 					+ " must implement OnFragmentInteractionListener");
-		}
-	}
-	
-	private static boolean filterDate(Transaction trans) {
-		switch (dateFilter)
-		{
-			default:
-				return true;
 		}
 	}
 

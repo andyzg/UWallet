@@ -110,6 +110,7 @@ public class TransactionFragment extends Fragment implements OnClickListener {
 			default:
 				return true;
 		}
+		return true;
 	}
 
 	@Override

@@ -22,9 +22,6 @@ import com.enghack.watcard.WatcardInfo;
 
 public class TransactionFragment extends Fragment implements OnClickListener {
 
-	// To be changed depending on settings
-	private static int dateFilter = 0;
-	
 	private Listener mListener;
 	private TableLayout table;
 	private ArrayList<Transaction> list;
@@ -63,33 +60,31 @@ public class TransactionFragment extends Fragment implements OnClickListener {
 		
 		for (Transaction trans:list)
 		{
-			if (filterDate(trans))
-			{	
-				TableRow row = new TableRow(getActivity());
-				TextView price, date, terminal;
-				price = new TextView(getActivity());
-				date = new TextView(getActivity());
-				terminal = new TextView(getActivity());
-				
-				price.setText(String.format("%.2f", trans.getAmount()));
-				date.setText(trans.getDate());
-				terminal.setText(trans.getTerminal());
-				
-				price.setLayoutParams(lparams);
-				date.setLayoutParams(lparams);
-				terminal.setLayoutParams(lparams);
-				terminal.setWidth(width/2);
-				
-				price.setTextSize(30);
-				date.setTextSize(30);
-				terminal.setTextSize(30);
-				
-				row.addView(price);
-				row.addView(date);
-				row.addView(terminal);
-				table.addView(row);
-			}
+			TableRow row = new TableRow(getActivity());
+			TextView price, date, terminal;
+			price = new TextView(getActivity());
+			date = new TextView(getActivity());
+			terminal = new TextView(getActivity());
+			
+			price.setText(String.format("%.2f", trans.getAmount()));
+			date.setText(trans.getDate());
+			terminal.setText(trans.getTerminal());
+			
+			price.setLayoutParams(lparams);
+			date.setLayoutParams(lparams);
+			terminal.setLayoutParams(lparams);
+			terminal.setWidth(width/2);
+			
+			price.setTextSize(30);
+			date.setTextSize(30);
+			terminal.setTextSize(30);
+			
+			row.addView(price);
+			row.addView(date);
+			row.addView(terminal);
+			table.addView(row);
 		}
+		
 		return v;
 	}
 
@@ -101,14 +96,6 @@ public class TransactionFragment extends Fragment implements OnClickListener {
 		} catch (ClassCastException e) {
 			throw new ClassCastException(activity.toString()
 					+ " must implement OnFragmentInteractionListener");
-		}
-	}
-	
-	private static boolean filterDate(Transaction trans) {
-		switch (dateFilter)
-		{
-			default:
-				return true;
 		}
 	}
 

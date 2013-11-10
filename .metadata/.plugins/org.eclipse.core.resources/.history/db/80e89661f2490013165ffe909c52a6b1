@@ -22,9 +22,7 @@ import com.enghack.watcard.WatcardInfo;
 
 public class TransactionFragment extends Fragment implements OnClickListener {
 
-	// To be changed depending on settings
-	private static int dateFilter = 0;
-	
+	private int filter = 0;
 	private Listener mListener;
 	private TableLayout table;
 	private ArrayList<Transaction> list;
@@ -104,12 +102,8 @@ public class TransactionFragment extends Fragment implements OnClickListener {
 		}
 	}
 	
-	private static boolean filterDate(Transaction trans) {
-		switch (dateFilter)
-		{
-			default:
-				return true;
-		}
+	private static boolean filter(Transaction trans) {
+		switch ()
 	}
 
 	@Override

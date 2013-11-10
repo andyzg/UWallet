@@ -107,8 +107,7 @@ public class TransactionFragment extends Fragment implements OnClickListener {
 	private static boolean filterDate(Transaction trans) {
 		switch (dateFilter)
 		{
-			default:
-				return true;
+			
 		}
 	}
 
