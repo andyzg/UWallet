@@ -6,7 +6,7 @@
     <string name="user_name">WatCard Number: </string>
     <string name="username_input">WatCard Number</string>
     <string name="title_activity_main">MainActivity</string>
-	<string name="subtitle">uWallet.</string>
+    <string name="subtitle">uWallet.</string>
     <string name="password">Enter Pin</string>
     <string name="login_button">Login</string>
     <string name="title_activity_display_message">My Message</string>
@@ -17,5 +17,6 @@
     <string name="total">Total: $</string>
     <string name="balance">Balance</string>
     <string name="balance_title">Balance</string>
+    <string name="hello_blank_fragment">Hello blank fragment</string>
 
 </resources>

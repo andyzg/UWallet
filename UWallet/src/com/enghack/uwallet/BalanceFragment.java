@@ -56,7 +56,6 @@ public class BalanceFragment extends Fragment implements OnClickListener {
 		((TextView)v.findViewById(R.id.meal_plan_label)).setText(meal);
 		((TextView)v.findViewById(R.id.flex_dollars_label)).setText(flex);
 		((TextView)v.findViewById(R.id.total_label)).setText(total);
-		((LinearLayout)v).addView(getChartView());
 		return v;
 	}
 
@@ -85,30 +84,4 @@ public class BalanceFragment extends Fragment implements OnClickListener {
 	@Override
 	public void onClick(View view) {
 	}
-	
-	private DefaultRenderer buildRenderer(int[] colors){
-		DefaultRenderer renderer = new DefaultRenderer();
-		for (int color : colors) {
-	        SimpleSeriesRenderer r = new SimpleSeriesRenderer();
-	        r.setColor(color);
-	        renderer.addSeriesRenderer(r);
-	    }
-		renderer.setBackgroundColor(0x00000000);
-	    return renderer;
-	}
-	
-	private GraphicalView getChartView(){
-		Context context = getActivity();
-		CategorySeries series = new CategorySeries("Balance");
-		
-		double[] values = {MainActivity.getMealBalance(), MainActivity.getFlexBalance()};
-		for (double v : values){
-			series.add(v);
-		}
-		
-		int[] colors = {0xFF00FF00, 0xFFFFFF00};
-		DefaultRenderer renderer = buildRenderer(colors);
-		return ChartFactory.getPieChartView(context, series, renderer);
-	}
-
 }

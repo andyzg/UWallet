@@ -39,6 +39,7 @@ public class MainActivity extends Activity implements ResponseListener,
 
 	BalanceFragment mBalanceFragment = null;
 	TransactionFragment mTransactionFragment = null;
+	StatsFragment mStatsFragment = null;
 	AboutFragment mAboutFragment = null;
 	LoginFragment mLoginFragment = null;
 	MenuFragment mMenuFragment = null;
@@ -79,6 +80,7 @@ public class MainActivity extends Activity implements ResponseListener,
 
 		mBalanceFragment = new BalanceFragment();
 		mTransactionFragment = new TransactionFragment();
+		mStatsFragment = new StatsFragment();
 		mAboutFragment = new AboutFragment();
 		mLoginFragment = new LoginFragment();
 		mMenuFragment = new MenuFragment();
@@ -252,5 +254,10 @@ public class MainActivity extends Activity implements ResponseListener,
 
 	public static ArrayList<Transaction> getList() {
 		return person.getList();
+	}
+
+	@Override
+	public void onStatsButtonClicked() {
+		switchToFragment(mStatsFragment, true);
 	}
 }

@@ -22,6 +22,11 @@
         android:id="@+id/transactions_button"
         style="@style/ImageButton"
         android:src="@drawable/button_transaction" />
+    
+    <ImageButton
+        android:id="@+id/stats_button"
+        style="@style/ImageButton"
+        android:src="@drawable/button_stats" />
 
     <ImageButton
         android:id="@+id/about_button"
