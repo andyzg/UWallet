@@ -1,0 +1,20 @@
+package com.enghack.uwallet.login;
+
+import org.jsoup.nodes.Element;
+
+public class HTMLParser {
+	
+	public HTMLParser() {
+		// Void Constructor
+	}
+	
+	public void parseHTML(Element table)
+	{
+		// For all table rows greater than the first one
+		// First one has title of each column
+		for (Element tr:table.select("tr:gt(1)"))
+		{
+			
+		}
+	}
+}

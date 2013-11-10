@@ -1,0 +1,15 @@
+package com.enghack.uwallet.login;
+
+import org.jsoup.nodes.Element;
+
+public class HTMLParser {
+	
+	public HTMLParser() {
+		// Void Constructor
+	}
+	
+	public WatCardHolder parseHTML(Element table)
+	{
+		
+	}
+}

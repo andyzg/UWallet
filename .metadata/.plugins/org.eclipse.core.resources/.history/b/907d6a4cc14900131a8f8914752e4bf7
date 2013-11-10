@@ -1,0 +1,8 @@
+package com.enghack.uwallet.login;
+
+public class HTMLParser {
+	
+	public HTMLParser() {
+		// Void Constructor
+	}
+}
