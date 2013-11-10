@@ -43,7 +43,6 @@ public class LoginTask extends AsyncTask<String, Void, Boolean>{
 	public interface ResponseListener
 	{
 		public void onResponseFinish(Element histDoc, Element statusDoc, boolean valid);
-		public void onResponseFinish(boolean valid);
 	}
 
     public LoginTask(Context context,ResponseListener listener){
@@ -94,7 +93,7 @@ public class LoginTask extends AsyncTask<String, Void, Boolean>{
 	protected void onPostExecute(Boolean a) {
 		if (!a) // If there there was an error in background
 		{
-			mListener.onResponseFinish(false);
+			onResponseFinish(histDoc,statusDoc,false);
 			dialog.dismiss();
 			return;
 		}
