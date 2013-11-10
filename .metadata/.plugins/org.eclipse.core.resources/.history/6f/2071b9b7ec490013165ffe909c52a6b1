@@ -1,0 +1,5 @@
+package com.enghack.uwallet.customview;
+
+public class CustomRow {
+
+}

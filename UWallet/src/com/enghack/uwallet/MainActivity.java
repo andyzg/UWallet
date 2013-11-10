@@ -5,6 +5,9 @@ import org.jsoup.nodes.Element;
 import android.app.Activity;
 import android.app.Fragment;
 import android.app.FragmentTransaction;
+import android.content.Context;
+import android.net.ConnectivityManager;
+import android.net.NetworkInfo;
 import android.os.Bundle;
 import android.view.Menu;
 import android.widget.EditText;
@@ -12,7 +15,6 @@ import android.widget.EditText;
 import com.enghack.uwallet.login.HTMLParser;
 import com.enghack.uwallet.login.LoginTask;
 import com.enghack.uwallet.login.LoginTask.ResponseListener;
-import com.enghack.watcard.DatabaseHandler;
 import com.enghack.watcard.WatcardInfo;
 
 public class MainActivity extends Activity implements ResponseListener,
@@ -105,6 +107,10 @@ public class MainActivity extends Activity implements ResponseListener,
 		parser = new HTMLParser();
 		viewID = (EditText) (this.findViewById(R.id.username_input));
 		viewPIN = (EditText) (this.findViewById(R.id.password_input));
+		if (!authenticate(viewID.getText().toString(), viewPIN.getText().toString()))
+		{
+			
+		}
 		studentID = Integer.parseInt(viewID.getText().toString());
 		studentPIN = Integer.parseInt(viewPIN.getText().toString());
 		executeLogin(URL, viewID.getText().toString(), viewPIN.getText()
@@ -133,4 +139,24 @@ public class MainActivity extends Activity implements ResponseListener,
 		return;
 	}
 
+	private boolean authenticate(String a, String b)
+	{
+	    try { 
+	        Integer.parseInt(a);
+	        Integer.parseInt(b);
+	    } catch(NumberFormatException e) { 
+	        return false; 
+	    }
+	    if (!this.isNetworkAvailable()) {
+	    	return false;
+	    }
+		return true;
+	}
+	
+	private boolean isNetworkAvailable() {
+	    ConnectivityManager connectivityManager 
+	          = (ConnectivityManager) getSystemService(Context.CONNECTIVITY_SERVICE);
+	    NetworkInfo activeNetworkInfo = connectivityManager.getActiveNetworkInfo();
+	    return activeNetworkInfo != null && activeNetworkInfo.isConnected();
+	}
 }
