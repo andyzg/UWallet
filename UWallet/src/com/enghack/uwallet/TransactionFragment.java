@@ -5,20 +5,18 @@ import java.util.ArrayList;
 import android.app.ActionBar.LayoutParams;
 import android.app.Activity;
 import android.app.Fragment;
-import android.content.Context;
 import android.os.Bundle;
-import android.util.TypedValue;
 import android.view.Gravity;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.View.OnClickListener;
 import android.view.ViewGroup;
+import android.widget.ScrollView;
 import android.widget.TableLayout;
 import android.widget.TableRow;
 import android.widget.TextView;
 
 import com.enghack.watcard.Transaction;
-import com.enghack.watcard.WatcardInfo;
 
 public class TransactionFragment extends Fragment implements OnClickListener {
 
@@ -28,6 +26,7 @@ public class TransactionFragment extends Fragment implements OnClickListener {
 	private Listener mListener;
 	private TableLayout table;
 	private ArrayList<Transaction> list;
+	private int textSize=13;
 	
 	public interface Listener {
 	}
@@ -39,9 +38,7 @@ public class TransactionFragment extends Fragment implements OnClickListener {
 	@Override
 	public void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
-		//WatcardInfo watcard = (Activity)getActivity().getWatcardInstance();
-		//list = watcard.getList();
-		
+		list = MainActivity.getList();
 	}
 
 	@Override
@@ -49,14 +46,18 @@ public class TransactionFragment extends Fragment implements OnClickListener {
 			Bundle savedInstanceState) {
 		
 		View v = inflater.inflate(R.layout.fragment_transaction, container,
-				false);
+				true);
+		ScrollView contain = (ScrollView)v.getRootView().findViewById(R.id.history_contain);
+		
 		final int width = getActivity().getWindowManager().getDefaultDisplay().getWidth(); 
 		
-		int dip = (int) TypedValue.applyDimension(
-				 TypedValue.COMPLEX_UNIT_DIP,
-				 (float) 1,
-				 getResources().getDisplayMetrics());
-		final LayoutParams lparams = new LayoutParams(width/4,LayoutParams.MATCH_PARENT);
+		TableLayout.LayoutParams tableParams = new TableLayout.LayoutParams(
+				TableLayout.LayoutParams.MATCH_PARENT, 
+				TableLayout.LayoutParams.WRAP_CONTENT);
+		table = new TableLayout(getActivity());
+		table.setLayoutParams(tableParams);
+		TableRow.LayoutParams lparams = new TableRow.LayoutParams(TableRow.LayoutParams.WRAP_CONTENT,TableRow.LayoutParams.MATCH_PARENT);
+		lparams.width = width/3;
 		lparams.gravity = Gravity.LEFT;
 		lparams.bottomMargin = 5;
 		lparams.topMargin = 5;
@@ -65,6 +66,7 @@ public class TransactionFragment extends Fragment implements OnClickListener {
 		{
 			if (filterDate(trans))
 			{	
+				System.out.println("Printing "+trans.getAmount());
 				TableRow row = new TableRow(getActivity());
 				TextView price, date, terminal;
 				price = new TextView(getActivity());
@@ -75,22 +77,21 @@ public class TransactionFragment extends Fragment implements OnClickListener {
 				date.setText(trans.getDate());
 				terminal.setText(trans.getTerminal());
 				
-				price.setLayoutParams(lparams);
-				date.setLayoutParams(lparams);
-				terminal.setLayoutParams(lparams);
-				terminal.setWidth(width/2);
+				// terminal.setWidth(width/2);
 				
-				price.setTextSize(30);
-				date.setTextSize(30);
-				terminal.setTextSize(30);
+				price.setTextSize(textSize);
+				date.setTextSize(textSize);
+				terminal.setTextSize(textSize);
 				
-				row.addView(price);
-				row.addView(date);
-				row.addView(terminal);
-				table.addView(row);
+				row.addView(price, lparams);
+				row.addView(date, lparams);
+				row.addView(terminal, lparams);
+				table.addView(row, new TableLayout.LayoutParams(LayoutParams.MATCH_PARENT, LayoutParams.WRAP_CONTENT));
 			}
 		}
-		return v;
+		contain.addView(table);
+		return (ScrollView)inflater.inflate(R.layout.fragment_transaction, container,
+				false);
 	}
 
 	@Override
@@ -126,10 +127,4 @@ public class TransactionFragment extends Fragment implements OnClickListener {
 	@Override
 	public void onClick(View view) {
 	}
-
-	@Override
-	public void onActivityCreated(Bundle savedInstanceState) {
-		table = (TableLayout) getActivity().findViewById(R.id.transaction_table);
-	}
-
 }

@@ -1,5 +1,7 @@
 package com.enghack.uwallet;
 
+import java.util.ArrayList;
+
 import org.jsoup.nodes.Element;
 
 import android.app.Activity;
@@ -16,6 +18,7 @@ import android.widget.Toast;
 import com.enghack.uwallet.login.HTMLParser;
 import com.enghack.uwallet.login.LoginTask;
 import com.enghack.uwallet.login.LoginTask.ResponseListener;
+import com.enghack.watcard.Transaction;
 import com.enghack.watcard.WatcardInfo;
 
 public class MainActivity extends Activity implements ResponseListener,
@@ -35,7 +38,7 @@ public class MainActivity extends Activity implements ResponseListener,
 	private int studentID;
 	private int studentPIN;
 	private Context context = this;
-	private WatcardInfo person;
+	private static WatcardInfo person;
 
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
@@ -140,7 +143,7 @@ public class MainActivity extends Activity implements ResponseListener,
 				parser.parseBalance(statusDoc, 2, 5), parser.parseBalance(
 						statusDoc, 5, 8),
 				parser.parseBalance(statusDoc, 8, 14), studentID, studentPIN);
-		person.printData(); // for testing purposes
+		//person.printData(); // for testing purposes
 		switchToFragment(mMenuFragment);
 		return;
 	}
@@ -171,10 +174,18 @@ public class MainActivity extends Activity implements ResponseListener,
 	{
 		Toast.makeText(getApplicationContext(), message, Toast.LENGTH_SHORT).show();
 	}
+<<<<<<< HEAD
 
 	public void onResponseFinish(Element histDoc, Element statusDoc) {
 		// TODO Auto-generated method stub
 		
 	}
 
+=======
+	
+	public static ArrayList<Transaction> getList()
+	{
+		return person.getList();
+	}
+>>>>>>> bf261d4b7c9a458795d10f329dcea7443d6dc877
 }
