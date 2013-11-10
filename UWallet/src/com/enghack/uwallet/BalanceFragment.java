@@ -28,7 +28,7 @@ public class BalanceFragment extends Fragment implements OnClickListener {
 	@Override
 	public View onCreateView(LayoutInflater inflater, ViewGroup container,
 			Bundle savedInstanceState) {
-		View v = inflater.inflate(R.layout.fragment_transaction, container,
+		View v = inflater.inflate(R.layout.fragment_balance, container,
 				false);
 		
 		return v;

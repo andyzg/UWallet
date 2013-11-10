@@ -38,6 +38,11 @@ public class MenuFragment extends Fragment implements OnClickListener {
 			Bundle savedInstanceState) {
 		View v = inflater.inflate(R.layout.fragment_menu, container, false);
 
+		v.findViewById(R.id.balance_button).setOnClickListener(this);
+		v.findViewById(R.id.transactions_button).setOnClickListener(this);
+		v.findViewById(R.id.about_button).setOnClickListener(this);
+		v.findViewById(R.id.logout_button).setOnClickListener(this);
+
 		return v;
 	}
 

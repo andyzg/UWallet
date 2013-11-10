@@ -27,10 +27,10 @@ public class MainActivity extends Activity implements ResponseListener,
 
 	private final String URL = "https://account.watcard.uwaterloo.ca/watgopher661.asp";
 	private HTMLParser parser;
-	private EditText viewID;
-	private EditText viewPIN;
-	private int studentID;
-	private int studentPIN;
+	private EditText viewID = null;
+	private EditText viewPIN = null;
+	private int studentID = 0;
+	private int studentPIN = 0;
 	
 	private WatcardInfo person;
 
@@ -45,7 +45,11 @@ public class MainActivity extends Activity implements ResponseListener,
 		mLoginFragment = new LoginFragment();
 		mMenuFragment = new MenuFragment();
 
-		switchToFragment(mLoginFragment);
+		if(viewID == null){
+			switchToFragment(mLoginFragment);
+		}else{
+			switchToFragment(mMenuFragment);
+		}
 	}
 
 	void switchToFragment(Fragment newFrag){
@@ -87,10 +91,11 @@ public class MainActivity extends Activity implements ResponseListener,
 
 	@Override
 	public void onLogOutButtonClicked() {
+		// TODO: Use cleardata base method
 		viewID = null;
 		viewPIN = null;
-		studentID = (Integer) null;
-		studentPIN = (Integer) null;
+		studentID = 0;
+		studentPIN = 0;
 		switchToFragment(mLoginFragment);
 	}
 	
