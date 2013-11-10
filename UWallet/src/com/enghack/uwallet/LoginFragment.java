@@ -1,6 +1,6 @@
 package com.enghack.uwallet;
 
-import org.jsoup.nodes.Document;
+import org.jsoup.nodes.Element;
 
 import android.app.Activity;
 import android.os.Bundle;
@@ -29,13 +29,14 @@ public class LoginFragment extends Activity implements ResponseListener{
 		try
 		{
 			LoginTask login = new LoginTask();
+			login.mListener = this;
 			login.execute(URL,ID,PIN);
 		} catch (Exception e) {
         e.printStackTrace();
 		}
 	}
 	@Override
-	public void onResponseFinish(Document doc) {
+	public void onResponseFinish(Element doc) {
 		System.out.println("HELLO WORLD");
 	return;	
 	}
