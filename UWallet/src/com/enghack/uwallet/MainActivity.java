@@ -8,9 +8,11 @@ import android.app.Activity;
 import android.app.Fragment;
 import android.app.FragmentTransaction;
 import android.content.Context;
+import android.content.SharedPreferences;
 import android.net.ConnectivityManager;
 import android.net.NetworkInfo;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.Menu;
 import android.view.MotionEvent;
 import android.view.inputmethod.InputMethodManager;
@@ -24,10 +26,11 @@ import com.enghack.watcard.Transaction;
 import com.enghack.watcard.WatcardInfo;
 
 /**
- * MainActivity, contains all fragment objects, listeners
- * get methods for ArrayList, and card balances
+ * MainActivity, contains all fragment objects, listeners get methods for
+ * ArrayList, and card balances
+ * 
  * @author Andy, Seikun
- *
+ * 
  */
 
 public class MainActivity extends Activity implements ResponseListener,
@@ -41,7 +44,7 @@ public class MainActivity extends Activity implements ResponseListener,
 	MenuFragment mMenuFragment = null;
 
 	private final String URL = "https://account.watcard.uwaterloo.ca/watgopher661.asp";
-	private HTMLParser parser;
+	private HTMLParser parser = new HTMLParser();
 	private EditText viewID = null;
 	private EditText viewPIN = null;
 	private int studentID = 0;
@@ -49,6 +52,25 @@ public class MainActivity extends Activity implements ResponseListener,
 
 	private static WatcardInfo person;
 	private Context context = this;
+
+	private String m_key = "Preferences";
+
+	// -store value———
+	public void setShared_Preferences(String name, String value) {
+
+		SharedPreferences preferences = getSharedPreferences(m_key,
+				MODE_PRIVATE);
+		SharedPreferences.Editor editor = preferences.edit();
+		editor.putString(name, value);
+		editor.commit();
+	}
+
+	// -get value———-
+	public String getShared_Preferences(String name) {
+		SharedPreferences myPrefs = getSharedPreferences(m_key, MODE_PRIVATE);
+		String resgid = myPrefs.getString(name, "0");
+		return resgid;
+	}
 
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
@@ -60,28 +82,42 @@ public class MainActivity extends Activity implements ResponseListener,
 		mAboutFragment = new AboutFragment();
 		mLoginFragment = new LoginFragment();
 		mMenuFragment = new MenuFragment();
+		studentID = Integer.parseInt(getShared_Preferences("studentID"));
+		studentPIN = Integer.parseInt(getShared_Preferences("studentPIN"));
 
-		switchToFragment(mLoginFragment, false);
+		if (studentID == 0 && studentPIN == 0) {
+			switchToFragment(mLoginFragment, false);
+		} else {
+			Log.d("STUDENT ID", String.format("%08d", studentID));
+			Log.d("STUDENT PIN", String.format("%04d", studentPIN));
+			executeLogin(URL, String.format("%08d", studentID),
+					String.format("%04d", studentPIN));
+		}
+
 	}
 
-	void switchToFragment(Fragment newFrag){
+	void switchToFragment(Fragment newFrag) {
 		switchToFragment(newFrag, true);
 	}
-	
-	void switchToFragment(Fragment newFrag, boolean addToBackStack){
-		FragmentTransaction transaction = getFragmentManager().beginTransaction();
-        transaction.replace(R.id.fragment_container, newFrag);
-        if (addToBackStack)
-                transaction.addToBackStack(null);
-        transaction.commit();
-/*		FragmentTransaction transaction = getFragmentManager().beginTransaction();
-		transaction.setCustomAnimations(
-                R.anim.card_flip_right_in, R.anim.card_flip_right_out,
-                R.anim.card_flip_left_in, R.anim.card_flip_left_out)
-                .replace(R.id.fragment_container, newFrag);
+
+	void switchToFragment(Fragment newFrag, boolean addToBackStack) {
+/*		FragmentTransaction transaction = getFragmentManager()
+				.beginTransaction();
+		transaction.replace(R.id.fragment_container, newFrag);
 		if (addToBackStack)
 			transaction.addToBackStack(null);
 		transaction.commit();*/
+
+		FragmentTransaction transaction = getFragmentManager()
+				.beginTransaction();
+		transaction.setCustomAnimations(R.anim.card_flip_right_in,
+				R.anim.card_flip_right_out, R.anim.card_flip_left_in,
+				R.anim.card_flip_left_out).replace(R.id.fragment_container,
+				newFrag);
+		if (addToBackStack)
+			transaction.addToBackStack(null);
+		transaction.commit();
+
 	}
 
 	@Override
@@ -111,31 +147,30 @@ public class MainActivity extends Activity implements ResponseListener,
 		// TODO: Use cleardata base method
 		studentID = 0;
 		studentPIN = 0;
+		setShared_Preferences("studentID", "0");
+		setShared_Preferences("studentPIN", "0");
 		switchToFragment(mLoginFragment);
 	}
-	
+
 	@Override
 	public void onLogInButtonClicked() {
-		//DatabaseHandler db = new DatabaseHandler(this);
-		parser = new HTMLParser();
+		// DatabaseHandler db = new DatabaseHandler(this);
 		viewID = (EditText) (this.findViewById(R.id.username_input));
 		viewPIN = (EditText) (this.findViewById(R.id.password_input));
-		if (!authenticate(viewID.getText().toString(), viewPIN.getText().toString()))
-		{
+		if (!authenticate(viewID.getText().toString(), viewPIN.getText()
+				.toString())) {
 
 			errorMessage("Invalid Login");
 			return;
-		}
-		else
-		{
+		} else {
 			studentID = Integer.parseInt(viewID.getText().toString());
-			
+
 			studentPIN = Integer.parseInt(viewPIN.getText().toString());
 			executeLogin(URL, viewID.getText().toString(), viewPIN.getText()
-				.toString());
+					.toString());
 		}
 	}
-	
+
 	private void executeLogin(String URL, String ID, String PIN) {
 		try {
 			LoginTask login = new LoginTask(context, this);
@@ -147,70 +182,73 @@ public class MainActivity extends Activity implements ResponseListener,
 	}
 
 	@Override
-	public void onResponseFinish(Element histDoc, Element statusDoc, boolean valid) {
-		if (!valid)
-		{
+	public void onResponseFinish(Element histDoc, Element statusDoc,
+			boolean valid) {
+		if (!valid) {
 			errorMessage("Invalid Credentials");
 			return;
 		}
-		person = new WatcardInfo(parser.parseHist(histDoc),
-		// Indexes of each type of balance based on the website
-				parser.parseBalance(statusDoc, 2, 5), parser.parseBalance(
-						statusDoc, 5, 8),
-				parser.parseBalance(statusDoc, 8, 14), studentID, studentPIN);
-		//person.printData(); // for testing purposes
+		try {
+			person = new WatcardInfo(parser.parseHist(histDoc),
+					parser.parseBalance(statusDoc, 2, 5), parser.parseBalance(
+							statusDoc, 5, 8), parser.parseBalance(statusDoc, 8,
+							14), studentID, studentPIN);
+			// person.printData(); // for testing purposes}
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
+		Log.d("STUDENT ID2", String.format("%08d", studentID));
+		Log.d("STUDENT PIN2", String.format("%04d", studentPIN));
+		setShared_Preferences("studentID", String.format("%08d", studentID));
+		setShared_Preferences("studentPIN", String.format("%04d", studentPIN));
 		switchToFragment(mMenuFragment, false);
 		return;
 	}
 
-	public void onResponseFinish(boolean valid)
-	{
+	public void onResponseFinish(boolean valid) {
 		errorMessage("Invalid Credentials");
 	}
-	
-	private boolean authenticate(String a, String b)
-	{
-		if (a.matches("[0-9]+") && a.length() > 2 && 
-				b.matches("[0-9]+") && b.length() > 2 && 
-				this.isNetworkAvailable()) { 
-	        return true; 
-	    }
+
+	private boolean authenticate(String a, String b) {
+		if (a.matches("[0-9]+") && a.length() > 2 && b.matches("[0-9]+")
+				&& b.length() > 2 && this.isNetworkAvailable()) {
+			return true;
+		}
 		return false;
 	}
-	
+
 	private boolean isNetworkAvailable() {
-	    ConnectivityManager connectivityManager 
-	          = (ConnectivityManager) getSystemService(Context.CONNECTIVITY_SERVICE);
-	    NetworkInfo activeNetworkInfo = connectivityManager.getActiveNetworkInfo();
-	    return activeNetworkInfo != null && activeNetworkInfo.isConnected();
-	}
-	
-	private void errorMessage(String message)
-	{
-		Toast.makeText(getApplicationContext(), message, Toast.LENGTH_SHORT).show();
+		ConnectivityManager connectivityManager = (ConnectivityManager) getSystemService(Context.CONNECTIVITY_SERVICE);
+		NetworkInfo activeNetworkInfo = connectivityManager
+				.getActiveNetworkInfo();
+		return activeNetworkInfo != null && activeNetworkInfo.isConnected();
 	}
 
-	public void onResponseFinish(Element histDoc, Element statusDoc) {
-		// TODO Auto-generated method stub
-		
+	private void errorMessage(String message) {
+		Toast.makeText(getApplicationContext(), message, Toast.LENGTH_SHORT)
+				.show();
 	}
-	
-	public static double getMealBalance(){
+
+	public static double getMealBalance() {
 		return person.getMealBalance();
 	}
-	
-	public static double getFlexBalance(){
+
+	public static double getFlexBalance() {
 		return person.getFlexBalance();
 	}
 
-	public boolean onTouchEvent(MotionEvent event){
-		InputMethodManager imm = (InputMethodManager)getSystemService(Context.INPUT_METHOD_SERVICE);
-		imm.hideSoftInputFromWindow(getCurrentFocus().getWindowToken(),0);
-		return true;
+	public boolean onTouchEvent(MotionEvent event) {
+		try {
+			InputMethodManager imm = (InputMethodManager) getSystemService(Context.INPUT_METHOD_SERVICE);
+			imm.hideSoftInputFromWindow(getCurrentFocus().getWindowToken(), 0);
+			return true;
+		} catch (Exception e) {
+
+		}
+		return false;
 	}
-	
-	public static ArrayList<Transaction> getList()
-	{
+
+	public static ArrayList<Transaction> getList() {
 		return person.getList();
 	}
 }
