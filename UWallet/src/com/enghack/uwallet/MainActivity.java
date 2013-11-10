@@ -158,7 +158,7 @@ public class MainActivity extends Activity implements ResponseListener,
 				parser.parseBalance(statusDoc, 2, 5), parser.parseBalance(
 						statusDoc, 5, 8),
 				parser.parseBalance(statusDoc, 8, 14), studentID, studentPIN);
-		//person.printData(); // for testing purposes
+		person.printData(); // for testing purposes
 		switchToFragment(mMenuFragment, false);
 		return;
 	}
@@ -204,8 +204,8 @@ public class MainActivity extends Activity implements ResponseListener,
 	}
 
 	public boolean onTouchEvent(MotionEvent event){
-		InputMethodManager imm = (InputMethodManager)getSystemService(Context.INPUT_METHOD_SERVICE);
-		imm.hideSoftInputFromWindow(getCurrentFocus().getWindowToken(),0);
+		//InputMethodManager imm = (InputMethodManager)getSystemService(Context.INPUT_METHOD_SERVICE);
+		//imm.hideSoftInputFromWindow(getCurrentFocus().getWindowToken(),0);
 		return true;
 	}
 	

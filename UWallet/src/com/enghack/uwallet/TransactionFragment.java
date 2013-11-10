@@ -61,9 +61,6 @@ public class TransactionFragment extends Fragment implements OnClickListener {
 				false);
 		ScrollView contain = (ScrollView) v.findViewById(R.id.history_contain);
 
-		final int width = getActivity().getWindowManager().getDefaultDisplay()
-				.getWidth();
-
 		TableLayout.LayoutParams tableParams = new TableLayout.LayoutParams(
 				TableLayout.LayoutParams.MATCH_PARENT,
 				TableLayout.LayoutParams.WRAP_CONTENT);
@@ -72,14 +69,13 @@ public class TransactionFragment extends Fragment implements OnClickListener {
 		TableRow.LayoutParams lparams = new TableRow.LayoutParams(
 				TableRow.LayoutParams.WRAP_CONTENT,
 				TableRow.LayoutParams.MATCH_PARENT);
-		lparams.width = width / 3;
+		lparams.weight = 0.1F;
 		lparams.gravity = Gravity.LEFT;
 		lparams.bottomMargin = 5;
 		lparams.topMargin = 5;
 
 		for (Transaction trans : list) {
 			if (filterDate(trans)) {
-				System.out.println("Printing " + trans.getAmount());
 				TableRow row = new TableRow(getActivity());
 				TextView price, date, terminal;
 				price = new TextView(getActivity());
