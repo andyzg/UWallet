@@ -1,0 +1,13 @@
+package com.enghack.uwallet;
+
+import android.app.Activity;
+import android.os.Bundle;
+
+public class LoginFragment extends Activity {
+
+	@Override
+	protected void onCreate(Bundle savedInstanceState) {
+		super.onCreate(savedInstanceState);
+	}
+
+}

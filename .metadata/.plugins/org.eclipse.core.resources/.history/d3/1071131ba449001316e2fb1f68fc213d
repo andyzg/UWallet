@@ -1,0 +1,78 @@
+package com.enghack.uwallet;
+
+import java.io.IOException;
+import java.util.ArrayList;
+import java.util.List;
+
+import org.apache.http.HttpEntity;
+import org.apache.http.HttpResponse;
+import org.apache.http.NameValuePair;
+import org.apache.http.client.ClientProtocolException;
+import org.apache.http.client.HttpResponseException;
+import org.apache.http.client.entity.UrlEncodedFormEntity;
+import org.apache.http.client.methods.HttpPost;
+import org.apache.http.impl.client.BasicResponseHandler;
+import org.apache.http.impl.client.DefaultHttpClient;
+import org.apache.http.message.BasicNameValuePair;
+
+import android.app.Activity;
+import android.os.Bundle;
+
+import com.enghack.uwallet.login.LoginTask;
+
+public class LoginFragment extends Activity {
+
+	@Override
+	protected void onCreate(Bundle savedInstanceState) {
+		super.onCreate(savedInstanceState);
+        setContentView(R.layout.activity_main);
+		String URL = "https://account.watcard.uwaterloo.ca/watgopher661.asp";
+		
+/*		try
+		{
+			LoginTask login = new LoginTask();
+			login.execute(URL,"20532350","5963");
+		} catch (Exception e) {
+        e.printStackTrace();
+		}
+*/
+		
+    	String endResult = null;
+    	DefaultHttpClient httpclient = new DefaultHttpClient();
+        HttpResponse response = null;
+        HttpEntity entity;
+        HttpPost httpost = new HttpPost("https://account.watcard.uwaterloo.ca/watgopher661.asp");
+        List <NameValuePair> nvps = new ArrayList <NameValuePair>();
+        nvps.add(new BasicNameValuePair("acnt_1", string[1]));
+        nvps.add(new BasicNameValuePair("acnt_2", string[2]));
+        nvps.add(new BasicNameValuePair("PASS", "PASS"));
+        nvps.add(new BasicNameValuePair("STATUS", "HIST"));
+        nvps.add(new BasicNameValuePair("DBDATE", "01/01/0001"));
+        nvps.add(new BasicNameValuePair("DEDATE", "01/01/2111"));
+        
+
+        try {
+            httpost.setEntity(new UrlEncodedFormEntity(nvps, "UTF_8"));
+            response = httpclient.execute(httpost);
+                
+        } catch (ClientProtocolException e) {
+            e.printStackTrace();
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+        
+
+        BasicResponseHandler myHandler = new BasicResponseHandler();
+
+        try {
+            endResult = myHandler.handleResponse(response);
+        } catch (HttpResponseException e) {
+            // TODO Auto-generated catch block
+            e.printStackTrace();
+        } catch (IOException e) {
+            // TODO Auto-generated catch block
+            e.printStackTrace();
+        }     
+		System.out.println(endResult);
+	}
+}
