@@ -17,10 +17,7 @@ import org.jsoup.Jsoup;
 import org.jsoup.nodes.Document;
 import org.jsoup.nodes.Element;
 
-<<<<<<< HEAD
-=======
 import android.app.ProgressDialog;
->>>>>>> fragmentView
 import android.content.Context;
 import android.os.AsyncTask;
 

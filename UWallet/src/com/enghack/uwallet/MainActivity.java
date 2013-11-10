@@ -180,16 +180,10 @@ public class MainActivity extends Activity implements ResponseListener,
 		Toast.makeText(getApplicationContext(), message, Toast.LENGTH_SHORT).show();
 	}
 
-<<<<<<< HEAD
-	public void onResponseFinish(boolean valid) {
-		// TODO Auto-generated method stub
-		
-	}
-=======
+
 	public void onResponseFinish(Element histDoc, Element statusDoc) {
 		// TODO Auto-generated method stub
 		
 	}
 
->>>>>>> fragmentView
 }
