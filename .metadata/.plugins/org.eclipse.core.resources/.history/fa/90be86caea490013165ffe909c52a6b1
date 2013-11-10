@@ -1,0 +1,83 @@
+package com.enghack.uwallet;
+
+import java.util.ArrayList;
+
+import android.app.Activity;
+import android.app.Fragment;
+import android.os.Bundle;
+import android.view.LayoutInflater;
+import android.view.View;
+import android.view.View.OnClickListener;
+import android.view.ViewGroup;
+import android.widget.TableLayout;
+
+import com.enghack.watcard.Transaction;
+import com.enghack.watcard.WatcardInfo;
+
+public class TransactionFragment extends Fragment implements OnClickListener {
+
+	private Listener mListener;
+	private TableLayout table;
+	private ArrayList<Transaction> list;
+	
+	public interface Listener {
+	}
+
+	public TransactionFragment() {
+		// Required empty public constructor
+	}
+
+	@Override
+	public void onCreate(Bundle savedInstanceState) {
+		super.onCreate(savedInstanceState);
+		WatcardInfo watcard = (Activity)getActivity().getWatcardInstance();
+		list = watcard.getList();
+		
+	}
+
+	@Override
+	public View onCreateView(LayoutInflater inflater, ViewGroup container,
+			Bundle savedInstanceState) {
+		View v = inflater.inflate(R.layout.fragment_transaction, container,
+				false);
+		
+		for (Transaction trans:list)
+		{
+			table.addView(new TableLayout());
+		}
+		
+		return v;
+	}
+
+	@Override
+	public void onAttach(Activity activity) {
+		super.onAttach(activity);
+		try {
+			mListener = (Listener) activity;
+		} catch (ClassCastException e) {
+			throw new ClassCastException(activity.toString()
+					+ " must implement OnFragmentInteractionListener");
+		}
+	}
+
+	@Override
+	public void onStart() {
+		super.onStart();
+	}
+
+	@Override
+	public void onDetach() {
+		super.onDetach();
+		mListener = null;
+	}
+
+	@Override
+	public void onClick(View view) {
+	}
+
+	@Override
+	public void onActivityCreated(Bundle savedInstanceState) {
+		table = (TableLayout) getActivity().findViewById(R.id.transaction_table);
+	}
+
+}

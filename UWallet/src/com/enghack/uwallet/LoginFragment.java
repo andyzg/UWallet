@@ -1,6 +1,5 @@
 package com.enghack.uwallet;
 
-import com.enghack.uwallet.R;
 import android.app.Activity;
 import android.app.Fragment;
 import android.os.Bundle;
@@ -8,6 +7,8 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.View.OnClickListener;
 import android.view.ViewGroup;
+import android.widget.EditText;
+import android.widget.TextView;
 
 public class LoginFragment extends Fragment implements OnClickListener {
 

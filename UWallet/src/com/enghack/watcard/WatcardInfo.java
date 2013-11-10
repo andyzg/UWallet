@@ -39,6 +39,24 @@ public class WatcardInfo {
 	}
 	
 	/**
+	 * Gets the list of transactions
+	 * @return
+	 */
+	public ArrayList<Transaction> getList()
+	{
+		return this.transList;
+	}
+	
+	/**
+	 * Sets the list of transactions
+	 * @param list
+	 */
+	public void setList(ArrayList<Transaction> list)
+	{
+		this.transList = list;
+	}
+	
+	/**
 	 * Set student ID of the Watcard
 	 * @param id
 	 */
@@ -74,6 +92,14 @@ public class WatcardInfo {
 		return this.PIN;
 	}
 	
+	public double getMealBalance(){
+		return this.mealBalance;
+	}
+	
+	public double getFlexBalance(){
+		return this.flexBalance;
+	}
+	
 	public void printData()
 	{
 		for (Transaction transaction: this.transList)
@@ -83,4 +109,6 @@ public class WatcardInfo {
 		System.out.println("You currently have "+this.mealBalance+" mealplan dollars");
 		System.out.println("You currently have "+this.flexBalance+" flex dollars");
 	}
+	
+	
 }

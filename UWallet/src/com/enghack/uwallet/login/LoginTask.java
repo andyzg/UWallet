@@ -4,7 +4,6 @@ import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
 
-import org.apache.http.HttpEntity;
 import org.apache.http.HttpResponse;
 import org.apache.http.NameValuePair;
 import org.apache.http.client.ClientProtocolException;
@@ -17,8 +16,9 @@ import org.apache.http.message.BasicNameValuePair;
 import org.jsoup.Jsoup;
 import org.jsoup.nodes.Document;
 import org.jsoup.nodes.Element;
-import org.jsoup.select.Elements;
 
+import android.app.ProgressDialog;
+import android.content.Context;
 import android.os.AsyncTask;
 
 /**
@@ -29,7 +29,7 @@ import android.os.AsyncTask;
  * @author Andy
  *
  */
-public class LoginTask extends AsyncTask<String, Void, Void>{
+public class LoginTask extends AsyncTask<String, Void, Boolean>{
 	
 	public ResponseListener mListener;
 	Document histDoc;
@@ -38,30 +38,25 @@ public class LoginTask extends AsyncTask<String, Void, Void>{
 	double flexBalance;
 	double mealBalance;
 	
+	ProgressDialog dialog;
+	
 	public interface ResponseListener
 	{
-		public void onResponseFinish(Element histDoc, Element statusDoc); 
+		public void onResponseFinish(Element histDoc, Element statusDoc, boolean valid);
+		public void onResponseFinish(boolean valid);
 	}
 
-    public LoginTask(ResponseListener listener){
+    public LoginTask(Context context,ResponseListener listener){
         this.mListener = listener;
+        dialog = new ProgressDialog(context);
     }
-    
-    
-	public LoginTask()
-	{
-		// Need this to be empty
-	}
 	
 	/**
 	 * Run network operations in the back
 	 */
 	@Override
-	protected Void doInBackground(String... string) {
-	
-		// Initialize all of the variables
-    	String endResult = null;
-    	
+	protected Boolean doInBackground(String... string) {
+	    	
         // Set all of the input values to connect to Transaction History
         List <NameValuePair> histList = new ArrayList <NameValuePair>();
         histList.add(new BasicNameValuePair("acnt_1", string[1]));
@@ -84,8 +79,11 @@ public class LoginTask extends AsyncTask<String, Void, Void>{
         
         histDoc = connection(histList);
         statusDoc = connection(statusList);
-        
-        return null;
+        if (histDoc.getElementById("oneweb_message_invalid_login") != null)
+        {
+        	return false;
+        }
+        return true;
 	}
 	
 
@@ -93,20 +91,28 @@ public class LoginTask extends AsyncTask<String, Void, Void>{
 	 * When the network operation is done, this will be sent
 	 */
 	@Override
-	protected void onPostExecute(Void a) {
+	protected void onPostExecute(Boolean a) {
+		if (!a) // If there there was an error in background
+		{
+			mListener.onResponseFinish(false);
+			dialog.dismiss();
+			return;
+		}
 		// Getting the table with all of the information
         Element histTable = histDoc.getElementById("oneweb_financial_history_table");
         Element statusTable = statusDoc.getElementById("oneweb_balance_information_table");
 		
 		// Send back the table to LoginFragment for parsing
-		mListener.onResponseFinish(histTable,statusTable);
+		mListener.onResponseFinish(histTable,statusTable,true);
+		dialog.dismiss();
 		return;
 	}
 
 	// Preparation for the network operations
 	@Override
 	protected void onPreExecute() {
-		super.onPreExecute();
+		dialog.setTitle("Loading");
+		dialog.show();
 	}
 
 	// Any progress update needed

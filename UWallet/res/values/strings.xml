@@ -12,5 +12,8 @@
     <string name="title_activity_display_message">My Message</string>
     <string name="hello_world">Hello world!</string>
     <string name="about_us">This app was made by Andy, Jessica, Scott, and Seikun!</string>
+    <string name="meal_plan">Meal Plan: $</string>
+    <string name="flex_dollars">Flex Dollars: $</string>
+    <string name="total">Total: $</string>
 
 </resources>
