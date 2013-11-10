@@ -2,16 +2,38 @@
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:orientation="vertical"
-    android:gravity="center" >
-    
-	    
+    android:orientation="vertical" >
+
     <TextView
-        android:layout_width="match_parent"
-        android:layout_height="match_parent"
+        android:id="@+id/title"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
         android:layout_gravity="center"
-        android:padding="30dp"
-        android:text="@string/about_us"
-        android:textSize="47sp"/>
+        android:text="About"
+        android:textAppearance="?android:attr/textAppearanceLarge"
+        android:textSize="50sp" />
+
+    <ImageView
+        android:id="@+id/about_logo"
+        android:layout_width="80dp"
+        android:layout_height="100dp"
+        android:layout_gravity="center"
+        android:src="@drawable/about_ab" />
+
+    <TextView
+        android:id="@+id/about_info"
+        android:layout_width="268dp"
+        android:layout_height="222dp"
+        android:layout_gravity="center"
+        android:text="@string/about_information"
+        android:textSize="15sp" />
     
+    <TextView
+        android:id="@+id/about_n"
+        android:layout_width="268dp"
+        android:layout_height="100dp"
+        android:layout_gravity="center"
+        android:text="@string/about_names"
+        android:textSize="15sp" />
+
 </LinearLayout>

@@ -18,5 +18,12 @@
     <string name="balance">Balance</string>
     <string name="balance_title">Balance</string>
     <string name="hello_blank_fragment">Hello blank fragment</string>
+    <string name="about_information">uWallet was designed to help busy students track their WatCard
+        spendings on the go! With balancing academics, extracurricular activities, and a whole new lifestyle, 
+        students simply don\'t have time to be attentive to how much they\'re spending. uWallet is a simple 
+        and clean app to view all your WatCard expenses spent from the comfort and convenient of a 
+        mobile device.</string>
+    <string name="about_names">uWallet was made by Andy Zhang, Jessica Wu, Scott So, and
+        Seikun Kambashi. </string>
 
 </resources>

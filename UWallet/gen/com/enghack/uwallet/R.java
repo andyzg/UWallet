@@ -60,48 +60,53 @@ containing a value of this type.
         public static final int activity_vertical_margin=0x7f050001;
     }
     public static final class drawable {
-        public static final int about_icon=0x7f020000;
-        public static final int about_icon_clicked=0x7f020001;
-        public static final int back_icon=0x7f020002;
-        public static final int back_icon_clicked=0x7f020003;
-        public static final int balance_bal=0x7f020004;
-        public static final int balance_icon=0x7f020005;
-        public static final int balance_icon_clicked=0x7f020006;
-        public static final int button_about=0x7f020007;
-        public static final int button_balance=0x7f020008;
-        public static final int button_logout=0x7f020009;
-        public static final int button_stats=0x7f02000a;
-        public static final int button_transaction=0x7f02000b;
-        public static final int ic_launcher=0x7f02000c;
-        public static final int logout_icon=0x7f02000d;
-        public static final int logout_icon_clicked=0x7f02000e;
-        public static final int main_menu_logo=0x7f02000f;
-        public static final int stats_icon=0x7f020010;
-        public static final int stats_icon_clicked=0x7f020011;
-        public static final int transactions_icon=0x7f020012;
-        public static final int transactions_icon_clicked=0x7f020013;
-        public static final int uwallet=0x7f020014;
-        public static final int uwallet2=0x7f020015;
+        public static final int about_ab=0x7f020000;
+        public static final int about_icon=0x7f020001;
+        public static final int about_icon_clicked=0x7f020002;
+        public static final int back_icon=0x7f020003;
+        public static final int back_icon_clicked=0x7f020004;
+        public static final int balance_bal=0x7f020005;
+        public static final int balance_icon=0x7f020006;
+        public static final int balance_icon_clicked=0x7f020007;
+        public static final int button_about=0x7f020008;
+        public static final int button_balance=0x7f020009;
+        public static final int button_logout=0x7f02000a;
+        public static final int button_stats=0x7f02000b;
+        public static final int button_transaction=0x7f02000c;
+        public static final int ic_launcher=0x7f02000d;
+        public static final int logout_icon=0x7f02000e;
+        public static final int logout_icon_clicked=0x7f02000f;
+        public static final int main_menu_logo=0x7f020010;
+        public static final int stats_icon=0x7f020011;
+        public static final int stats_icon_clicked=0x7f020012;
+        public static final int transactions_icon=0x7f020013;
+        public static final int transactions_icon_clicked=0x7f020014;
+        public static final int uwallet=0x7f020015;
+        public static final int uwallet2=0x7f020016;
     }
     public static final class id {
-        public static final int about_button=0x7f0a000e;
-        public static final int action_settings=0x7f0a0011;
-        public static final int balance_button=0x7f0a000b;
-        public static final int custom_font=0x7f0a0002;
-        public static final int flex_dollars_label=0x7f0a0004;
+        public static final int about_button=0x7f0a0012;
+        public static final int about_info=0x7f0a0003;
+        public static final int about_logo=0x7f0a0002;
+        public static final int about_n=0x7f0a0004;
+        public static final int action_settings=0x7f0a0015;
+        public static final int balance_button=0x7f0a000f;
+        public static final int custom_font=0x7f0a0006;
+        public static final int flex_dollars_label=0x7f0a0008;
         public static final int fragment_container=0x7f0a0000;
-        public static final int history_contain=0x7f0a0010;
-        public static final int imageView1=0x7f0a0006;
-        public static final int login_button=0x7f0a0009;
-        public static final int logout_button=0x7f0a000f;
-        public static final int main_menu_logo=0x7f0a000a;
-        public static final int meal_plan_label=0x7f0a0003;
-        public static final int password_input=0x7f0a0008;
-        public static final int stats_button=0x7f0a000d;
-        public static final int tableLayout1=0x7f0a0001;
-        public static final int total_label=0x7f0a0005;
-        public static final int transactions_button=0x7f0a000c;
-        public static final int username_input=0x7f0a0007;
+        public static final int history_contain=0x7f0a0014;
+        public static final int imageView1=0x7f0a000a;
+        public static final int login_button=0x7f0a000d;
+        public static final int logout_button=0x7f0a0013;
+        public static final int main_menu_logo=0x7f0a000e;
+        public static final int meal_plan_label=0x7f0a0007;
+        public static final int password_input=0x7f0a000c;
+        public static final int stats_button=0x7f0a0011;
+        public static final int tableLayout1=0x7f0a0005;
+        public static final int title=0x7f0a0001;
+        public static final int total_label=0x7f0a0009;
+        public static final int transactions_button=0x7f0a0010;
+        public static final int username_input=0x7f0a000b;
     }
     public static final class integer {
         public static final int card_flip_time_full=0x7f060001;
@@ -121,6 +126,8 @@ containing a value of this type.
         public static final int main=0x7f090000;
     }
     public static final class string {
+        public static final int about_information=0x7f070011;
+        public static final int about_names=0x7f070012;
         public static final int about_us=0x7f07000a;
         public static final int action_settings=0x7f070001;
         public static final int app_name=0x7f070000;
