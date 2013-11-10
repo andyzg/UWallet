@@ -39,6 +39,24 @@ public class WatcardInfo {
 	}
 	
 	/**
+	 * Gets the list of transactions
+	 * @return
+	 */
+	public ArrayList<Transaction> getList()
+	{
+		return this.transList;
+	}
+	
+	/**
+	 * Sets the list of transactions
+	 * @param list
+	 */
+	public void setList(ArrayList<Transaction> list)
+	{
+		this.transList = list;
+	}
+	
+	/**
 	 * Set student ID of the Watcard
 	 * @param id
 	 */
