@@ -152,6 +152,7 @@ public class MainActivity extends Activity implements ResponseListener,
 						statusDoc, 5, 8),
 				parser.parseBalance(statusDoc, 8, 14), studentID, studentPIN);
 		person.printData(); // for testing purposes
+		mTransactionFragment.setList(person.getList());
 		return;
 	}
 	
