@@ -23,6 +23,13 @@ import com.enghack.uwallet.login.LoginTask.ResponseListener;
 import com.enghack.watcard.Transaction;
 import com.enghack.watcard.WatcardInfo;
 
+/**
+ * MainActivity, contains all fragment objects, listeners
+ * get methods for ArrayList, and card balances
+ * @author Andy, Seikun
+ *
+ */
+
 public class MainActivity extends Activity implements ResponseListener,
 		BalanceFragment.Listener, TransactionFragment.Listener,
 		AboutFragment.Listener, LoginFragment.Listener, MenuFragment.Listener {

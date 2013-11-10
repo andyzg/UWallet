@@ -9,6 +9,11 @@ import android.view.View;
 import android.view.View.OnClickListener;
 import android.view.ViewGroup;
 
+/**
+ * Main hub fragment, activates once a username and password have been verified
+ * @author Seikun
+ */
+
 public class MenuFragment extends Fragment implements OnClickListener {
 
 	private Listener mListener;

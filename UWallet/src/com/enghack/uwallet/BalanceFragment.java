@@ -9,6 +9,12 @@ import android.view.View.OnClickListener;
 import android.view.ViewGroup;
 import android.widget.TextView;
 
+/**
+ * Balance fragment displays watcard balances in a really simple format
+ * By changing TextView values 
+ * @author Seikun
+ */
+
 public class BalanceFragment extends Fragment implements OnClickListener {
 
 	@SuppressWarnings("unused")
