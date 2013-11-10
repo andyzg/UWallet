@@ -2,8 +2,10 @@ package com.enghack.uwallet;
 
 import org.jsoup.nodes.Element;
 
+import android.app.Activity;
 import android.app.Fragment;
 import android.content.Context;
+import android.location.GpsStatus.Listener;
 import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -17,6 +19,7 @@ import com.enghack.uwallet.login.HTMLParser;
 import com.enghack.uwallet.login.LoginTask;
 import com.enghack.uwallet.login.LoginTask.ResponseListener;
 import com.enghack.watcard.WatcardInfo;
+import com.example.testreadwrite.R;
 
 public class LoginFragment extends Fragment implements ResponseListener, OnClickListener {
 
@@ -31,11 +34,24 @@ public class LoginFragment extends Fragment implements ResponseListener, OnClick
 	private EditText ViewID;
 	private EditText ViewPIN;
 	
+	private Listener mListener;
+	
+	public interface Listener {
+		public void onTestButtonClicked();
+	}
+
+	public LoginFragment() {
+		// Required empty public constructor
+	}
+	
 	@Override
 	public View onCreateView(LayoutInflater inflater, ViewGroup container,
             Bundle savedInstanceState) {
 		
 		Parser = new HTMLParser();
+		
+		View v = inflater.inflate(R.layout.fragment_login, container,
+				false);
         
         view = (LinearLayout)getActivity().findViewById(R.id.login_view);
         submit = (Button)getActivity().findViewById(R.id.login_button);
@@ -48,7 +64,28 @@ public class LoginFragment extends Fragment implements ResponseListener, OnClick
         return view;
 	}
 	
-	
+
+	@Override
+	public void onAttach(Activity activity) {
+		super.onAttach(activity);
+		try {
+			mListener = (Listener) activity;
+		} catch (ClassCastException e) {
+			throw new ClassCastException(activity.toString()
+					+ " must implement OnFragmentInteractionListener");
+		}
+	}
+
+	@Override
+	public void onStart() {
+		super.onStart();
+	}
+
+	@Override
+	public void onDetach() {
+		super.onDetach();
+		mListener = null;
+	}
 	
 	private void executeLogin(String URL, String ID, String PIN)
 	{
