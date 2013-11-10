@@ -92,6 +92,14 @@ public class WatcardInfo {
 		return this.PIN;
 	}
 	
+	public double getMealBalance(){
+		return this.mealBalance;
+	}
+	
+	public double getFlexBalance(){
+		return this.flexBalance;
+	}
+	
 	public void printData()
 	{
 		for (Transaction transaction: this.transList)
@@ -101,4 +109,6 @@ public class WatcardInfo {
 		System.out.println("You currently have "+this.mealBalance+" mealplan dollars");
 		System.out.println("You currently have "+this.flexBalance+" flex dollars");
 	}
+	
+	
 }

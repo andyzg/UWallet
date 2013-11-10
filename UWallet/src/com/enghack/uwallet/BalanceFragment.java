@@ -1,6 +1,5 @@
 package com.enghack.uwallet;
 
-import com.enghack.uwallet.R;
 import android.app.Activity;
 import android.app.Fragment;
 import android.os.Bundle;
@@ -8,9 +7,11 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.View.OnClickListener;
 import android.view.ViewGroup;
+import android.widget.TextView;
 
 public class BalanceFragment extends Fragment implements OnClickListener {
 
+	@SuppressWarnings("unused")
 	private Listener mListener;
 
 	public interface Listener {
@@ -30,6 +31,13 @@ public class BalanceFragment extends Fragment implements OnClickListener {
 			Bundle savedInstanceState) {
 		View v = inflater.inflate(R.layout.fragment_balance, container,
 				false);
+		
+		TextView insert = (TextView) v.findViewById(R.id.meal_plan_variable);
+		insert.setText("" + MainActivity.getMealBalance());
+		insert = (TextView)v.findViewById(R.id.flex_dollars_variable);
+		insert.setText("" + MainActivity.getFlexBalance());
+		insert = (TextView)v.findViewById(R.id.total_variable);
+		insert.setText("" + (MainActivity.getFlexBalance()+MainActivity.getMealBalance()));
 		
 		return v;
 	}

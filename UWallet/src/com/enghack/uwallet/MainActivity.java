@@ -10,6 +10,8 @@ import android.net.ConnectivityManager;
 import android.net.NetworkInfo;
 import android.os.Bundle;
 import android.view.Menu;
+import android.view.MotionEvent;
+import android.view.inputmethod.InputMethodManager;
 import android.widget.EditText;
 import android.widget.Toast;
 
@@ -35,7 +37,7 @@ public class MainActivity extends Activity implements ResponseListener,
 	private int studentID = 0;
 	private int studentPIN = 0;
 
-	private WatcardInfo person;
+	private static WatcardInfo person;
 	private Context context = this;
 
 	@Override
@@ -96,10 +98,11 @@ public class MainActivity extends Activity implements ResponseListener,
 	@Override
 	public void onLogOutButtonClicked() {
 		// TODO: Use cleardata base method
+		person = null;
 		viewID = null;
 		viewPIN = null;
-		studentID = 0;
-		studentPIN = 0;
+		studentID = (Integer) null;
+		studentPIN = (Integer) null;
 		switchToFragment(mLoginFragment);
 	}
 	
@@ -185,5 +188,18 @@ public class MainActivity extends Activity implements ResponseListener,
 		// TODO Auto-generated method stub
 		
 	}
+	
+	public static double getMealBalance(){
+		return person.getMealBalance();
+	}
+	
+	public static double getFlexBalance(){
+		return person.getFlexBalance();
+	}
 
+	public boolean onTouchEvent(MotionEvent event){
+		InputMethodManager imm = (InputMethodManager)getSystemService(Context.INPUT_METHOD_SERVICE);
+		imm.hideSoftInputFromWindow(getCurrentFocus().getWindowToken(),0);
+		return true;
+	}
 }
