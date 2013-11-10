@@ -105,7 +105,7 @@ public class MainActivity extends Activity implements ResponseListener,
 		viewPIN = (EditText) (this.findViewById(R.id.password_input));
 		if (!authenticate(viewID.getText().toString(), viewPIN.getText().toString()))
 		{
-			errorMessage("Invalid Login");
+			onInterruptLogin("Invalid Login");
 			return;
 		}
 		else
@@ -129,12 +129,7 @@ public class MainActivity extends Activity implements ResponseListener,
 	}
 
 	@Override
-	public void onResponseFinish(Element histDoc, Element statusDoc, boolean valid) {
-		if (!valid)
-		{
-			errorMessage("Invalid Credentials");
-			return;
-		}
+	public void onResponseFinish(Element histDoc, Element statusDoc) {
 		person = new WatcardInfo(parser.parseHist(histDoc),
 		// Indexes of each type of balance based on the website
 				parser.parseBalance(statusDoc, 2, 5), parser.parseBalance(
@@ -161,9 +156,9 @@ public class MainActivity extends Activity implements ResponseListener,
 	    NetworkInfo activeNetworkInfo = connectivityManager.getActiveNetworkInfo();
 	    return activeNetworkInfo != null && activeNetworkInfo.isConnected();
 	}
-	
-	private void errorMessage(String message)
-	{
-		Toast.makeText(getApplicationContext(), message, Toast.LENGTH_SHORT).show();
+
+	@Override
+	public void onInterruptLogin(String errorMessage) {
+		Toast.makeText(getApplicationContext(),errorMessage, Toast.LENGTH_SHORT).show();
 	}
 }

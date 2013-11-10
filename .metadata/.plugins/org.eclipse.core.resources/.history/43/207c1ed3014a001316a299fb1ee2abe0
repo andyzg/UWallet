@@ -105,7 +105,7 @@ public class MainActivity extends Activity implements ResponseListener,
 		viewPIN = (EditText) (this.findViewById(R.id.password_input));
 		if (!authenticate(viewID.getText().toString(), viewPIN.getText().toString()))
 		{
-			errorMessage("Invalid Login");
+			onInterruptLogin("Invalid Login");
 			return;
 		}
 		else

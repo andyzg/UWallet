@@ -105,7 +105,8 @@ public class MainActivity extends Activity implements ResponseListener,
 		viewPIN = (EditText) (this.findViewById(R.id.password_input));
 		if (!authenticate(viewID.getText().toString(), viewPIN.getText().toString()))
 		{
-			errorMessage("Invalid Login");
+			//display in long period of time
+			Toast.makeText(getApplicationContext(), "Invalid Login", Toast.LENGTH_LONG).show();
 			return;
 		}
 		else
@@ -115,6 +116,7 @@ public class MainActivity extends Activity implements ResponseListener,
 			studentPIN = Integer.parseInt(viewPIN.getText().toString());
 			executeLogin(URL, viewID.getText().toString(), viewPIN.getText()
 				.toString());
+			switchToFragment(mMenuFragment);
 		}
 	}
 
@@ -129,19 +131,13 @@ public class MainActivity extends Activity implements ResponseListener,
 	}
 
 	@Override
-	public void onResponseFinish(Element histDoc, Element statusDoc, boolean valid) {
-		if (!valid)
-		{
-			errorMessage("Invalid Credentials");
-			return;
-		}
+	public void onResponseFinish(Element histDoc, Element statusDoc) {
 		person = new WatcardInfo(parser.parseHist(histDoc),
 		// Indexes of each type of balance based on the website
 				parser.parseBalance(statusDoc, 2, 5), parser.parseBalance(
 						statusDoc, 5, 8),
 				parser.parseBalance(statusDoc, 8, 14), studentID, studentPIN);
 		person.printData(); // for testing purposes
-		switchToFragment(mMenuFragment);
 		return;
 	}
 
@@ -160,10 +156,5 @@ public class MainActivity extends Activity implements ResponseListener,
 	          = (ConnectivityManager) getSystemService(Context.CONNECTIVITY_SERVICE);
 	    NetworkInfo activeNetworkInfo = connectivityManager.getActiveNetworkInfo();
 	    return activeNetworkInfo != null && activeNetworkInfo.isConnected();
-	}
-	
-	private void errorMessage(String message)
-	{
-		Toast.makeText(getApplicationContext(), message, Toast.LENGTH_SHORT).show();
 	}
 }

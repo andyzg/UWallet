@@ -42,7 +42,8 @@ public class LoginTask extends AsyncTask<String, Void, Boolean>{
 	
 	public interface ResponseListener
 	{
-		public void onResponseFinish(Element histDoc, Element statusDoc, boolean valid);
+		public void onResponseFinish(Element histDoc, Element statusDoc);
+		public void onInterruptLogin(String errorMessage);
 	}
 
     public LoginTask(Context context,ResponseListener listener){
@@ -80,6 +81,7 @@ public class LoginTask extends AsyncTask<String, Void, Boolean>{
         statusDoc = connection(statusList);
         if (histDoc.getElementById("oneweb_message_invalid_login") != null)
         {
+        	mListener.onInterruptLogin("Incorrect Credentials");
         	return false;
         }
         return true;

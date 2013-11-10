@@ -29,7 +29,7 @@ import android.os.AsyncTask;
  * @author Andy
  *
  */
-public class LoginTask extends AsyncTask<String, Void, Boolean>{
+public class LoginTask extends AsyncTask<String, Void, Void>{
 	
 	public ResponseListener mListener;
 	Document histDoc;
@@ -42,7 +42,8 @@ public class LoginTask extends AsyncTask<String, Void, Boolean>{
 	
 	public interface ResponseListener
 	{
-		public void onResponseFinish(Element histDoc, Element statusDoc, boolean valid);
+		public void onResponseFinish(Element histDoc, Element statusDoc);
+		public void onInterruptLogin(String errorMessage);
 	}
 
     public LoginTask(Context context,ResponseListener listener){
@@ -54,7 +55,7 @@ public class LoginTask extends AsyncTask<String, Void, Boolean>{
 	 * Run network operations in the back
 	 */
 	@Override
-	protected Boolean doInBackground(String... string) {
+	protected Void doInBackground(String... string) {
 	    	
         // Set all of the input values to connect to Transaction History
         List <NameValuePair> histList = new ArrayList <NameValuePair>();
@@ -78,11 +79,8 @@ public class LoginTask extends AsyncTask<String, Void, Boolean>{
         
         histDoc = connection(histList);
         statusDoc = connection(statusList);
-        if (histDoc.getElementById("oneweb_message_invalid_login") != null)
-        {
-        	return false;
-        }
-        return true;
+        
+        return null;
 	}
 	
 
@@ -90,18 +88,13 @@ public class LoginTask extends AsyncTask<String, Void, Boolean>{
 	 * When the network operation is done, this will be sent
 	 */
 	@Override
-	protected void onPostExecute(Boolean a) {
-		if (!a) // If there there was an error in background
-		{
-			dialog.dismiss();
-			return;
-		}
+	protected void onPostExecute(Void a) {
 		// Getting the table with all of the information
         Element histTable = histDoc.getElementById("oneweb_financial_history_table");
         Element statusTable = statusDoc.getElementById("oneweb_balance_information_table");
 		
 		// Send back the table to LoginFragment for parsing
-		mListener.onResponseFinish(histTable,statusTable,true);
+		mListener.onResponseFinish(histTable,statusTable);
 		dialog.dismiss();
 		return;
 	}
