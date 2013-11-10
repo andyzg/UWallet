@@ -1,0 +1,24 @@
+package com.enghack.watcard;
+
+import java.util.ArrayList;
+
+public class WatcardInfo {
+	
+	public static int mInstance = null;
+	private ArrayList<Transaction> transList;
+	
+	private int studentID;
+	private int PIN;
+	
+	private double flexDollar;
+	private double mealDollar;
+	
+	public WatcardInfo(ArrayList<Transaction> list, int studentID, int PIN)
+	{
+		this.transList = list;
+		this.studentID = studentID;
+		this.PIN = PIN;
+	}
+	
+	public 
+}

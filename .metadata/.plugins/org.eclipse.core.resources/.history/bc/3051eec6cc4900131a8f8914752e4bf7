@@ -1,0 +1,64 @@
+package com.enghack.watcard;
+
+import java.util.ArrayList;
+
+public class WatcardInfo {
+	
+	// Only have 1 mInstance at a time
+	// false for none
+	// true for one
+	public static boolean mInstance = false;
+	
+	// List of all of the transactions
+	private ArrayList<Transaction> transList;
+	
+	private int studentID;
+	private int PIN;
+	
+	private double flexDollar;
+	private double mealDollar;
+	
+	public WatcardInfo(ArrayList<Transaction> list, int studentID, int PIN)
+	{
+		this.mInstance = true;
+		this.transList = list;
+		this.studentID = studentID;
+		this.PIN = PIN;
+	}
+	
+	/**
+	 * Set student ID of the Watcard
+	 * @param id
+	 */
+	public void setID(int id)
+	{
+		this.studentID = id;
+	}
+	
+	/**
+	 * Get the student ID of the current Watcard
+	 * @return
+	 */
+	public int getID()
+	{
+		return this.studentID;
+	}
+	
+	/**
+	 * Set the PIN of the Watcard
+	 * @param pin
+	 */
+	public void setPIN(int pin)
+	{
+		this.PIN = pin;
+	}
+	
+	/**
+	 * Get the PIN of the current Watcrad
+	 * @return
+	 */
+	public int getPIN()
+	{
+		return this.PIN;
+	}
+}

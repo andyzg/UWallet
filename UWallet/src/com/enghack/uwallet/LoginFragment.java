@@ -47,8 +47,14 @@ public class LoginFragment extends Activity implements ResponseListener, OnClick
 		}
 	}
 	@Override
-	public void onResponseFinish(Element doc) {
-		WatcardInfo person = new WatcardInfo(Parser.parseHTML(doc), studentID, PIN);
+	public void onResponseFinish(Element histDoc, Element statusDoc) {
+		WatcardInfo person = new WatcardInfo(
+				Parser.parseHist(histDoc),
+				Parser.parseFlex(statusDoc),
+				Parser.parseMeal(statusDoc),
+				studentID,
+				PIN);
+		person.printData(); // for testing purposes
 	return;	
 	}
 
