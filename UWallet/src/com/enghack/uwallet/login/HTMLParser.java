@@ -73,15 +73,12 @@ public class HTMLParser {
 	
 	private int filterNonAlphabetic(String s)
 	{
-		s = s.replaceAll("[^A-Z]","");
+		s = s.replaceAll("[^A-Z -]","");
 		if (!values.contains(s))
 		{
-			System.out.println("Adding "+s);
 			values.add(s);
 			map.put(Integer.valueOf(values.indexOf(s)),s);
 		}
-		else
-			System.out.println("Not working");
 		return values.indexOf(s);
 	}
 	
