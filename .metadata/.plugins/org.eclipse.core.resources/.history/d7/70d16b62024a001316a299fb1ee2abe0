@@ -94,7 +94,7 @@ public class LoginTask extends AsyncTask<String, Void, Boolean>{
 	protected void onPostExecute(Boolean a) {
 		if (!a) // If there there was an error in background
 		{
-			mListener.onResponseFinish(false);
+			onResponseFinish(false);
 			dialog.dismiss();
 			return;
 		}

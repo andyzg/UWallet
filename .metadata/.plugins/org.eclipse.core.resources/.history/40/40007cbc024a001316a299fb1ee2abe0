@@ -94,7 +94,7 @@ public class LoginTask extends AsyncTask<String, Void, Boolean>{
 	protected void onPostExecute(Boolean a) {
 		if (!a) // If there there was an error in background
 		{
-			mListener.onResponseFinish(false);
+			onResponseFinish(false);
 			dialog.dismiss();
 			return;
 		}
@@ -106,6 +106,12 @@ public class LoginTask extends AsyncTask<String, Void, Boolean>{
 		mListener.onResponseFinish(histTable,statusTable,true);
 		dialog.dismiss();
 		return;
+	}
+
+	private void onResponseFinish(Document histDoc2, Document statusDoc2,
+			boolean b) {
+		// TODO Auto-generated method stub
+		
 	}
 
 	// Preparation for the network operations

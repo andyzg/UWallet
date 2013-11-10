@@ -149,7 +149,6 @@ public class MainActivity extends Activity implements ResponseListener,
 	{
 		errorMessage("Invalid Credentials");
 	}
-	
 	private boolean authenticate(String a, String b)
 	{
 		if (a.matches("[0-9]+") && a.length() > 2 && 
