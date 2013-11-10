@@ -695,3 +695,6 @@ java.io.IOException: Bad format
 	at org.eclipse.jdt.internal.ui.actions.WorkbenchRunnableAdapter.run(WorkbenchRunnableAdapter.java:106)
 	at org.eclipse.jdt.internal.ui.actions.WorkbenchRunnableAdapter$1.run(WorkbenchRunnableAdapter.java:122)
 	at org.eclipse.core.internal.jobs.Worker.run(Worker.java:53)
+
+!ENTRY org.eclipse.ui 4 4 2013-11-09 21:43:04.610
+!MESSAGE Referenced part does not exist yet: org.eclipse.ui.views.ProblemView.
