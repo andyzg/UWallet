@@ -46,7 +46,7 @@ public class BalanceFragment extends Fragment implements OnClickListener {
 		((TextView)v.findViewById(R.id.meal_plan_label)).setText(meal);
 		((TextView)v.findViewById(R.id.flex_dollars_label)).setText(flex);
 		((TextView)v.findViewById(R.id.total_label)).setText(total);
-		
+
 		return v;
 	}
 
