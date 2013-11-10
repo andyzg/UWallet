@@ -158,7 +158,7 @@ public class MainActivity extends Activity implements ResponseListener,
 				parser.parseBalance(statusDoc, 2, 5), parser.parseBalance(
 						statusDoc, 5, 8),
 				parser.parseBalance(statusDoc, 8, 14), studentID, studentPIN);
-		person.printData(); // for testing purposes
+		// person.printData(); // for testing purposes
 		switchToFragment(mMenuFragment, false);
 		return;
 	}

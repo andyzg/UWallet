@@ -62,7 +62,7 @@ public class Transaction {
 
 	// getting date
 	public String getDate() {
-		return getMonth(this._date/1000000)+" "+(this._date/10000 - (this._date/1000000)*100)+" "+(this._date%100)+"'";
+		return getMonth(this._date/1000000)+" "+(this._date/10000 - (this._date/1000000))+" "+(this._date%100)+"'";
 	}
 
 	// setting date
