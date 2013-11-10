@@ -18,6 +18,12 @@ import android.widget.TextView;
 
 import com.enghack.watcard.Transaction;
 
+/**
+ * Transaction fragment, implements ScrollView to display information in table format
+ * @author Andy, Seikun
+ *
+ */
+
 public class TransactionFragment extends Fragment implements OnClickListener {
 
 	// To be changed depending on settings

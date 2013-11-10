@@ -1,5 +1,10 @@
 package com.enghack.watcard;
 
+/**
+ * Template for each transaction object, standard get/set methods
+ * @author Seikun
+ */
+
 public class Transaction {
 
 	// private variables

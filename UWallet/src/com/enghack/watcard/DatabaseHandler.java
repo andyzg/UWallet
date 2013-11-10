@@ -9,6 +9,11 @@ import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
 import android.database.sqlite.SQLiteOpenHelper;
 
+/**
+ * DataBaseHandler contains all methods for manipulating SQLite database
+ * @author Seikun
+ */
+
 public class DatabaseHandler extends SQLiteOpenHelper {
 
 	// All Static variables

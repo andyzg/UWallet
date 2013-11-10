@@ -10,6 +10,11 @@ import android.view.ViewGroup;
 import android.widget.EditText;
 import android.widget.TextView;
 
+/**
+ * Standard fragment with 2 input fields and a button with listener attached
+ * @author Seikun
+ */
+
 public class LoginFragment extends Fragment implements OnClickListener {
 
 	private Listener mListener;

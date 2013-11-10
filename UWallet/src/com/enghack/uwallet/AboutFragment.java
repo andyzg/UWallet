@@ -9,6 +9,11 @@ import android.view.View;
 import android.view.View.OnClickListener;
 import android.view.ViewGroup;
 
+/**
+ *	really basic fragment
+ *	@author Seikun
+ */
+
 public class AboutFragment extends Fragment implements OnClickListener {
 
 	private Listener mListener;
