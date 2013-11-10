@@ -24,7 +24,7 @@ import android.os.AsyncTask;
 
 public class LoginTask extends AsyncTask<String,Void, Element>{
 	
-	public ResponseListener mListener;
+	ResponseListener mListener;
 	Document doc;
 	
 	public interface ResponseListener
@@ -89,12 +89,14 @@ public class LoginTask extends AsyncTask<String,Void, Element>{
 		}*/
         doc = Jsoup.parseBodyFragment(endResult);
         Element table = doc.getElementById("oneweb_financial_history_table");
+
 		return table;
 	}
 	
 
 	@Override
 	protected void onPostExecute(Element result) {
+
 		mListener.onResponseFinish(result);
 		return;
 	}

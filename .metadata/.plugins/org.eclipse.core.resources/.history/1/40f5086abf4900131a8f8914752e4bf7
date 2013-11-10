@@ -24,7 +24,7 @@ import android.os.AsyncTask;
 
 public class LoginTask extends AsyncTask<String,Void, Element>{
 	
-	public ResponseListener mListener;
+	ResponseListener mListener;
 	Document doc;
 	
 	public interface ResponseListener

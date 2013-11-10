@@ -29,7 +29,6 @@ public class LoginFragment extends Activity implements ResponseListener{
 		try
 		{
 			LoginTask login = new LoginTask();
-			login.mListener = this;
 			login.execute(URL,ID,PIN);
 		} catch (Exception e) {
         e.printStackTrace();

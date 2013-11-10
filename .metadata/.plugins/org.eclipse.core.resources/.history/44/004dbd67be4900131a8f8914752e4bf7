@@ -22,14 +22,14 @@ import org.jsoup.select.Elements;
 import android.os.AsyncTask;
 
 
-public class LoginTask extends AsyncTask<String,Void, Element>{
+public class LoginTask extends AsyncTask<String,Void, Document>{
 	
-	public ResponseListener mListener;
+	ResponseListener mListener;
 	Document doc;
 	
 	public interface ResponseListener
 	{
-		public void onResponseFinish(Element doc); 
+		public void onResponseFinish(Document doc); 
 	}
 
     public LoginTask(ResponseListener listener){
@@ -42,7 +42,7 @@ public class LoginTask extends AsyncTask<String,Void, Element>{
 	}
 	
 	@Override
-	protected Element doInBackground(String... string) {
+	protected Document doInBackground(String... string) {
 	
     	String endResult = null;
     	DefaultHttpClient httpclient = new DefaultHttpClient();
@@ -89,13 +89,15 @@ public class LoginTask extends AsyncTask<String,Void, Element>{
 		}*/
         doc = Jsoup.parseBodyFragment(endResult);
         Element table = doc.getElementById("oneweb_financial_history_table");
-		return table;
+
+		return doc;
 	}
 	
 
 	@Override
-	protected void onPostExecute(Element result) {
-		mListener.onResponseFinish(result);
+	protected void onPostExecute(Document result) {
+
+		//mListener.onResponseFinish(result);
 		return;
 	}
 
@@ -110,4 +112,13 @@ public class LoginTask extends AsyncTask<String,Void, Element>{
 		// TODO Auto-generated method stub
 		super.onProgressUpdate(values);
 	}
+	
+	/*public static Document loadXMLFromString(String xml) throws Exception
+	{
+	    DocumentBuilderFactory factory = DocumentBuilderFactory.newInstance();
+	    DocumentBuilder builder = factory.newDocumentBuilder();
+	    InputSource is = new InputSource(new StringReader(xml));
+	    return builder.parse(is);
+	}
+*/
 }
