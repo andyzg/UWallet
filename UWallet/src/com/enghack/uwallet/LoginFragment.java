@@ -3,11 +3,15 @@ package com.enghack.uwallet;
 import org.jsoup.nodes.Element;
 
 import android.app.Fragment;
+import android.content.Context;
 import android.os.Bundle;
+import android.view.LayoutInflater;
 import android.view.View;
 import android.view.View.OnClickListener;
+import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.EditText;
+import android.widget.LinearLayout;
 
 import com.enghack.uwallet.login.HTMLParser;
 import com.enghack.uwallet.login.LoginTask;
@@ -21,16 +25,27 @@ public class LoginFragment extends Fragment implements ResponseListener, OnClick
 	private HTMLParser Parser;
 	private int studentID;
 	private int PIN;
+	private LinearLayout view;
+	private Context context;
+	
+	private EditText ViewID;
+	private EditText ViewPIN;
 	
 	@Override
-	protected void onCreate(Bundle savedInstanceState) {
-		super.onCreate(savedInstanceState);
+	public View onCreateView(LayoutInflater inflater, ViewGroup container,
+            Bundle savedInstanceState) {
+		
 		Parser = new HTMLParser();
-        setContentView(R.layout.activity_main);
         
-        submit = (Button)findViewById(R.id.login_button);
+        view = (LinearLayout)getActivity().findViewById(R.id.login_view);
+        submit = (Button)getActivity().findViewById(R.id.login_button);
+
+		ViewID = (EditText)getActivity().findViewById(R.id.username_input);
+		ViewPIN = (EditText)getActivity().findViewById(R.id.password_input);
        
         submit.setOnClickListener(this);
+        
+        return view;
 	}
 	
 	
@@ -65,8 +80,6 @@ public class LoginFragment extends Fragment implements ResponseListener, OnClick
 	// Currently needs validating in case bad input or bad connection
 	@Override
 	public void onClick(View view) {
-		EditText ViewID = (EditText)findViewById(R.id.username_input);
-		EditText ViewPIN = (EditText)findViewById(R.id.password_input);
 		studentID = Integer.parseInt(ViewID.getText().toString());
 		PIN = Integer.parseInt(ViewPIN.getText().toString());
 		executeLogin(URL, ViewID.getText().toString(), ViewPIN.getText().toString());
