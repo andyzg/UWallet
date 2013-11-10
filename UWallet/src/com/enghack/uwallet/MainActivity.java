@@ -4,7 +4,7 @@ import android.app.Activity;
 import android.app.Fragment;
 import android.app.FragmentTransaction;
 import android.os.Bundle;
-import android.view.Menu;
+import android.view.Menu;	 		 
 
 public class MainActivity extends Activity implements BalanceFragment.Listener,
 		TransactionFragment.Listener, AboutFragment.Listener,
