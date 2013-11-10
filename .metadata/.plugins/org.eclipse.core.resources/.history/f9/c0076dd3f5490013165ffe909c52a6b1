@@ -4,6 +4,7 @@ import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
 
+import org.apache.http.HttpEntity;
 import org.apache.http.HttpResponse;
 import org.apache.http.NameValuePair;
 import org.apache.http.client.ClientProtocolException;
@@ -16,9 +17,8 @@ import org.apache.http.message.BasicNameValuePair;
 import org.jsoup.Jsoup;
 import org.jsoup.nodes.Document;
 import org.jsoup.nodes.Element;
+import org.jsoup.select.Elements;
 
-import android.app.ProgressDialog;
-import android.content.Context;
 import android.os.AsyncTask;
 
 /**
@@ -38,8 +38,6 @@ public class LoginTask extends AsyncTask<String, Void, Void>{
 	double flexBalance;
 	double mealBalance;
 	
-	ProgressDialog dialog;
-	
 	public interface ResponseListener
 	{
 		public void onResponseFinish(Element histDoc, Element statusDoc); 
@@ -50,9 +48,9 @@ public class LoginTask extends AsyncTask<String, Void, Void>{
     }
     
     
-	public LoginTask(Context context)
+	public LoginTask()
 	{
-		 dialog = new ProgressDialog(context);
+		// Need this to be empty
 	}
 	
 	/**
@@ -99,15 +97,13 @@ public class LoginTask extends AsyncTask<String, Void, Void>{
 		
 		// Send back the table to LoginFragment for parsing
 		mListener.onResponseFinish(histTable,statusTable);
-		dialog.dismiss();
 		return;
 	}
 
 	// Preparation for the network operations
 	@Override
 	protected void onPreExecute() {
-		dialog.setTitle("Please wait");
-		dialog.show();
+		super.onPreExecute();
 	}
 
 	// Any progress update needed

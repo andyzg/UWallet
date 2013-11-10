@@ -99,7 +99,7 @@ public class LoginTask extends AsyncTask<String, Void, Void>{
 		
 		// Send back the table to LoginFragment for parsing
 		mListener.onResponseFinish(histTable,statusTable);
-		dialog.dismiss();
+		dialog.setTitle("Please wait");
 		return;
 	}
 

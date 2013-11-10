@@ -52,7 +52,7 @@ public class LoginTask extends AsyncTask<String, Void, Void>{
     
 	public LoginTask(Context context)
 	{
-		 dialog = new ProgressDialog(context);
+		// Need this to be empty
 	}
 	
 	/**
@@ -99,15 +99,13 @@ public class LoginTask extends AsyncTask<String, Void, Void>{
 		
 		// Send back the table to LoginFragment for parsing
 		mListener.onResponseFinish(histTable,statusTable);
-		dialog.dismiss();
 		return;
 	}
 
 	// Preparation for the network operations
 	@Override
 	protected void onPreExecute() {
-		dialog.setTitle("Please wait");
-		dialog.show();
+		super.onPreExecute();
 	}
 
 	// Any progress update needed
