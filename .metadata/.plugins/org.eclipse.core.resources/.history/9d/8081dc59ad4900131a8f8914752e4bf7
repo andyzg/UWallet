@@ -24,7 +24,7 @@ import android.os.AsyncTask;
 
 
 public class LoginTask extends AsyncTask<String,Void, Document>{
-	
+	DocumentBuilder builder;
 	ResponseListener mListener;
 	
 	public interface ResponseListener
@@ -49,7 +49,7 @@ public class LoginTask extends AsyncTask<String,Void, Document>{
     	DefaultHttpClient httpclient = new DefaultHttpClient();
         HttpResponse response = null;
         HttpEntity entity;
-        Document doc = new Document();
+        Document doc = null;
         HttpPost httpost = new HttpPost("https://account.watcard.uwaterloo.ca/watgopher661.asp");
         List <NameValuePair> nvps = new ArrayList <NameValuePair>();
         nvps.add(new BasicNameValuePair("acnt_1", string[1]));
