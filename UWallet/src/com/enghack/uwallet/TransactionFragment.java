@@ -40,7 +40,14 @@ public class TransactionFragment extends Fragment implements OnClickListener {
 	
 	@Override
 	public void onCreate(Bundle savedInstanceState) {
+<<<<<<< HEAD
 		super.onCreate(savedInstanceState);		
+=======
+		super.onCreate(savedInstanceState);
+		//WatcardInfo watcard = (Activity)getActivity().getWatcardInstance();
+		//list = watcard.getList();
+		
+>>>>>>> fragmentView
 	}
 
 	@Override

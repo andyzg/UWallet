@@ -11,6 +11,7 @@ import android.net.NetworkInfo;
 import android.os.Bundle;
 import android.view.Menu;
 import android.widget.EditText;
+import android.widget.Toast;
 
 import com.enghack.uwallet.login.HTMLParser;
 import com.enghack.uwallet.login.LoginTask;
@@ -29,11 +30,19 @@ public class MainActivity extends Activity implements ResponseListener,
 
 	private final String URL = "https://account.watcard.uwaterloo.ca/watgopher661.asp";
 	private HTMLParser parser;
+<<<<<<< HEAD
 	private EditText viewID = null;
 	private EditText viewPIN = null;
 	private int studentID = 0;
 	private int studentPIN = 0;
 	
+=======
+	private EditText viewID;
+	private EditText viewPIN;
+	private int studentID;
+	private int studentPIN;
+	private Context context = this;
+>>>>>>> fragmentView
 	private WatcardInfo person;
 	private Context context = this;
 
@@ -110,14 +119,21 @@ public class MainActivity extends Activity implements ResponseListener,
 		viewPIN = (EditText) (this.findViewById(R.id.password_input));
 		if (!authenticate(viewID.getText().toString(), viewPIN.getText().toString()))
 		{
+<<<<<<< HEAD
 			// insertToast
+=======
+			errorMessage("Invalid Login");
+>>>>>>> fragmentView
 			return;
 		}
-		studentID = Integer.parseInt(viewID.getText().toString());
-		studentPIN = Integer.parseInt(viewPIN.getText().toString());
-		executeLogin(URL, viewID.getText().toString(), viewPIN.getText()
+		else
+		{
+			studentID = Integer.parseInt(viewID.getText().toString());
+			
+			studentPIN = Integer.parseInt(viewPIN.getText().toString());
+			executeLogin(URL, viewID.getText().toString(), viewPIN.getText()
 				.toString());
-		switchToFragment(mMenuFragment);
+		}
 	}
 
 	private boolean authenticate(String a, String b)
@@ -145,21 +161,47 @@ public class MainActivity extends Activity implements ResponseListener,
 	}
 
 	@Override
-	public void onResponseFinish(Element histDoc, Element statusDoc) {
+	public void onResponseFinish(Element histDoc, Element statusDoc, boolean valid) {
+		if (!valid)
+		{
+			errorMessage("Invalid Credentials");
+			return;
+		}
 		person = new WatcardInfo(parser.parseHist(histDoc),
 		// Indexes of each type of balance based on the website
 				parser.parseBalance(statusDoc, 2, 5), parser.parseBalance(
 						statusDoc, 5, 8),
 				parser.parseBalance(statusDoc, 8, 14), studentID, studentPIN);
 		person.printData(); // for testing purposes
+<<<<<<< HEAD
 		mTransactionFragment.setList(person.getList());
 		return;
 	}
+=======
+		switchToFragment(mMenuFragment);
+		return;
+	}
+
+	private boolean authenticate(String a, String b)
+	{
+		if (a.matches("[0-9]+") && a.length() > 2 && 
+				b.matches("[0-9]+") && b.length() > 2 && 
+				this.isNetworkAvailable()) { 
+	        return true; 
+	    }
+		return false;
+	}
+>>>>>>> fragmentView
 	
 	private boolean isNetworkAvailable() {
 	    ConnectivityManager connectivityManager 
 	          = (ConnectivityManager) getSystemService(Context.CONNECTIVITY_SERVICE);
 	    NetworkInfo activeNetworkInfo = connectivityManager.getActiveNetworkInfo();
 	    return activeNetworkInfo != null && activeNetworkInfo.isConnected();
+	}
+	
+	private void errorMessage(String message)
+	{
+		Toast.makeText(getApplicationContext(), message, Toast.LENGTH_SHORT).show();
 	}
 }
