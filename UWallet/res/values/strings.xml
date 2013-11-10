@@ -8,8 +8,9 @@
     <string name="title_activity_main">MainActivity</string>
 	<string name="subtitle">uWallet.</string>
     <string name="password">Enter Pin</string>
-    <string name="login">Login</string>
+    <string name="login_button">Login</string>
     <string name="title_activity_display_message">My Message</string>
     <string name="hello_world">Hello world!</string>
+    <string name="about_us">This app was made by Andy, Jessica, Scott, and Seikun!</string>
 
 </resources>
