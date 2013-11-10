@@ -42,10 +42,6 @@ public class MainActivity extends Activity implements ResponseListener,
 
 	private static WatcardInfo person;
 	private Context context = this;
-<<<<<<< HEAD
-=======
-	private static WatcardInfo person;
->>>>>>> fragmentView
 
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
@@ -58,11 +54,7 @@ public class MainActivity extends Activity implements ResponseListener,
 		mLoginFragment = new LoginFragment();
 		mMenuFragment = new MenuFragment();
 
-		if(viewID == null){
-			switchToFragment(mLoginFragment);
-		}else{
-			switchToFragment(mMenuFragment);
-		}
+		switchToFragment(mLoginFragment, false);
 	}
 
 	void switchToFragment(Fragment newFrag){
@@ -71,13 +63,18 @@ public class MainActivity extends Activity implements ResponseListener,
 	
 	void switchToFragment(Fragment newFrag, boolean addToBackStack){
 		FragmentTransaction transaction = getFragmentManager().beginTransaction();
+        transaction.replace(R.id.fragment_container, newFrag);
+        if (addToBackStack)
+                transaction.addToBackStack(null);
+        transaction.commit();
+/*		FragmentTransaction transaction = getFragmentManager().beginTransaction();
 		transaction.setCustomAnimations(
                 R.anim.card_flip_right_in, R.anim.card_flip_right_out,
                 R.anim.card_flip_left_in, R.anim.card_flip_left_out)
                 .replace(R.id.fragment_container, newFrag);
 		if (addToBackStack)
 			transaction.addToBackStack(null);
-		transaction.commit();
+		transaction.commit();*/
 	}
 
 	@Override
@@ -105,11 +102,8 @@ public class MainActivity extends Activity implements ResponseListener,
 	@Override
 	public void onLogOutButtonClicked() {
 		// TODO: Use cleardata base method
-		person = null;
-		viewID = null;
-		viewPIN = null;
-		studentID = (Integer) null;
-		studentPIN = (Integer) null;
+		studentID = 0;
+		studentPIN = 0;
 		switchToFragment(mLoginFragment);
 	}
 	
@@ -157,13 +151,8 @@ public class MainActivity extends Activity implements ResponseListener,
 				parser.parseBalance(statusDoc, 2, 5), parser.parseBalance(
 						statusDoc, 5, 8),
 				parser.parseBalance(statusDoc, 8, 14), studentID, studentPIN);
-<<<<<<< HEAD
-		person.printData(); // for testing purposes
-
-=======
 		//person.printData(); // for testing purposes
->>>>>>> fragmentView
-		switchToFragment(mMenuFragment);
+		switchToFragment(mMenuFragment, false);
 		return;
 	}
 
@@ -193,8 +182,6 @@ public class MainActivity extends Activity implements ResponseListener,
 	{
 		Toast.makeText(getApplicationContext(), message, Toast.LENGTH_SHORT).show();
 	}
-<<<<<<< HEAD
-
 
 	public void onResponseFinish(Element histDoc, Element statusDoc) {
 		// TODO Auto-generated method stub
@@ -209,19 +196,14 @@ public class MainActivity extends Activity implements ResponseListener,
 		return person.getFlexBalance();
 	}
 
-<<<<<<< HEAD
 	public boolean onTouchEvent(MotionEvent event){
 		InputMethodManager imm = (InputMethodManager)getSystemService(Context.INPUT_METHOD_SERVICE);
 		imm.hideSoftInputFromWindow(getCurrentFocus().getWindowToken(),0);
 		return true;
 	}
-=======
-=======
 	
 	public static ArrayList<Transaction> getList()
 	{
 		return person.getList();
 	}
->>>>>>> bf261d4b7c9a458795d10f329dcea7443d6dc877
->>>>>>> fragmentView
 }

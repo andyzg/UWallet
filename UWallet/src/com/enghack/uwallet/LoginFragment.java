@@ -34,11 +34,6 @@ public class LoginFragment extends Fragment implements OnClickListener {
 				false);
 
 		v.findViewById(R.id.login_button).setOnClickListener(this);
-		
-		EditText clear = (EditText) v.findViewById(R.id.username_input);
-		clear.setText(null);
-		clear = (EditText) v.findViewById(R.id.password_input);
-		clear.setText("", TextView.BufferType.EDITABLE);
 
 		return v;
 	}
