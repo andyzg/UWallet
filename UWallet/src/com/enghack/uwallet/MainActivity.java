@@ -188,6 +188,7 @@ public class MainActivity extends Activity implements ResponseListener,
 			errorMessage("Invalid Credentials");
 			return;
 		}
+
 		try {
 			person = new WatcardInfo(parser.parseHist(histDoc),
 					parser.parseBalance(statusDoc, 2, 5), parser.parseBalance(
@@ -201,6 +202,7 @@ public class MainActivity extends Activity implements ResponseListener,
 		Log.d("STUDENT PIN2", String.format("%04d", studentPIN));
 		setShared_Preferences("studentID", String.format("%08d", studentID));
 		setShared_Preferences("studentPIN", String.format("%04d", studentPIN));
+
 		switchToFragment(mMenuFragment, false);
 		return;
 	}
