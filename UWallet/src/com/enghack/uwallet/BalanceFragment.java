@@ -43,7 +43,7 @@ public class BalanceFragment extends Fragment implements OnClickListener {
 		insert = (TextView)v.findViewById(R.id.flex_dollars_variable);
 		insert.setText("" + MainActivity.getFlexBalance());
 		insert = (TextView)v.findViewById(R.id.total_variable);
-		insert.setText("" + (MainActivity.getFlexBalance()+MainActivity.getMealBalance()));
+		insert.setText(String.format("%.2f",(MainActivity.getFlexBalance()+MainActivity.getMealBalance())));
 		
 		return v;
 	}

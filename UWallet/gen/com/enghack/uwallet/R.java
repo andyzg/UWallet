@@ -125,6 +125,7 @@ containing a value of this type.
         public static final int about_us=0x7f07000a;
         public static final int action_settings=0x7f070001;
         public static final int app_name=0x7f070000;
+        public static final int balance_title=0x7f07000e;
         public static final int flex_dollars=0x7f07000c;
         public static final int hello_world=0x7f070009;
         public static final int login_button=0x7f070007;
@@ -167,6 +168,7 @@ containing a value of this type.
          */
         public static final int AppTheme=0x7f080001;
         public static final int ImageButton=0x7f080002;
+        public static final int TextView=0x7f080003;
     }
     public static final class styleable {
         /** Attributes that can be used with a CustomRow.

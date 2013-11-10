@@ -2,22 +2,20 @@
 <TableLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:id="@+id/tableLayout1"
     android:layout_width="match_parent"
-    android:layout_height="match_parent"
-    android:shrinkColumns="*"
-    android:stretchColumns="*" >
+    android:layout_height="match_parent" >
 
     <TableRow
         android:id="@+id/tableRow1"
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:gravity="center_horizontal" >
+        android:layout_height="70dp"
+        android:gravity="center" >
 
         <TextView
             android:id="@+id/custom_font"
             android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
+            android:layout_height="70dp"
             android:layout_gravity="center"
-            android:text="Balance"
+            android:text="@string/balance_title"
             android:textAppearance="?android:attr/textAppearanceLarge"
             android:textSize="50sp" >
         </TextView>
@@ -26,8 +24,8 @@
     <TableRow
         android:id="@+id/tableRow2"
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:gravity="center_horizontal" >
+        android:layout_height="70dp"
+        android:gravity="center" >
 
         <ImageView
             android:layout_width="wrap_content"
@@ -40,72 +38,58 @@
         android:id="@+id/tableRow3"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:gravity="right" >
+        android:layout_marginTop="80dp"
+        android:gravity="center" >
 
         <TextView
             android:id="@+id/custom_font1"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_marginTop="80dp"
-            android:gravity="right"
-            android:text="@string/meal_plan"
-            android:textSize="20sp" />
+           	style="@style/TextView"
+            android:text="@string/meal_plan" />
 
         <TextView
             android:id="@+id/meal_plan_variable"
-            android:layout_width="wrap_content"
-            android:layout_marginRight="20dp"
-            android:layout_marginTop="80dp"
-            android:gravity="left"
-            android:textSize="20sp" />
+           	style="@style/TextView"
+            android:layout_gravity="center" />
+        
     </TableRow>
 
     <TableRow
         android:id="@+id/tableRow3"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:gravity="right" >
+        android:gravity="center" >
 
         <TextView
             android:id="@+id/custom_font2"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_marginTop="10dp"
-            android:gravity="right"
+           	style="@style/TextView"
             android:text="@string/flex_dollars"
-            android:textSize="20sp" />
+             />
 
         <TextView
             android:id="@+id/flex_dollars_variable"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_marginRight="20dp"
-            android:layout_marginTop="10dp"
-            android:textSize="20sp" />
+            	style="@style/TextView"
+            android:layout_gravity="center"
+            />
+    
     </TableRow>
 
     <TableRow
         android:id="@+id/tableRow3"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:gravity="right" >
+        android:gravity="center" >
 
         <TextView
             android:id="@+id/custom_font3"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_marginTop="10dp"
-            android:gravity="right"
+            style="@style/TextView"
             android:text="@string/total"
-            android:textSize="30sp" />
+            />
 
         <TextView
             android:id="@+id/total_variable"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_marginRight="20dp"
-            android:layout_marginTop="10dp"
-            android:textSize="30sp" />
+           	style="@style/TextView"
+            android:gravity="center"
+             />
     </TableRow>
 
 </TableLayout>
