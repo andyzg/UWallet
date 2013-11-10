@@ -2,7 +2,7 @@ package com.enghack.uwallet;
 
 import org.jsoup.nodes.Element;
 
-import android.app.Activity;
+import android.app.Fragment;
 import android.os.Bundle;
 import android.view.View;
 import android.view.View.OnClickListener;
@@ -14,7 +14,7 @@ import com.enghack.uwallet.login.LoginTask;
 import com.enghack.uwallet.login.LoginTask.ResponseListener;
 import com.enghack.watcard.WatcardInfo;
 
-public class LoginFragment extends Activity implements ResponseListener, OnClickListener {
+public class LoginFragment extends Fragment implements ResponseListener, OnClickListener {
 
 	private String URL = "https://account.watcard.uwaterloo.ca/watgopher661.asp";
 	private Button submit;

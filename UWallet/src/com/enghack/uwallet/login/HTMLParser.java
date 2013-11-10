@@ -5,7 +5,6 @@ import java.util.ArrayList;
 import org.jsoup.nodes.Element;
 
 import com.enghack.watcard.Transaction;
-import org.apache.commons.lang3.StringUtils;
 
 /**
  * Parse all of the information and clean up all of the values of each
