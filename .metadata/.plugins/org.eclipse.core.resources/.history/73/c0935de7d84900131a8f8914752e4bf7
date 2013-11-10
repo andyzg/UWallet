@@ -3,6 +3,7 @@ package com.enghack.uwallet.login;
 import java.util.ArrayList;
 
 import org.jsoup.nodes.Element;
+import org.jsoup.select.Elements;
 
 import com.enghack.watcard.Transaction;
 
@@ -70,7 +71,7 @@ public class HTMLParser {
 	
 	private static String filterNonAlphabetic(String s)
 	{
-		String onlyLetters = "[^a-zA-Z- ]";
+		String onlyLetters = "[^a-zA-Z\-]";
         return s.replaceAll(onlyLetters,"");
 	}
 }

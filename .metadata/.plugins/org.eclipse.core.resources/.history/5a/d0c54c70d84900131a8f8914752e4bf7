@@ -3,6 +3,7 @@ package com.enghack.uwallet.login;
 import java.util.ArrayList;
 
 import org.jsoup.nodes.Element;
+import org.jsoup.select.Elements;
 
 import com.enghack.watcard.Transaction;
 
@@ -40,7 +41,7 @@ public class HTMLParser {
 					Double.parseDouble(spaceFilter(tr.getElementById("oneweb_financial_history_td_amount").text())),
 					tr.getElementById("oneweb_financial_history_td_date").text(),
 					tr.getElementById("oneweb_financial_history_td_trantype").text(),
-					filterNonAlphabetic(tr.getElementById("oneweb_financial_history_td_terminal").text()));
+					tr.getElementById("oneweb_financial_history_td_terminal").text());
 			transactionList.add(trans);
 		}
 		return transactionList;
@@ -66,11 +67,5 @@ public class HTMLParser {
 	public static String spaceFilter(String a)
 	{
 		return a.replaceAll("\\s+","");
-	}
-	
-	private static String filterNonAlphabetic(String s)
-	{
-		String onlyLetters = "[^a-zA-Z- ]";
-        return s.replaceAll(onlyLetters,"");
 	}
 }

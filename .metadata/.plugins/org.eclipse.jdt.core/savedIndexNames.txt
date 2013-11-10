@@ -10,7 +10,6 @@ INDEX VERSION 1.126+C:\Users\Andy\Documents\GitHub\UWallet\.metadata\.plugins\or
 3335072432.index
 3400715200.index
 3857101292.index
-3695233402.index
 3353951665.index
 694900868.index
 3041156950.index

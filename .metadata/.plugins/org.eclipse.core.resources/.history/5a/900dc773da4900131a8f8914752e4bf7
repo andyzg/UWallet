@@ -71,6 +71,7 @@ public class HTMLParser {
 	private static String filterNonAlphabetic(String s)
 	{
 		String onlyLetters = "[^a-zA-Z- ]";
+		StringRemove remove = new StringRemoveAll();
         return s.replaceAll(onlyLetters,"");
 	}
 }
