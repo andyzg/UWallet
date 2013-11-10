@@ -14,10 +14,18 @@ public class MenuFragment extends Fragment implements OnClickListener {
 	private Listener mListener;
 
 	public interface Listener {
+		public void onBalanceButtonClicked();
+
+		public void onTransactionsButtonClicked();
+
+		public void onAboutButtonClicked();
+
+		public void onLogOutButtonClicked();
 	}
 
 	public MenuFragment() {
 		// Required empty public constructor
+
 	}
 
 	@Override
@@ -28,9 +36,8 @@ public class MenuFragment extends Fragment implements OnClickListener {
 	@Override
 	public View onCreateView(LayoutInflater inflater, ViewGroup container,
 			Bundle savedInstanceState) {
-		View v = inflater.inflate(R.layout.fragment_transaction, container,
-				false);
-		
+		View v = inflater.inflate(R.layout.fragment_menu, container, false);
+
 		return v;
 	}
 
@@ -58,6 +65,20 @@ public class MenuFragment extends Fragment implements OnClickListener {
 
 	@Override
 	public void onClick(View view) {
+		switch (view.getId()) {
+		case R.id.balance_button:
+			mListener.onBalanceButtonClicked();
+			break;
+		case R.id.transactions_button:
+			mListener.onTransactionsButtonClicked();
+			break;
+		case R.id.about_button:
+			mListener.onAboutButtonClicked();
+			break;
+		case R.id.logout_button:
+			mListener.onLogOutButtonClicked();
+			break;
+		}
 	}
 
 }
