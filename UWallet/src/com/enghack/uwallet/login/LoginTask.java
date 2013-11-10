@@ -45,15 +45,10 @@ public class LoginTask extends AsyncTask<String, Void, Void>{
 		public void onResponseFinish(Element histDoc, Element statusDoc); 
 	}
 
-    public LoginTask(ResponseListener listener){
+    public LoginTask(Context context,ResponseListener listener){
         this.mListener = listener;
+        dialog = new ProgressDialog(context);
     }
-    
-    
-	public LoginTask(Context context)
-	{
-		 dialog = new ProgressDialog(context);
-	}
 	
 	/**
 	 * Run network operations in the back
@@ -106,7 +101,7 @@ public class LoginTask extends AsyncTask<String, Void, Void>{
 	// Preparation for the network operations
 	@Override
 	protected void onPreExecute() {
-		dialog.setTitle("Please wait");
+		dialog.setTitle("Loading");
 		dialog.show();
 	}
 

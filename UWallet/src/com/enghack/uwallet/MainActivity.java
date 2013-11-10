@@ -11,6 +11,7 @@ import android.net.NetworkInfo;
 import android.os.Bundle;
 import android.view.Menu;
 import android.widget.EditText;
+import android.widget.Toast;
 
 import com.enghack.uwallet.login.HTMLParser;
 import com.enghack.uwallet.login.LoginTask;
@@ -33,7 +34,7 @@ public class MainActivity extends Activity implements ResponseListener,
 	private EditText viewPIN;
 	private int studentID;
 	private int studentPIN;
-	
+	private Context context = this;
 	private WatcardInfo person;
 
 	@Override
@@ -104,18 +105,24 @@ public class MainActivity extends Activity implements ResponseListener,
 		viewPIN = (EditText) (this.findViewById(R.id.password_input));
 		if (!authenticate(viewID.getText().toString(), viewPIN.getText().toString()))
 		{
-			
+			//display in long period of time
+			Toast.makeText(getApplicationContext(), "Invalid Login", Toast.LENGTH_LONG).show();
+			return;
 		}
-		studentID = Integer.parseInt(viewID.getText().toString());
-		studentPIN = Integer.parseInt(viewPIN.getText().toString());
-		executeLogin(URL, viewID.getText().toString(), viewPIN.getText()
+		else
+		{
+			studentID = Integer.parseInt(viewID.getText().toString());
+			
+			studentPIN = Integer.parseInt(viewPIN.getText().toString());
+			executeLogin(URL, viewID.getText().toString(), viewPIN.getText()
 				.toString());
-		switchToFragment(mMenuFragment);
+			switchToFragment(mMenuFragment);
+		}
 	}
 
 	private void executeLogin(String URL, String ID, String PIN) {
 		try {
-			LoginTask login = new LoginTask();
+			LoginTask login = new LoginTask(context, this);
 			login.mListener = this;
 			login.execute(URL, ID, PIN);
 		} catch (Exception e) {
@@ -136,16 +143,12 @@ public class MainActivity extends Activity implements ResponseListener,
 
 	private boolean authenticate(String a, String b)
 	{
-	    try { 
-	        Integer.parseInt(a);
-	        Integer.parseInt(b);
-	    } catch(NumberFormatException e) { 
-	        return false; 
+		if (a.matches("[0-9]+") && a.length() > 2 && 
+				b.matches("[0-9]+") && b.length() > 2 && 
+				this.isNetworkAvailable()) { 
+	        return true; 
 	    }
-	    if (!this.isNetworkAvailable()) {
-	    	return false;
-	    }
-		return true;
+		return false;
 	}
 	
 	private boolean isNetworkAvailable() {

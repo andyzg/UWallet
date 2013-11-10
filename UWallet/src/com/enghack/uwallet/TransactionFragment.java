@@ -39,8 +39,8 @@ public class TransactionFragment extends Fragment implements OnClickListener {
 	@Override
 	public void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
-		WatcardInfo watcard = (Activity)getActivity().getWatcardInstance();
-		list = watcard.getList();
+		//WatcardInfo watcard = (Activity)getActivity().getWatcardInstance();
+		//list = watcard.getList();
 		
 	}
 
