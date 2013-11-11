@@ -46,7 +46,6 @@ public class LoginTask extends AsyncTask<String, Void, Boolean>{
 	public interface ResponseListener
 	{
 		public void onResponseFinish(Element histDoc, Element statusDoc, boolean valid);
-		public void onResponseFinish(boolean valid);
 	}
 
     public LoginTask(Context context,ResponseListener listener){
@@ -99,7 +98,7 @@ public class LoginTask extends AsyncTask<String, Void, Boolean>{
 		dialog.dismiss();
 		if (!a) // If there there was an error in background
 		{
-			mListener.onResponseFinish(false);
+			mListener.onResponseFinish(null, null, false);
 			return;
 		}
 		// Getting the table with all of the information

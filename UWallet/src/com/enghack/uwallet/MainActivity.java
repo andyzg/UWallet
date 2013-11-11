@@ -23,8 +23,8 @@ import android.widget.Toast;
 import com.enghack.uwallet.login.HTMLParser;
 import com.enghack.uwallet.login.LoginTask;
 import com.enghack.uwallet.login.LoginTask.ResponseListener;
-import com.enghack.watcard.Transaction;
-import com.enghack.watcard.WatcardInfo;
+import com.enghack.uwallet.watcard.Transaction;
+import com.enghack.uwallet.watcard.WatcardInfo;
 
 /**
  * MainActivity, contains all fragment objects, listeners get methods for
@@ -58,6 +58,7 @@ public class MainActivity extends Activity implements ResponseListener,
 	private static final String PREFERENCE_KEY = "Preferences";
 	public static final String STUDENT_ID_KEY = "studentID";
 	public static final String STUDENT_PIN_KEY = "studentPIN";
+	private static final String TAG = "MainActivity";
 
 	private void setSharedPreferences(String name, String value) {
 
@@ -179,31 +180,28 @@ public class MainActivity extends Activity implements ResponseListener,
 
 	@Override
 	public void onResponseFinish(Element histDoc, Element statusDoc, boolean valid) {
-		if (!valid) {
+		if (histDoc == null)
+			Log.e(TAG, "histDoc null");
+		if (statusDoc == null)
+			Log.e(TAG, "statusDoc null");
+		if (!valid || histDoc == null || statusDoc == null) {
 			showToast(getResources().getString(R.string.invalid_credentials_message));
 			return;
 		}
+		
+		
 
-		try {
-			person = new WatcardInfo(parser.parseHist(histDoc),
-					parser.parseBalance(statusDoc, 2, 5), parser.parseBalance(
-							statusDoc, 5, 8), parser.parseBalance(statusDoc, 8,
-							14), studentID, studentPIN);
-			// person.printData(); // for testing purposes}
-		} catch (Exception e) {
-			e.printStackTrace();
-		}
+		person = new WatcardInfo(parser.parseHist(histDoc),
+				parser.parseBalance(statusDoc, 2, 5),
+				parser.parseBalance(statusDoc, 5, 8),
+				parser.parseBalance(statusDoc, 8, 14), studentID, studentPIN);
+		// person.printData(); // for testing purposes}
+			
 		setSharedPreferences(STUDENT_ID_KEY, studentID);
 		setSharedPreferences(STUDENT_PIN_KEY, studentPIN);
 
 		switchToFragment(mMenuFragment, false);
 		return;
-	}
-
-	@Override
-	public void onResponseFinish(boolean valid) {
-		showToast(getResources().getString(R.string.invalid_credentials_message));
-		switchToFragment(mLoginFragment, false);
 	}
 
 	private boolean isNetworkAvailable() {
