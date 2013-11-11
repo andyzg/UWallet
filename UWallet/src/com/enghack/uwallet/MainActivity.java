@@ -6,6 +6,7 @@ import org.jsoup.nodes.Element;
 
 import android.app.Activity;
 import android.app.Fragment;
+import android.app.FragmentManager;
 import android.app.FragmentTransaction;
 import android.content.Context;
 import android.content.SharedPreferences;
@@ -113,8 +114,7 @@ public class MainActivity extends Activity implements ResponseListener,
 		FragmentTransaction transaction = getFragmentManager()
 				.beginTransaction();
 		transaction.setCustomAnimations(R.anim.card_flip_right_in,
-				R.anim.card_flip_right_out, R.anim.card_flip_left_in,
-				R.anim.card_flip_left_out).replace(R.id.fragment_container,
+				R.anim.card_flip_right_out).replace(R.id.fragment_container,
 				newFrag);
 		if (addToBackStack)
 			transaction.addToBackStack(null);
@@ -151,7 +151,10 @@ public class MainActivity extends Activity implements ResponseListener,
 		studentPIN = 0;
 		setShared_Preferences("studentID", "0");
 		setShared_Preferences("studentPIN", "0");
-		switchToFragment(mLoginFragment);
+		
+		FragmentManager fm = getFragmentManager();
+		
+		switchToFragment(mLoginFragment, false);
 	}
 
 	@Override
@@ -214,7 +217,7 @@ public class MainActivity extends Activity implements ResponseListener,
 	}
 
 	private boolean authenticate(String a, String b) {
-		if (a.matches("[0-9]+") && a.length() > 2 && b.matches("[0-9]+")
+		if (a.matches("[0-9a-zA-Z]+") && a.length() > 2 && b.matches("[0-9a-zA-Z]+")
 				&& b.length() > 2 && this.isNetworkAvailable()) {
 			return true;
 		}

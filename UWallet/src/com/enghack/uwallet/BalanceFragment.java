@@ -50,9 +50,9 @@ public class BalanceFragment extends Fragment implements OnClickListener {
 		
 		double mealBalance = MainActivity.getMealBalance();
 		double flexBalance = MainActivity.getFlexBalance();
-		String meal = getResources().getString(R.string.meal_plan) + mealBalance;
-		String flex = getResources().getString(R.string.flex_dollars) + flexBalance;
-		String total = getResources().getString(R.string.total)+ (mealBalance + flexBalance);
+		String meal = getResources().getString(R.string.meal_plan) + String.format("%.2f", mealBalance);
+		String flex = getResources().getString(R.string.flex_dollars) + String.format("%.2f", flexBalance);
+		String total = getResources().getString(R.string.total)+ String.format("%.2f", (mealBalance + flexBalance));
 		((TextView)v.findViewById(R.id.meal_plan_label)).setText(meal);
 		((TextView)v.findViewById(R.id.flex_dollars_label)).setText(flex);
 		((TextView)v.findViewById(R.id.total_label)).setText(total);
