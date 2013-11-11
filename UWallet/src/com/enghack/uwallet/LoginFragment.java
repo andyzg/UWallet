@@ -64,11 +64,21 @@ public class LoginFragment extends Fragment implements OnClickListener {
 		super.onDetach();
 		mListener = null;
 	}
+	
+	public void clearId(){
+		((TextView)getView().findViewById(R.id.username_input)).setText("");
+	}
+	
+	public void clearPin(){
+		((TextView)getView().findViewById(R.id.password_input)).setText("");
+	}
 
 	@Override
 	public void onClick(View view) {
 		switch (view.getId()) {
 		case R.id.login_button:
+			clearId();
+			clearPin();
 			mListener.onLogInButtonClicked();
 			break;
 		}

@@ -114,6 +114,7 @@ public class LoginTask extends AsyncTask<String, Void, Boolean>{
 	// Preparation for the network operations
 	@Override
 	protected void onPreExecute() {
+		// Exception if called after Activity exited
 		dialog.setTitle("Loading");
 		dialog.show();
 	}

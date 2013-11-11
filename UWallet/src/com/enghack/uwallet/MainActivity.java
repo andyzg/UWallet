@@ -59,8 +59,7 @@ public class MainActivity extends Activity implements ResponseListener,
 	public static final String STUDENT_ID_KEY = "studentID";
 	public static final String STUDENT_PIN_KEY = "studentPIN";
 
-	// -store value———
-	public void setSharedPreferences(String name, String value) {
+	private void setSharedPreferences(String name, String value) {
 
 		SharedPreferences preferences = getSharedPreferences(PREFERENCE_KEY,
 				MODE_PRIVATE);
@@ -69,11 +68,15 @@ public class MainActivity extends Activity implements ResponseListener,
 		editor.commit();
 	}
 
-	// -get value———-
-	public String getSharedPreferences(String name) {
+	private String getSharedPreferences(String name) {
 		SharedPreferences myPrefs = getSharedPreferences(PREFERENCE_KEY, MODE_PRIVATE);
-		String resgid = myPrefs.getString(name, "0");
-		return resgid;
+		return myPrefs.getString(name, null);
+	}
+	
+	private void clearSharedPreferences(String name){
+		SharedPreferences.Editor edit = getSharedPreferences(PREFERENCE_KEY, MODE_PRIVATE).edit();
+		edit.remove(name);
+		edit.commit();
 	}
 
 	@Override
@@ -88,15 +91,17 @@ public class MainActivity extends Activity implements ResponseListener,
 		mLoginFragment = new LoginFragment();
 		mMenuFragment = new MenuFragment();
 		
+		switchToFragment(mLoginFragment, false);
+		tryLoginFromPreferences();
+	}
+	
+	private void tryLoginFromPreferences(){
 		studentID = getSharedPreferences(STUDENT_ID_KEY);
 		studentPIN = getSharedPreferences(STUDENT_PIN_KEY);
 
-		if (studentID == null && studentPIN == null) {
-			switchToFragment(mLoginFragment, false);
-		} else {
+		if (studentID != null && studentPIN != null) {
 			executeLogin(URL, studentID, studentPIN);
 		}
-
 	}
 
 	void switchToFragment(Fragment newFrag) {
@@ -104,13 +109,6 @@ public class MainActivity extends Activity implements ResponseListener,
 	}
 
 	void switchToFragment(Fragment newFrag, boolean addToBackStack) {
-/*		FragmentTransaction transaction = getFragmentManager()
-				.beginTransaction();
-		transaction.replace(R.id.fragment_container, newFrag);
-		if (addToBackStack)
-			transaction.addToBackStack(null);
-		transaction.commit();*/
-
 		FragmentTransaction transaction = getFragmentManager()
 				.beginTransaction();
 		transaction.setCustomAnimations(R.anim.card_flip_right_in,
@@ -146,13 +144,10 @@ public class MainActivity extends Activity implements ResponseListener,
 
 	@Override
 	public void onLogOutButtonClicked() {
-		// TODO: Use cleardata base method
 		studentID = null;
 		studentPIN = null;
-		setSharedPreferences("studentID", "0");
-		setSharedPreferences("studentPIN", "0");
-		
-		FragmentManager fm = getFragmentManager();
+		clearSharedPreferences(STUDENT_ID_KEY);
+		clearSharedPreferences(STUDENT_PIN_KEY);
 		
 		switchToFragment(mLoginFragment, false);
 	}
@@ -165,23 +160,27 @@ public class MainActivity extends Activity implements ResponseListener,
 	
 		studentID = viewID.getText().toString();
 		studentPIN = viewPIN.getText().toString();
+
 		executeLogin(URL, studentID, studentPIN);
 	}
 
-	private void executeLogin(String URL, String ID, String PIN) {
+	private boolean executeLogin(String URL, String ID, String PIN) {
+		if (!isNetworkAvailable()){
+			showToast(getResources().getString(R.string.no_connection_message));
+			return false;
+		}
 		LoginTask login = new LoginTask(context, this);
 		login.mListener = this;
-		try {
-			login.execute(URL, ID, PIN);
-		} catch (Exception e) {
-			e.printStackTrace();
-		}
+		
+		login.execute(URL, ID, PIN);
+				
+		return true;
 	}
 
 	@Override
 	public void onResponseFinish(Element histDoc, Element statusDoc, boolean valid) {
 		if (!valid) {
-			showToast("Invalid Credentials");
+			showToast(getResources().getString(R.string.invalid_credentials_message));
 			return;
 		}
 
@@ -194,8 +193,6 @@ public class MainActivity extends Activity implements ResponseListener,
 		} catch (Exception e) {
 			e.printStackTrace();
 		}
-		Log.d("STUDENT ID2", studentID);
-		Log.d("STUDENT PIN2", studentPIN);
 		setSharedPreferences(STUDENT_ID_KEY, studentID);
 		setSharedPreferences(STUDENT_PIN_KEY, studentPIN);
 
@@ -203,8 +200,9 @@ public class MainActivity extends Activity implements ResponseListener,
 		return;
 	}
 
+	@Override
 	public void onResponseFinish(boolean valid) {
-		showToast("Invalid Credentials");
+		showToast(getResources().getString(R.string.invalid_credentials_message));
 		switchToFragment(mLoginFragment, false);
 	}
 
@@ -228,6 +226,7 @@ public class MainActivity extends Activity implements ResponseListener,
 	}
 
 	public boolean onTouchEvent(MotionEvent event) {
+		//  TODO WHY?
 		try {
 			InputMethodManager imm = (InputMethodManager) getSystemService(Context.INPUT_METHOD_SERVICE);
 			imm.hideSoftInputFromWindow(getCurrentFocus().getWindowToken(), 0);
