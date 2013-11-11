@@ -49,18 +49,20 @@ public class MainActivity extends Activity implements ResponseListener,
 	private HTMLParser parser = new HTMLParser();
 	private EditText viewID = null;
 	private EditText viewPIN = null;
-	private int studentID = 0;
-	private int studentPIN = 0;
+	private String studentID = null;
+	private String studentPIN = null;
 
 	private static WatcardInfo person;
 	private Context context = this;
 
-	private String m_key = "Preferences";
+	private static final String PREFERENCE_KEY = "Preferences";
+	public static final String STUDENT_ID_KEY = "studentID";
+	public static final String STUDENT_PIN_KEY = "studentPIN";
 
 	// -store value———
-	public void setShared_Preferences(String name, String value) {
+	public void setSharedPreferences(String name, String value) {
 
-		SharedPreferences preferences = getSharedPreferences(m_key,
+		SharedPreferences preferences = getSharedPreferences(PREFERENCE_KEY,
 				MODE_PRIVATE);
 		SharedPreferences.Editor editor = preferences.edit();
 		editor.putString(name, value);
@@ -68,8 +70,8 @@ public class MainActivity extends Activity implements ResponseListener,
 	}
 
 	// -get value———-
-	public String getShared_Preferences(String name) {
-		SharedPreferences myPrefs = getSharedPreferences(m_key, MODE_PRIVATE);
+	public String getSharedPreferences(String name) {
+		SharedPreferences myPrefs = getSharedPreferences(PREFERENCE_KEY, MODE_PRIVATE);
 		String resgid = myPrefs.getString(name, "0");
 		return resgid;
 	}
@@ -85,16 +87,14 @@ public class MainActivity extends Activity implements ResponseListener,
 		mAboutFragment = new AboutFragment();
 		mLoginFragment = new LoginFragment();
 		mMenuFragment = new MenuFragment();
-		studentID = Integer.parseInt(getShared_Preferences("studentID"));
-		studentPIN = Integer.parseInt(getShared_Preferences("studentPIN"));
+		
+		studentID = getSharedPreferences(STUDENT_ID_KEY);
+		studentPIN = getSharedPreferences(STUDENT_PIN_KEY);
 
-		if (studentID == 0 && studentPIN == 0) {
+		if (studentID == null && studentPIN == null) {
 			switchToFragment(mLoginFragment, false);
 		} else {
-			Log.d("STUDENT ID", String.format("%08d", studentID));
-			Log.d("STUDENT PIN", String.format("%04d", studentPIN));
-			executeLogin(URL, String.format("%08d", studentID),
-					String.format("%04d", studentPIN));
+			executeLogin(URL, studentID, studentPIN);
 		}
 
 	}
@@ -147,10 +147,10 @@ public class MainActivity extends Activity implements ResponseListener,
 	@Override
 	public void onLogOutButtonClicked() {
 		// TODO: Use cleardata base method
-		studentID = 0;
-		studentPIN = 0;
-		setShared_Preferences("studentID", "0");
-		setShared_Preferences("studentPIN", "0");
+		studentID = null;
+		studentPIN = null;
+		setSharedPreferences("studentID", "0");
+		setSharedPreferences("studentPIN", "0");
 		
 		FragmentManager fm = getFragmentManager();
 		
@@ -162,24 +162,16 @@ public class MainActivity extends Activity implements ResponseListener,
 		// DatabaseHandler db = new DatabaseHandler(this);
 		viewID = (EditText) (this.findViewById(R.id.username_input));
 		viewPIN = (EditText) (this.findViewById(R.id.password_input));
-		if (!authenticate(viewID.getText().toString(), viewPIN.getText()
-				.toString())) {
-
-			errorMessage("Invalid Login");
-			return;
-		} else {
-			studentID = Integer.parseInt(viewID.getText().toString());
-
-			studentPIN = Integer.parseInt(viewPIN.getText().toString());
-			executeLogin(URL, viewID.getText().toString(), viewPIN.getText()
-					.toString());
-		}
+	
+		studentID = viewID.getText().toString();
+		studentPIN = viewPIN.getText().toString();
+		executeLogin(URL, studentID, studentPIN);
 	}
 
 	private void executeLogin(String URL, String ID, String PIN) {
+		LoginTask login = new LoginTask(context, this);
+		login.mListener = this;
 		try {
-			LoginTask login = new LoginTask(context, this);
-			login.mListener = this;
 			login.execute(URL, ID, PIN);
 		} catch (Exception e) {
 			e.printStackTrace();
@@ -187,10 +179,9 @@ public class MainActivity extends Activity implements ResponseListener,
 	}
 
 	@Override
-	public void onResponseFinish(Element histDoc, Element statusDoc,
-			boolean valid) {
+	public void onResponseFinish(Element histDoc, Element statusDoc, boolean valid) {
 		if (!valid) {
-			errorMessage("Invalid Credentials");
+			showToast("Invalid Credentials");
 			return;
 		}
 
@@ -203,25 +194,18 @@ public class MainActivity extends Activity implements ResponseListener,
 		} catch (Exception e) {
 			e.printStackTrace();
 		}
-		Log.d("STUDENT ID2", String.format("%08d", studentID));
-		Log.d("STUDENT PIN2", String.format("%04d", studentPIN));
-		setShared_Preferences("studentID", String.format("%08d", studentID));
-		setShared_Preferences("studentPIN", String.format("%04d", studentPIN));
+		Log.d("STUDENT ID2", studentID);
+		Log.d("STUDENT PIN2", studentPIN);
+		setSharedPreferences(STUDENT_ID_KEY, studentID);
+		setSharedPreferences(STUDENT_PIN_KEY, studentPIN);
 
 		switchToFragment(mMenuFragment, false);
 		return;
 	}
 
 	public void onResponseFinish(boolean valid) {
-		errorMessage("Invalid Credentials");
-	}
-
-	private boolean authenticate(String a, String b) {
-		if (a.matches("[0-9a-zA-Z]+") && a.length() > 2 && b.matches("[0-9a-zA-Z]+")
-				&& b.length() > 2 && this.isNetworkAvailable()) {
-			return true;
-		}
-		return false;
+		showToast("Invalid Credentials");
+		switchToFragment(mLoginFragment, false);
 	}
 
 	private boolean isNetworkAvailable() {
@@ -231,9 +215,8 @@ public class MainActivity extends Activity implements ResponseListener,
 		return activeNetworkInfo != null && activeNetworkInfo.isConnected();
 	}
 
-	private void errorMessage(String message) {
-		Toast.makeText(getApplicationContext(), message, Toast.LENGTH_SHORT)
-				.show();
+	private void showToast(String message) {
+		Toast.makeText(getApplicationContext(), message, Toast.LENGTH_SHORT).show();
 	}
 
 	public static double getMealBalance() {
