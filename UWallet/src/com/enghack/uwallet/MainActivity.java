@@ -6,7 +6,6 @@ import org.jsoup.nodes.Element;
 
 import android.app.Activity;
 import android.app.Fragment;
-import android.app.FragmentManager;
 import android.app.FragmentTransaction;
 import android.content.Context;
 import android.content.SharedPreferences;
@@ -17,7 +16,6 @@ import android.util.Log;
 import android.view.Menu;
 import android.view.MotionEvent;
 import android.view.inputmethod.InputMethodManager;
-import android.widget.EditText;
 import android.widget.Toast;
 
 import com.enghack.uwallet.login.HTMLParser;
@@ -47,8 +45,6 @@ public class MainActivity extends Activity implements ResponseListener,
 
 	private final String URL = "https://account.watcard.uwaterloo.ca/watgopher661.asp";
 	private HTMLParser parser = new HTMLParser();
-	private EditText viewID = null;
-	private EditText viewPIN = null;
 	private String studentID = null;
 	private String studentPIN = null;
 
@@ -154,13 +150,10 @@ public class MainActivity extends Activity implements ResponseListener,
 	}
 
 	@Override
-	public void onLogInButtonClicked() {
-		// DatabaseHandler db = new DatabaseHandler(this);
-		viewID = (EditText) (this.findViewById(R.id.username_input));
-		viewPIN = (EditText) (this.findViewById(R.id.password_input));
+	public void onLogInButtonClicked(String id, String pin) {
 	
-		studentID = viewID.getText().toString();
-		studentPIN = viewPIN.getText().toString();
+		studentID = id;
+		studentPIN = pin;
 
 		executeLogin(URL, studentID, studentPIN);
 	}
