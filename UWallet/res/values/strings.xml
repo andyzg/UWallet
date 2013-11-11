@@ -4,10 +4,10 @@
     <string name="app_name">uWallet</string>
     <string name="action_settings">Settings</string>
     <string name="user_name">WatCard Number: </string>
-    <string name="username_input">WatCard Number</string>
+    <string name="username_input">ID</string>
     <string name="title_activity_main">MainActivity</string>
     <string name="subtitle">uWallet.</string>
-    <string name="password">Enter Pin</string>
+    <string name="password">PIN</string>
     <string name="login_button">Login</string>
     <string name="title_activity_display_message">My Message</string>
     <string name="hello_world">Hello world!</string>
@@ -23,7 +23,6 @@
         students simply don\'t have time to be attentive to how much they\'re spending. uWallet is a simple 
         and clean app to view all your WatCard expenses spent from the comfort and convenience of a 
         mobile device.</string>
-    <string name="about_names">uWallet was made by Andy Zhang, Jessica Wu, Scott So, and
-        Seikun Kambashi. </string>
+    <string name="about_names">uWallet was made by Seikun Kambashi, Scott So, Gabriel Wong, Jessica Wu and Andy Zhang. </string>
 
 </resources>
