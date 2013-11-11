@@ -1,11 +1,12 @@
 package com.enghack.uwallet.login;
 
 import java.util.ArrayList;
+import java.util.HashMap;
+import java.util.List;
 
 import org.jsoup.nodes.Element;
 
 import com.enghack.watcard.Transaction;
-import org.apache.commons.lang3.StringUtils;
 
 /**
  * Parse all of the information and clean up all of the values of each
@@ -15,7 +16,8 @@ import org.apache.commons.lang3.StringUtils;
  */
 public class HTMLParser {
 	
-	
+	private ArrayList<String> values = new ArrayList<String>();
+	public static HashMap<Integer,String> map = new HashMap<Integer, String>();
 	public HTMLParser() {
 		// Void Constructor
 	}
@@ -39,7 +41,7 @@ public class HTMLParser {
 			Transaction trans = new Transaction(
 					count++,
 					Double.parseDouble(spaceFilter(tr.getElementById("oneweb_financial_history_td_amount").text())),
-					tr.getElementById("oneweb_financial_history_td_date").text(),
+					filterNonNumerical(tr.getElementById("oneweb_financial_history_td_date").text()),
 					filterNonAlphabetic(tr.getElementById("oneweb_financial_history_td_trantype").text()),
 					filterNonAlphabetic(tr.getElementById("oneweb_financial_history_td_terminal").text()));
 			transactionList.add(trans);
@@ -64,14 +66,25 @@ public class HTMLParser {
 	 * @param a
 	 * @return
 	 */
-	public static String spaceFilter(String a)
+	public String spaceFilter(String a)
 	{
 		return a.replaceAll("\\s+","");
 	}
 	
-	private static String filterNonAlphabetic(String s)
+	private int filterNonAlphabetic(String s)
 	{
-		String onlyLetters = "[^a-zA-Z- ]";
-        return s.replaceAll(onlyLetters,"");
+		s = s.replaceAll("[^A-Z -]","");
+		if (!values.contains(s))
+		{
+			values.add(s);
+			map.put(Integer.valueOf(values.indexOf(s)),s);
+		}
+		return values.indexOf(s);
+	}
+	
+	private Integer filterNonNumerical(String s)
+	{
+		String onlyLetters = "[^0-9]";
+        return Integer.parseInt(s.replaceAll(onlyLetters,""));
 	}
 }

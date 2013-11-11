@@ -1,74 +1,77 @@
 package com.enghack.uwallet;
 
-import org.jsoup.nodes.Element;
-
 import android.app.Activity;
+import android.app.Fragment;
 import android.os.Bundle;
+import android.view.LayoutInflater;
 import android.view.View;
 import android.view.View.OnClickListener;
-import android.widget.Button;
+import android.view.ViewGroup;
 import android.widget.EditText;
+import android.widget.TextView;
 
-import com.enghack.uwallet.login.HTMLParser;
-import com.enghack.uwallet.login.LoginTask;
-import com.enghack.uwallet.login.LoginTask.ResponseListener;
-import com.enghack.watcard.WatcardInfo;
+/**
+ * Standard fragment with 2 input fields and a button with listener attached
+ * @author Seikun
+ */
 
-public class LoginFragment extends Activity implements ResponseListener, OnClickListener {
+public class LoginFragment extends Fragment implements OnClickListener {
 
-	private String URL = "https://account.watcard.uwaterloo.ca/watgopher661.asp";
-	private Button submit;
-	private HTMLParser Parser;
-	private int studentID;
-	private int PIN;
-	
-	@Override
-	protected void onCreate(Bundle savedInstanceState) {
-		super.onCreate(savedInstanceState);
-		Parser = new HTMLParser();
-        setContentView(R.layout.activity_main);
-        
-        submit = (Button)findViewById(R.id.login_button);
-       
-        submit.setOnClickListener(this);
+	private Listener mListener;
+
+	public interface Listener {
+		public void onLogInButtonClicked();
 	}
-	
-	
-	
-	private void executeLogin(String URL, String ID, String PIN)
-	{
-		try
-		{
-			LoginTask login = new LoginTask();
-			login.mListener = this;
-			login.execute(URL,ID,PIN);
-		} catch (Exception e) {
-        e.printStackTrace();
+
+	public LoginFragment() {
+		// Required empty public constructor
+	}
+
+	@Override
+	public void onCreate(Bundle savedInstanceState) {
+		super.onCreate(savedInstanceState);
+	}
+
+	@Override
+	public View onCreateView(LayoutInflater inflater, ViewGroup container,
+			Bundle savedInstanceState) {
+		View v = inflater.inflate(R.layout.fragment_login, container,
+				false);
+
+		v.findViewById(R.id.login_button).setOnClickListener(this);
+
+		return v;
+	}
+
+	@Override
+	public void onAttach(Activity activity) {
+		super.onAttach(activity);
+		try {
+			mListener = (Listener) activity;
+		} catch (ClassCastException e) {
+			throw new ClassCastException(activity.toString()
+					+ " must implement OnFragmentInteractionListener");
 		}
 	}
+
 	@Override
-	public void onResponseFinish(Element histDoc, Element statusDoc) {
-		WatcardInfo person = new WatcardInfo(
-				Parser.parseHist(histDoc),
-				// Indexes of each type of balance based on the website
-				Parser.parseBalance(statusDoc,2,5),
-				Parser.parseBalance(statusDoc,5,8),
-				Parser.parseBalance(statusDoc, 8, 14),
-				studentID,
-				PIN);
-		person.printData(); // for testing purposes
-	return;	
+	public void onStart() {
+		super.onStart();
 	}
 
+	@Override
+	public void onDetach() {
+		super.onDetach();
+		mListener = null;
+	}
 
-
-	// Currently needs validating in case bad input or bad connection
 	@Override
 	public void onClick(View view) {
-		EditText ViewID = (EditText)findViewById(R.id.username_input);
-		EditText ViewPIN = (EditText)findViewById(R.id.password_input);
-		studentID = Integer.parseInt(ViewID.getText().toString());
-		PIN = Integer.parseInt(ViewPIN.getText().toString());
-		executeLogin(URL, ViewID.getText().toString(), ViewPIN.getText().toString());
+		switch (view.getId()) {
+		case R.id.login_button:
+			mListener.onLogInButtonClicked();
+			break;
+		}
 	}
+
 }

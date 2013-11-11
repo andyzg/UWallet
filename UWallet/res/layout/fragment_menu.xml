@@ -1,0 +1,41 @@
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical"
+    tools:context=".MenuFragment" >
+
+    <ImageView
+        android:id="@+id/main_menu_logo"
+        style="@style/ImageButton"
+        android:layout_height="100dp"
+        android:layout_marginBottom="50dp"
+        android:scaleType="fitCenter"
+        android:src="@drawable/main_menu_logo" />
+
+    <ImageButton
+        android:id="@+id/balance_button"
+        style="@style/ImageButton"
+        android:src="@drawable/button_balance" />
+
+    <ImageButton
+        android:id="@+id/transactions_button"
+        style="@style/ImageButton"
+        android:src="@drawable/button_transaction" />
+    
+    <ImageButton
+        android:id="@+id/stats_button"
+        style="@style/ImageButton"
+        android:src="@drawable/button_stats" />
+
+    <ImageButton
+        android:id="@+id/about_button"
+        style="@style/ImageButton"
+        android:src="@drawable/button_about" />
+
+    <ImageButton
+        android:id="@+id/logout_button"
+        style="@style/ImageButton"
+        android:src="@drawable/button_logout" />
+
+</LinearLayout>
