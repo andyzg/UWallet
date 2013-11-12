@@ -25,6 +25,16 @@
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
+        
+        <service
+            	android:name="com.enghack.uwallet.sync.accounts.AuthenticatorService">
+        	<intent-filter>
+            	<action android:name="com.enghack.uwallet.watcard.AccountAuthenticator"/>
+        	</intent-filter>
+        	<meta-data
+            	android:name="com.enghack.uwallet.watcard.AccountAuthenticator"
+            	android:resource="@xml/authenticator" />
+    	</service>
     </application>
 
 </manifest>
