@@ -205,7 +205,7 @@ public class MainActivity extends Activity implements ResponseListener,
 	}
 
 	private void showToast(String message) {
-		Toast.makeText(getApplicationContext(), message, Toast.LENGTH_SHORT).show();
+		Toast.makeText(getApplicationContext(), message, Toast.LENGTH_LONG).show();
 	}
 
 	public static double getMealBalance() {
@@ -217,7 +217,7 @@ public class MainActivity extends Activity implements ResponseListener,
 	}
 
 	public boolean onTouchEvent(MotionEvent event) {
-		//  TODO WHY?
+		// Dismiss keyboard by tapping
 		try {
 			InputMethodManager imm = (InputMethodManager) getSystemService(Context.INPUT_METHOD_SERVICE);
 			imm.hideSoftInputFromWindow(getCurrentFocus().getWindowToken(), 0);

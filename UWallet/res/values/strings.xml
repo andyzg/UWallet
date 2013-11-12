@@ -3,8 +3,8 @@
 
     <string name="app_name">uWallet</string>
     <string name="action_settings">Settings</string>
-    <string name="user_name">WatCard Number: </string>
-    <string name="username_input">ID</string>
+    <string name="user_name">WatCard Number</string>
+    <string name="username_input">WatCard Number</string>
     <string name="title_activity_main">MainActivity</string>
     <string name="subtitle">uWallet.</string>
     <string name="password">PIN</string>
@@ -17,7 +17,7 @@
     <string name="total">Total: $</string>
     <string name="balance">Balance</string>
     <string name="no_connection_message">Internet connection unavailable</string>
-    <string name="invalid_credentials_message">Username or password invalid</string>
+    <string name="invalid_credentials_message">WatCard number or PIN invalid.\nUse your WatCard number not your Quest ID.</string>
     <string name="about_information">uWallet was designed to help busy students track their WatCard
         spendings on the go! With balancing academics, extracurricular activities, and a whole new lifestyle, 
         students simply don\'t have time to be attentive to how much they\'re spending. uWallet is a simple 

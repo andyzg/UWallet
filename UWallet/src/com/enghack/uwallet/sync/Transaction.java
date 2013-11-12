@@ -73,7 +73,7 @@ public class Transaction {
 		return mTransactionType;
 	}
 
-	public void setTransType(int transactionType) {
+	public void setTransactionType(int transactionType) {
 		this.mTransactionType = transactionType;
 	}
 
