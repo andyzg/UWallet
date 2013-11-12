@@ -44,6 +44,9 @@ public class SyncAdapter extends AbstractThreadedSyncAdapter{
 	private static final String COLUMN_TRANSACTION_TYPE = "oneweb_financial_history_td_transtype";
 	private static final String COLUMN_TRANSACTION_TERMINAL = "oneweb_financial_history_td_terminal";
 	
+	private static final String COLUMN_BALANCE_NAME = "oneweb_balance_information_td_name";
+	private static final String COLUMN_BALANCE_AMOUNT = "oneweb_balance_information_td_amount";	
+	
 	private static final String DATE_FORMAT_STRING = "MM/dd/yyyyHH:mm:ss";
 	@SuppressLint("SimpleDateFormat") // Parse the format given by the WatCard server. Not generating a String.
 	private static final SimpleDateFormat DATE_FORMAT = new SimpleDateFormat(DATE_FORMAT_STRING);
@@ -78,8 +81,10 @@ public class SyncAdapter extends AbstractThreadedSyncAdapter{
 		String password = accountManager.getPassword(account);
 		
 		ArrayList<Transaction> transactions;
+		ArrayList<Integer> balances;
 		try{
 			transactions = getTransactions(username, password);
+			balances = getBalances(username, password);
 		} catch(IOException e){
 			// TODO sync failed
 			Log.e(TAG, "IOException", e);
@@ -150,6 +155,24 @@ public class SyncAdapter extends AbstractThreadedSyncAdapter{
 		return transactions;
 	}
 	
+	private ArrayList<Integer> getBalances(String username, String password) throws IOException{
+		ArrayList<Integer> balances = new ArrayList<Integer>(); // TODO add expected number for performance
+		
+		Document doc = getBalanceDocument(username, password);
+		Element table = doc.getElementById(BALANCE_TABLE_ID);
+		
+		for (Element row : table.select(BALANCE_TABLE_SELECTOR)){
+			balances.add(parseBalanceFromRow(row));
+		}
+		return balances;
+	}
+	
+	/**
+	 * Returns the Transaction that the row describes.
+	 * @param row The HTML table row.
+	 * @return The transaction information.
+	 * @throws ParseException
+	 */
 	private Transaction parseTransactionFromRow(Element row) throws ParseException{
 		return new Transaction(
 				parseAmount(row.getElementById(COLUMN_TRANSACTION_AMOUNT).text()),
@@ -160,8 +183,17 @@ public class SyncAdapter extends AbstractThreadedSyncAdapter{
 				parseTerminal(row.getElementById(COLUMN_TRANSACTION_TERMINAL).text()));
 	}
 	
+	private int parseBalanceFromRow(Element row){
+		return parseAmount(row.getElementById(COLUMN_BALANCE_AMOUNT).text());
+	}
+	
+	/**
+	 * Parses money text to a string.
+	 * @param s The string to parse.
+	 * @return The monetary amount in cents.
+	 */
 	private int parseAmount(String s){
-		s = s.trim().replace(".", "");
+		s = s.trim().replace("[^0-9-]", ""); // Remove whitespace and all non-numerical or "-" characters
 		return Integer.parseInt(s);
 	}
 	
