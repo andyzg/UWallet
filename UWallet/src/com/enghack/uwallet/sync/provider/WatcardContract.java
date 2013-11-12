@@ -10,7 +10,7 @@ import android.provider.BaseColumns;
  * @author Gabriel
  *
  */
-public class WatcardContract {
+public final class WatcardContract {
 	private WatcardContract(){}
 	
 	/**
@@ -26,23 +26,23 @@ public class WatcardContract {
     /**
      * Path component for "transactions"-type resources..
      */
-    public static final String PATH_TRANSACTIONS = "transactions";
+    public static final String PATH_TRANSACTIONS = "transaction";
     
     /**
      * Columns supported by "transaction" records.
      */
-    public static class Transaction implements BaseColumns {
+    public static final class Transaction implements BaseColumns {
     	// TODO change first two
         /**
          * MIME type for lists of transactions.
          */
         public static final String CONTENT_TYPE =
-                ContentResolver.CURSOR_DIR_BASE_TYPE + "/vnd.basicsyncadapter.entries";
+                ContentResolver.CURSOR_DIR_BASE_TYPE + "/vnd.com.enghack.transaction";
         /**
          * MIME type for individual entries.
          */
         public static final String CONTENT_ITEM_TYPE =
-                ContentResolver.CURSOR_ITEM_BASE_TYPE + "/vnd.basicsyncadapter.entry";
+                ContentResolver.CURSOR_ITEM_BASE_TYPE + "/vnd.com.enghack.transaction";
 
         /**
          * Fully qualified URI for "transaction" resources.

@@ -26,6 +26,11 @@
             </intent-filter>
         </activity>
         
+        <provider
+                android:name=".provider.FeedProvider"
+                android:authorities="com.enghack.uwallet.sync.watcardsyncadapter"
+                android:exported="false" />
+        
         <service
             	android:name="com.enghack.uwallet.sync.accounts.AuthenticatorService">
         	<intent-filter>
