@@ -1,4 +1,4 @@
-package com.enghack.watcard;
+package com.enghack.uwallet.watcard;
 
 import com.enghack.uwallet.login.HTMLParser;
 

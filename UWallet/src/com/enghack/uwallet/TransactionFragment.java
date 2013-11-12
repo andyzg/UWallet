@@ -18,7 +18,7 @@ import android.widget.TableLayout;
 import android.widget.TableRow;
 import android.widget.TextView;
 
-import com.enghack.watcard.Transaction;
+import com.enghack.uwallet.watcard.Transaction;
 
 /**
  * Transaction fragment, implements ScrollView to display information in table format

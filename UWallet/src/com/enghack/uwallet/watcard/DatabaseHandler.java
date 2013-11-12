@@ -1,4 +1,4 @@
-package com.enghack.watcard;
+package com.enghack.uwallet.watcard;
 
 import java.util.ArrayList;
 import java.util.List;
