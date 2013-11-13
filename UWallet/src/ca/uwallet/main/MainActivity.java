@@ -1,4 +1,4 @@
-package com.enghack.uwallet;
+package ca.uwallet.main;
 
 import java.util.ArrayList;
 
@@ -17,12 +17,11 @@ import android.view.Menu;
 import android.view.MotionEvent;
 import android.view.inputmethod.InputMethodManager;
 import android.widget.Toast;
-
-import com.enghack.uwallet.login.HTMLParser;
-import com.enghack.uwallet.login.LoginTask;
-import com.enghack.uwallet.login.LoginTask.ResponseListener;
-import com.enghack.uwallet.watcard.Transaction;
-import com.enghack.uwallet.watcard.WatcardInfo;
+import ca.uwallet.main.login.HTMLParser;
+import ca.uwallet.main.login.LoginTask;
+import ca.uwallet.main.login.LoginTask.ResponseListener;
+import ca.uwallet.main.watcard.Transaction;
+import ca.uwallet.main.watcard.WatcardInfo;
 
 /**
  * MainActivity, contains all fragment objects, listeners get methods for

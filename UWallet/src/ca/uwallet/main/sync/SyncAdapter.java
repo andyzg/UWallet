@@ -1,4 +1,4 @@
-package com.enghack.uwallet.sync;
+package ca.uwallet.main.sync;
 
 import java.io.IOException;
 import java.text.DateFormat;
@@ -24,8 +24,7 @@ import android.content.SyncResult;
 import android.os.Bundle;
 import android.os.RemoteException;
 import android.util.Log;
-
-import com.enghack.uwallet.sync.provider.WatcardContract;
+import ca.uwallet.main.sync.provider.WatcardContract;
 
 /**
  * Handle syncing of WatCard data.

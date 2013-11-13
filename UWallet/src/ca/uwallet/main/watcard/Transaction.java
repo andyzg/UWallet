@@ -1,6 +1,6 @@
-package com.enghack.uwallet.watcard;
+package ca.uwallet.main.watcard;
 
-import com.enghack.uwallet.login.HTMLParser;
+import ca.uwallet.main.login.HTMLParser;
 
 /**
  * Template for each transaction object, standard get/set methods

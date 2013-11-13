@@ -1,4 +1,4 @@
-package com.enghack.uwallet;
+package ca.uwallet.main;
 
 import org.achartengine.ChartFactory;
 import org.achartengine.GraphicalView;

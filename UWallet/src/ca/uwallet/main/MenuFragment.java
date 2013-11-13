@@ -1,6 +1,5 @@
-package com.enghack.uwallet;
+package ca.uwallet.main;
 
-import com.enghack.uwallet.R;
 import android.app.Activity;
 import android.app.Fragment;
 import android.os.Bundle;

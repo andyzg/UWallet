@@ -1,4 +1,4 @@
-package com.enghack.uwallet.login;
+package ca.uwallet.main.login;
 
 import java.util.ArrayList;
 import java.util.HashMap;
@@ -6,7 +6,7 @@ import java.util.List;
 
 import org.jsoup.nodes.Element;
 
-import com.enghack.uwallet.watcard.Transaction;
+import ca.uwallet.main.watcard.Transaction;
 
 /**
  * Parse all of the information and clean up all of the values of each

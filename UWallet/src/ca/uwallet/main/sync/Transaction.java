@@ -1,4 +1,4 @@
-package com.enghack.uwallet.sync;
+package ca.uwallet.main.sync;
 
 
 /**

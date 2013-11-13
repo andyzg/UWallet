@@ -1,4 +1,4 @@
-package com.enghack.uwallet.sync.util;
+package ca.uwallet.main.sync.util;
 
 import java.util.ArrayList;
 import java.util.Arrays;

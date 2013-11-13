@@ -1,4 +1,4 @@
-package com.enghack.uwallet;
+package ca.uwallet.main;
 
 import java.util.ArrayList;
 
@@ -17,8 +17,7 @@ import android.widget.ScrollView;
 import android.widget.TableLayout;
 import android.widget.TableRow;
 import android.widget.TextView;
-
-import com.enghack.uwallet.watcard.Transaction;
+import ca.uwallet.main.watcard.Transaction;
 
 /**
  * Transaction fragment, implements ScrollView to display information in table format

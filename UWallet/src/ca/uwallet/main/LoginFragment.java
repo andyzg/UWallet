@@ -1,6 +1,5 @@
-package com.enghack.uwallet;
+package ca.uwallet.main;
 
-import com.enghack.uwallet.R;
 import android.app.Activity;
 import android.app.Fragment;
 import android.os.Bundle;
@@ -8,20 +7,22 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.View.OnClickListener;
 import android.view.ViewGroup;
+import android.widget.TextView;
 
 /**
- *	really basic fragment
- *	@author Seikun
+ * Standard fragment with 2 input fields and a button with listener attached
+ * @author Seikun
  */
 
-public class AboutFragment extends Fragment implements OnClickListener {
+public class LoginFragment extends Fragment implements OnClickListener {
 
 	private Listener mListener;
 
 	public interface Listener {
+		public void onLogInButtonClicked(String id, String pin);
 	}
 
-	public AboutFragment() {
+	public LoginFragment() {
 		// Required empty public constructor
 	}
 
@@ -33,9 +34,11 @@ public class AboutFragment extends Fragment implements OnClickListener {
 	@Override
 	public View onCreateView(LayoutInflater inflater, ViewGroup container,
 			Bundle savedInstanceState) {
-		View v = inflater.inflate(R.layout.fragment_about, container,
+		View v = inflater.inflate(R.layout.fragment_login, container,
 				false);
-		
+
+		v.findViewById(R.id.login_button).setOnClickListener(this);
+
 		return v;
 	}
 
@@ -60,9 +63,31 @@ public class AboutFragment extends Fragment implements OnClickListener {
 		super.onDetach();
 		mListener = null;
 	}
+	
+	public String getInputId(){
+		return ((TextView)getView().findViewById(R.id.username_input)).getText().toString();
+	}
+	
+	public String getInputPin(){
+		return ((TextView)getView().findViewById(R.id.password_input)).getText().toString();
+	}
+	
+	public void clearId(){
+		((TextView)getView().findViewById(R.id.username_input)).setText("");
+	}
+	
+	public void clearPin(){
+		((TextView)getView().findViewById(R.id.password_input)).setText("");
+	}
 
 	@Override
 	public void onClick(View view) {
+		switch (view.getId()) {
+		case R.id.login_button:
+			mListener.onLogInButtonClicked(getInputId(), getInputPin());
+			clearPin();
+			break;
+		}
 	}
 
 }

@@ -1,4 +1,4 @@
-package com.enghack.uwallet.sync.accounts;
+package ca.uwallet.main.sync.accounts;
 
 import android.accounts.AbstractAccountAuthenticator;
 import android.accounts.Account;

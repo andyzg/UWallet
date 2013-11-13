@@ -1,4 +1,4 @@
-package com.enghack.uwallet.login;
+package ca.uwallet.main.login;
 
 import java.io.IOException;
 import java.util.ArrayList;

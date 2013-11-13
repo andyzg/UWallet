@@ -1,4 +1,4 @@
-package com.enghack.uwallet.sync.provider;
+package ca.uwallet.main.sync.provider;
 
 import android.content.ContentResolver;
 import android.net.Uri;
@@ -6,7 +6,7 @@ import android.provider.BaseColumns;
 
 /**
  * Field and table name constants for 
- * {@link com.enghack.uwallet.sync.provider.WatcardProvider}.
+ * {@link ca.uwallet.main.sync.provider.WatcardProvider}.
  * @author Gabriel
  *
  */
@@ -16,7 +16,7 @@ public final class WatcardContract {
 	/**
      * Content provider authority.
      */
-    public static final String CONTENT_AUTHORITY = "com.enghack.uwallet.sync.watcardsyncadapter";
+    public static final String CONTENT_AUTHORITY = "ca.uwallet.main.provider";
 
     /**
      * Base URI. (content://com.example.android.network.sync.basicsyncadapter)
@@ -42,12 +42,12 @@ public final class WatcardContract {
          * MIME type for lists of transactions.
          */
         public static final String CONTENT_TYPE =
-                ContentResolver.CURSOR_DIR_BASE_TYPE + "/vnd.com.enghack.uwallet.provider.transaction";
+                ContentResolver.CURSOR_DIR_BASE_TYPE + "/vnd.ca.uwallet.main.provider.transaction";
         /**
          * MIME type for individual entries.
          */
         public static final String CONTENT_ITEM_TYPE =
-                ContentResolver.CURSOR_ITEM_BASE_TYPE + "/vnd.com.enghack.uwallet.provider.transaction";
+                ContentResolver.CURSOR_ITEM_BASE_TYPE + "/vnd.ca.uwallet.main.provider.transaction";
 
         /**
          * Fully qualified URI for "transaction" resources.
@@ -87,12 +87,12 @@ public final class WatcardContract {
          * MIME type for lists of transactions.
          */
         public static final String CONTENT_TYPE =
-                ContentResolver.CURSOR_DIR_BASE_TYPE + "/vnd.com.enghack.uwallet.provider.balance";
+                ContentResolver.CURSOR_DIR_BASE_TYPE + "/vnd.ca.uwallet.main.provider.balance";
         /**
          * MIME type for individual entries.
          */
         public static final String CONTENT_ITEM_TYPE =
-                ContentResolver.CURSOR_ITEM_BASE_TYPE + "/vnd.com.enghack.uwallet.provider.balance";
+                ContentResolver.CURSOR_ITEM_BASE_TYPE + "/vnd.ca.uwallet.main.provider.balance";
 
         /**
          * Fully qualified URI for "transaction" resources.
