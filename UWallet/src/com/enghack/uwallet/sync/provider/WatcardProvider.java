@@ -185,14 +185,14 @@ public class WatcardProvider extends ContentProvider{
                        .delete(db);
                 break;
             case ROUTE_BALANCES:
+            	count = mBalanceList.size();
             	mBalanceList = new ArrayList<Integer>();
             	setIntegerArrayPref(getContext(), PREFS_KEY_BALANCE, mBalanceList);
-            	count = 0;
             	break;
             case ROUTE_BALANCES_ID:
             	mBalanceList.remove((int) Integer.parseInt(uri.getLastPathSegment()));
             	setIntegerArrayPref(getContext(), PREFS_KEY_BALANCE, mBalanceList);
-            	count = mBalanceList.size();
+            	count = 1;
             	break;
             default:
                 throw new UnsupportedOperationException("Unknown uri: " + uri);
@@ -229,7 +229,7 @@ public class WatcardProvider extends ContentProvider{
            case ROUTE_BALANCES_ID:
         	   int index = Integer.parseInt(uri.getLastPathSegment());
         	   mBalanceList.set(index, values.getAsInteger(WatcardContract.Balance.COLUMN_NAME_AMOUNT));
-        	   count = mBalanceList.size();
+        	   count = 1;
         	   break;
            case ROUTE_BALANCES:
         	   throw new UnsupportedOperationException("Update not support on URI: " + uri);
@@ -297,7 +297,7 @@ public class WatcardProvider extends ContentProvider{
 		
 		private static final String SQL_CREATE_ENTRIES =
 				"CREATE TABLE " + WatcardContract.Transaction.TABLE_NAME + "(" +
-				"_id" + " INTEGER PRIMARY KEY, " +
+				"_id" + " INTEGER PRIMARY KEY AUTOINCREMENT, " +
 				WatcardContract.Transaction.COLUMN_NAME_AMOUNT + TYPE_TEXT + COMMA_SEP +
 				WatcardContract.Transaction.COLUMN_NAME_DATE + TYPE_INTEGER + COMMA_SEP +
 				WatcardContract.Transaction.COLUMN_NAME_TYPE + TYPE_INTEGER + COMMA_SEP + 

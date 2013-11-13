@@ -53,7 +53,7 @@ public class Transaction {
 		this.mId = id;
 	}
 
-	public double getAmount() {
+	public int getAmount() {
 		return this.mAmount;
 	}
 
@@ -69,7 +69,7 @@ public class Transaction {
 		this.mDate = date;
 	}
 
-	public int getTransactionType() {
+	public int getType() {
 		return mTransactionType;
 	}
 

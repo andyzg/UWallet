@@ -5,19 +5,27 @@ import java.text.DateFormat;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
+
+import org.jsoup.Connection;
 import org.jsoup.Jsoup;
 import org.jsoup.nodes.Document;
 import org.jsoup.nodes.Element;
+
 import android.accounts.Account;
 import android.accounts.AccountManager;
 import android.annotation.SuppressLint;
 import android.content.AbstractThreadedSyncAdapter;
 import android.content.ContentProviderClient;
+import android.content.ContentProviderOperation;
 import android.content.ContentResolver;
 import android.content.Context;
+import android.content.OperationApplicationException;
 import android.content.SyncResult;
 import android.os.Bundle;
+import android.os.RemoteException;
 import android.util.Log;
+
+import com.enghack.uwallet.sync.provider.WatcardContract;
 
 /**
  * Handle syncing of WatCard data.
@@ -46,6 +54,7 @@ public class SyncAdapter extends AbstractThreadedSyncAdapter{
 	@Override
 	public void onPerformSync(Account account, Bundle extras, String authority,
 			ContentProviderClient provider, SyncResult syncResult) {
+		Log.i(TAG, "Begin network synchronization");
 		// Get login details
 		AccountManager accountManager = AccountManager.get(getContext());
 		String username = account.name;
@@ -53,26 +62,40 @@ public class SyncAdapter extends AbstractThreadedSyncAdapter{
 		
 		ArrayList<Transaction> transactions;
 		ArrayList<Integer> balances;
+		Log.i(TAG, "Fetching from network");
 		try{
 			Document transactionDoc = getTransactionDocument(username, password);
 			Document balanceDoc = getBalanceDocument(username, password);
 			if (!Parser.isLoginSuccessful(transactionDoc) || !Parser.isLoginSuccessful(balanceDoc)){
-				// TODO invalid login info
+				Log.e(TAG, "Log in unnsucessful");
+				syncResult.stats.numAuthExceptions++;
 				return;
 			}
 			transactions = Parser.parseTransactions(transactionDoc);
 			balances = Parser.parseBalances(balanceDoc);
 		} catch(IOException e){
-			// TODO sync failed
-			Log.e(TAG, "IOException", e);
-			return;
+			Log.e(TAG, "Error reading from network: " + e.toString());
+            syncResult.stats.numIoExceptions++;
+            return;
 		} catch(ParseException e){
-			// TODO sync failed
-			Log.e(TAG, "ParseException", e);
-			return;
+			Log.e(TAG, "Error parsing data: " + e.toString());
+            syncResult.stats.numParseExceptions++;
+            return;
 		}
-		
-		
+		// We have all transaction objects and balances
+		try{
+			updateTransactionData(transactions, syncResult);
+			updateBalanceData(balances, syncResult);
+		} catch (RemoteException e){
+			Log.e(TAG, "Error updating database: " + e.toString());
+			syncResult.databaseError = true;
+			return;
+		} catch (OperationApplicationException e){
+			Log.e(TAG, "Error updating database: " + e.toString());
+            syncResult.databaseError = true;
+            return;
+		}
+		Log.i(TAG, "Network synchronization complete");
 	}
 	
 	/**
@@ -83,24 +106,26 @@ public class SyncAdapter extends AbstractThreadedSyncAdapter{
 	 * @throws IOException
 	 */
 	private Document getTransactionDocument(String username, String password) throws IOException{
-		return Jsoup.connect(WAT_BASE_URL)
+		Log.i(TAG, "Fetching transactions from network");
+		Connection connection = Jsoup.connect(WAT_BASE_URL)
 				.data(USERNAME_NAME, username)
 				.data(PASSWORD_NAME, password)
 				.data("PASS", "PASS")
 				.data("STATUS", "HIST") // Specifiy transaction request
 				.data("DBDATE", "01/01/0001") // Start date for transactions
-				.data("DEDATE", "01/01/2111") // End date for transactions
-				.post();
+				.data("DEDATE", "01/01/2111"); // End date for transactions
+		return connection.post();
 	}
 
 	/**
-	 * POST 
+	 * POST a request for balance history and returns the Jsoup document.
 	 * @param username
 	 * @param password
 	 * @return
 	 * @throws IOException
 	 */
 	private Document getBalanceDocument(String username, String password) throws IOException{
+		Log.i(TAG, "Fetching balances from network");
 		return Jsoup.connect(WAT_BASE_URL)
 				.data(USERNAME_NAME, username)
 				.data(PASSWORD_NAME, password)
@@ -113,7 +138,67 @@ public class SyncAdapter extends AbstractThreadedSyncAdapter{
 				.post();
 	}
 	
+	/**
+	 * Updates the transaction database with new transactions. For now it deletes all the old data and inserts the new.
+	 * @param transactions
+	 * @throws OperationApplicationException 
+	 * @throws RemoteException 
+	 */
+	public void updateTransactionData(ArrayList<Transaction> transactions, final SyncResult syncResult) throws RemoteException, OperationApplicationException{
+		ArrayList<ContentProviderOperation> batch = new ArrayList<ContentProviderOperation>();
+		
+		// Delete the old data
+		Log.i(TAG, "Scheduling delete of old transactions");
+		batch.add(ContentProviderOperation.newDelete(WatcardContract.Transaction.CONTENT_URI).build()); 
+		syncResult.stats.numDeletes++;
+		
+		Log.i(TAG, "Scheduling insert of new transactions");
+		// Schedule transaction inserts
+		for (Transaction t : transactions){
+			batch.add(ContentProviderOperation.newInsert(WatcardContract.Transaction.CONTENT_URI)
+					.withValue(WatcardContract.Transaction.COLUMN_NAME_AMOUNT, t.getAmount())
+					.withValue(WatcardContract.Transaction.COLUMN_NAME_DATE, t.getDate())
+					.withValue(WatcardContract.Transaction.COLUMN_NAME_TYPE, t.getType())
+					.withValue(WatcardContract.Transaction.COLUMN_NAME_TERMINAL, t.getTerminal())
+					.build());
+			syncResult.stats.numInserts++;
+		}
+		
+		Log.i(TAG, "Applying batch update of transactions");
+		mContentResolver.applyBatch(WatcardContract.CONTENT_AUTHORITY, batch);
+		mContentResolver.notifyChange(WatcardContract.BASE_CONTENT_URI, null, false);
+	}
+	
+	/**
+	 * Updates the balance data with new balances. Deletes the old balances and inserts new data.
+	 * @param balances
+	 * @param syncResult
+	 * @throws RemoteException
+	 * @throws OperationApplicationException
+	 */
+	public void updateBalanceData(ArrayList<Integer> balances, final SyncResult syncResult) throws RemoteException, OperationApplicationException{
+		ArrayList<ContentProviderOperation> batch = new ArrayList<ContentProviderOperation>();
+		
+		// Delete the old data
+		Log.i(TAG, "Scheduling delete of old balances");
+		batch.add(ContentProviderOperation.newDelete(WatcardContract.Balance.CONTENT_URI).build());
+		syncResult.stats.numDeletes++;
+		
+		Log.i(TAG, "Scheduling insert of new balances");
+		for (Integer amount : balances){
+			batch.add(ContentProviderOperation.newInsert(WatcardContract.Balance.CONTENT_URI)
+					.withValue(WatcardContract.Balance.COLUMN_NAME_AMOUNT, amount)
+					.build());
+			syncResult.stats.numInserts++;
+		}
+		
+		Log.i(TAG, "Applying batch update of balances");
+		mContentResolver.applyBatch(WatcardContract.CONTENT_AUTHORITY, batch);
+		mContentResolver.notifyChange(WatcardContract.BASE_CONTENT_URI, null, false);
+	}
+	
 	private static class Parser{
+		private static final String TAG = "Parser";
 		
 		private static final String INVALID_LOGIN_ID = "oneweb_message_invalid_login";
 		private static final String TRANSACTION_TABLE_ID = "oneweb_financial_history_table";
@@ -137,13 +222,14 @@ public class SyncAdapter extends AbstractThreadedSyncAdapter{
 		private Parser(){}
 		
 		/**
-		 * Parse the HTML transaction history document into a list of Transaction.
-		 * @param doc The HTML transaction history.
+		 * Parse the transaction history document into a list of Transaction.
+		 * @param doc The Jsoup transaction history.
 		 * @return The parsed transactions.
 		 * @throws IOException
 		 * @throws ParseException
 		 */
 		private static ArrayList<Transaction> parseTransactions(Document doc) throws ParseException{
+			Log.i(TAG, "Parsing transactions");
 			ArrayList<Transaction> transactions = new ArrayList<Transaction>();
 			Element table = doc.getElementById(TRANSACTION_TABLE_ID);
 				
@@ -155,12 +241,13 @@ public class SyncAdapter extends AbstractThreadedSyncAdapter{
 		}
 		
 		/**
-		 * Parse the HTML balance document into a list of doubles representing each balance.
-		 * @param doc The HTML balance document.
+		 * Parse the balance document into a list of doubles representing each balance.
+		 * @param doc The Jsoup balance document.
 		 * @return A list of balances.
 		 * @throws IOException
 		 */
 		private static ArrayList<Integer> parseBalances(Document doc){
+			Log.i(TAG, "Parsing balances");
 			ArrayList<Integer> balances = new ArrayList<Integer>(); // TODO add expected number for performance
 			Element table = doc.getElementById(BALANCE_TABLE_ID);
 			
