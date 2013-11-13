@@ -6,4 +6,7 @@
         android:userVisible="true"
         android:supportsUploading="false"
         android:allowParallelSyncs="false"
-        android:isAlwaysSyncable="true"/>
+        android:isAlwaysSyncable="true"
+        android:label="@string/watcard_sync_label"
+        android:description="@string/watcard_sync_description"
+        android:icon="@drawable/ic_launcher"/>

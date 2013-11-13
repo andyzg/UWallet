@@ -223,7 +223,7 @@ public class AuthenticatorActivity extends AccountAuthenticatorActivity {
 		
 		@Override
 		protected LoginTaskResult doInBackground(Void... params) {
-			// TODO: attempt authentication against a network service.
+			// Authenticate the login by fetching the balance document
 			Document doc;
 			try {
 				doc = SyncAdapter.getBalanceDocument(mUsername, mPassword);
@@ -236,6 +236,7 @@ public class AuthenticatorActivity extends AccountAuthenticatorActivity {
 			if (!loginSuccessful)
 				return LoginTaskResult.INVALID_CREDENTIALS;
 
+			// Add the account to the AccountManager
 			Account account = new Account(mUsername, ACCOUNT_TYPE);
 			AccountManager accountManager = (AccountManager) getSystemService(Context.ACCOUNT_SERVICE);
 			boolean addSuccess = accountManager.addAccountExplicitly(account, mPassword, null);

@@ -25,5 +25,8 @@
         mobile device.</string>
     <string name="about_names">uWallet was made by Seikun Kambashi, Scott So, Gabriel Wong, Jessica Wu and Andy Zhang. </string>
     <string name="error_connection_failed">Internet connection failed.</string>
+    <string name="watcard_sync_label">WatCard</string>
+    <string name="watcard_sync_description">Connect to WatCard servers to get balance and transaction information.</string>
+    <string name="watcard_sync_process">:sync</string>
 
 </resources>
