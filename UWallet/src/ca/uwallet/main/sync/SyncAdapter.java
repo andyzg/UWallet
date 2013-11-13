@@ -208,7 +208,7 @@ public class SyncAdapter extends AbstractThreadedSyncAdapter{
 		private static final String COLUMN_TRANSACTION_AMOUNT = "oneweb_financial_history_td_amount";
 		private static final String COLUMN_TRANSACTION_DATE = "oneweb_financial_history_td_date";
 		private static final String COLUMN_TRANSACTION_TIME = "oneweb_financial_history_td_time";
-		private static final String COLUMN_TRANSACTION_TYPE = "oneweb_financial_history_td_transtype";
+		private static final String COLUMN_TRANSACTION_TYPE = "oneweb_financial_history_td_trantype";
 		private static final String COLUMN_TRANSACTION_TERMINAL = "oneweb_financial_history_td_terminal";
 		
 		private static final String COLUMN_BALANCE_NAME = "oneweb_balance_information_td_name";
@@ -300,7 +300,7 @@ public class SyncAdapter extends AbstractThreadedSyncAdapter{
 		 * @return The monetary amount in cents.
 		 */
 		public static int parseAmount(String s){
-			s = s.trim().replace("[^0-9-]", ""); // Remove whitespace and all non-numerical or "-" characters
+			s = s.trim().replaceAll("[^0-9-]", ""); // Remove whitespace and all non-numerical or "-" characters
 			return Integer.parseInt(s);
 		}
 		

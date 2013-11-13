@@ -78,8 +78,8 @@ public class AuthenticatorActivity extends AccountAuthenticatorActivity {
 
 		// Set up the login form.
 		mUsername = getIntent().getStringExtra(EXTRA_USERNAME);
+		mUsernameView = (EditText) findViewById(R.id.username_input);
 		if (mUsername != null){
-			mUsernameView = (EditText) findViewById(R.id.username_input);
 			mUsernameView.setText(mUsername);
 		}
 
