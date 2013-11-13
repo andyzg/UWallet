@@ -108,9 +108,7 @@ public class MainActivity extends ActionBarActivity implements ResponseListener,
 
 	void switchToFragment(Fragment newFrag, boolean addToBackStack) {
 		FragmentTransaction transaction = getSupportFragmentManager().beginTransaction();
-		transaction.setCustomAnimations(R.anim.card_flip_right_in,
-				R.anim.card_flip_right_out).replace(R.id.fragment_container,
-				newFrag);
+		transaction.replace(R.id.fragment_container, newFrag);
 		if (addToBackStack)
 			transaction.addToBackStack(null);
 		transaction.commit();
