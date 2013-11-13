@@ -29,6 +29,11 @@ public final class WatcardContract {
     public static final String PATH_TRANSACTIONS = "transaction";
     
     /**
+     * Path component for balance
+     */
+    public static final String PATH_BALANCES = "balance";
+    
+    /**
      * Columns supported by "transaction" records.
      */
     public static final class Transaction implements BaseColumns {
@@ -37,12 +42,12 @@ public final class WatcardContract {
          * MIME type for lists of transactions.
          */
         public static final String CONTENT_TYPE =
-                ContentResolver.CURSOR_DIR_BASE_TYPE + "/vnd.com.enghack.transaction";
+                ContentResolver.CURSOR_DIR_BASE_TYPE + "/vnd.com.enghack.uwallet.provider.transaction";
         /**
          * MIME type for individual entries.
          */
         public static final String CONTENT_ITEM_TYPE =
-                ContentResolver.CURSOR_ITEM_BASE_TYPE + "/vnd.com.enghack.transaction";
+                ContentResolver.CURSOR_ITEM_BASE_TYPE + "/vnd.com.enghack.uwallet.provider.transaction";
 
         /**
          * Fully qualified URI for "transaction" resources.
@@ -71,5 +76,33 @@ public final class WatcardContract {
          * The transaction's terminal (vendor / description).
          */
         public static final String COLUMN_NAME_TERMINAL = "terminal";
+    }
+    
+    /**
+     * Columns supported by "transaction" records.
+     */
+    public static final class Balance implements BaseColumns {
+    	// TODO change first two
+        /**
+         * MIME type for lists of transactions.
+         */
+        public static final String CONTENT_TYPE =
+                ContentResolver.CURSOR_DIR_BASE_TYPE + "/vnd.com.enghack.uwallet.provider.balance";
+        /**
+         * MIME type for individual entries.
+         */
+        public static final String CONTENT_ITEM_TYPE =
+                ContentResolver.CURSOR_ITEM_BASE_TYPE + "/vnd.com.enghack.uwallet.provider.balance";
+
+        /**
+         * Fully qualified URI for "transaction" resources.
+         */
+        public static final Uri CONTENT_URI =
+                BASE_CONTENT_URI.buildUpon().appendPath(PATH_BALANCES).build();
+        
+        /**
+         * The balance amount for the category.
+         */
+        public static final String COLUMN_NAME_AMOUNT = "amount";
     }
 }

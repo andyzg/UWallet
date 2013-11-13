@@ -33,6 +33,7 @@ public class SyncAdapter extends AbstractThreadedSyncAdapter{
 	private static final String USERNAME_NAME = "acnt_1";
 	private static final String PASSWORD_NAME = "acnt_2";
 	
+	private static final String INVALID_LOGIN_ID = "oneweb_message_invalid_login";
 	private static final String TRANSACTION_TABLE_ID = "oneweb_financial_history_table";
 	private static final String BALANCE_TABLE_ID = "oneweb_balance_information_table";
 	private static final String TRANSACTION_TABLE_SELECTOR = "tr:gt(1)";
@@ -83,8 +84,14 @@ public class SyncAdapter extends AbstractThreadedSyncAdapter{
 		ArrayList<Transaction> transactions;
 		ArrayList<Integer> balances;
 		try{
-			transactions = getTransactions(username, password);
-			balances = getBalances(username, password);
+			Document transactionDoc = getTransactionDocument(username, password);
+			Document balanceDoc = getBalanceDocument(username, password);
+			if (!isLoginSuccessful(transactionDoc) || !isLoginSuccessful(balanceDoc)){
+				// TODO invalid login info
+				return;
+			}
+			transactions = parseTransactions(transactionDoc);
+			balances = getBalances(balanceDoc);
 		} catch(IOException e){
 			// TODO sync failed
 			Log.e(TAG, "IOException", e);
@@ -94,6 +101,8 @@ public class SyncAdapter extends AbstractThreadedSyncAdapter{
 			Log.e(TAG, "ParseException", e);
 			return;
 		}
+		
+		
 	}
 	
 	/**
@@ -135,19 +144,16 @@ public class SyncAdapter extends AbstractThreadedSyncAdapter{
 	}
 	
 	/**
-	 * Returns the transaction history for the given user.
-	 * @param username The WatCard ID.
-	 * @param password The WatCard PIN.
-	 * @return The user's complete transaction history.
+	 * Parse the HTML transaction history document into a list of Transaction.
+	 * @param doc The HTML transaction history.
+	 * @return The parsed transactions.
 	 * @throws IOException
+	 * @throws ParseException
 	 */
-	private ArrayList<Transaction> getTransactions(String username, String password) throws IOException, ParseException{
+	private ArrayList<Transaction> parseTransactions(Document doc) throws ParseException{
 		ArrayList<Transaction> transactions = new ArrayList<Transaction>();
-		
-		Document doc = getTransactionDocument(username, password);
 		Element table = doc.getElementById(TRANSACTION_TABLE_ID);
-		
-		
+			
 		for (Element row : table.select(TRANSACTION_TABLE_SELECTOR)){
 			transactions.add(parseTransactionFromRow(row));
 		}
@@ -155,10 +161,14 @@ public class SyncAdapter extends AbstractThreadedSyncAdapter{
 		return transactions;
 	}
 	
-	private ArrayList<Integer> getBalances(String username, String password) throws IOException{
+	/**
+	 * Parse the HTML balance document into a list of doubles representing each balance.
+	 * @param doc The HTML balance document.
+	 * @return A list of balances.
+	 * @throws IOException
+	 */
+	private ArrayList<Integer> getBalances(Document doc){
 		ArrayList<Integer> balances = new ArrayList<Integer>(); // TODO add expected number for performance
-		
-		Document doc = getBalanceDocument(username, password);
 		Element table = doc.getElementById(BALANCE_TABLE_ID);
 		
 		for (Element row : table.select(BALANCE_TABLE_SELECTOR)){
@@ -212,5 +222,10 @@ public class SyncAdapter extends AbstractThreadedSyncAdapter{
 	private String filterNonNumerical(String s)
 	{
 		return s.replaceAll("[^0-9]", "");
+	}
+	
+	private static boolean isLoginSuccessful(Document doc){
+		// Checks whether the invalid login message is displayed
+		return doc.getElementById(INVALID_LOGIN_ID) == null;
 	}
 }
