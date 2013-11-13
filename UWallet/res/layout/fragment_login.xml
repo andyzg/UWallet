@@ -17,6 +17,8 @@
         android:layout_width="250dp"
         android:layout_height="wrap_content"
         android:layout_gravity="center"
+        android:lines="1"
+        android:inputType="number"
         android:typeface="sans"
         android:hint="@string/username_input" />
 

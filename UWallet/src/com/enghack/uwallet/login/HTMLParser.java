@@ -6,7 +6,7 @@ import java.util.List;
 
 import org.jsoup.nodes.Element;
 
-import com.enghack.watcard.Transaction;
+import com.enghack.uwallet.watcard.Transaction;
 
 /**
  * Parse all of the information and clean up all of the values of each
