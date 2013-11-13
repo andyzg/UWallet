@@ -120,6 +120,7 @@ public class LoginActivity extends AccountAuthenticatorActivity {
 	@Override
 	public boolean onTouchEvent(MotionEvent event) {
 		// Dismiss keyboard by tapping
+		// TODO fix
 		try {
 			InputMethodManager imm = (InputMethodManager) getSystemService(Context.INPUT_METHOD_SERVICE);
 			imm.hideSoftInputFromWindow(getCurrentFocus().getWindowToken(), 0);
@@ -128,6 +129,15 @@ public class LoginActivity extends AccountAuthenticatorActivity {
 
 		}
 		return false;
+	}
+	
+	/**
+	 * Inform that the user cancelled.
+	 */
+	@Override
+	public void onBackPressed(){
+		setResult(RESULT_CANCELED);
+		finish();
 	}
 
 	/**
@@ -222,6 +232,11 @@ public class LoginActivity extends AccountAuthenticatorActivity {
 	
 	private void showToast(String text, int duration){
 		Toast.makeText(this, text, duration).show();
+	}
+	
+	public static int numAccounts(Context context){
+		AccountManager accountManager = (AccountManager) context.getSystemService(Context.ACCOUNT_SERVICE);
+		return accountManager.getAccountsByType(ACCOUNT_TYPE).length;
 	}
 	
 	

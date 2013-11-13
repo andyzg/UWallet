@@ -4,7 +4,10 @@ import java.util.ArrayList;
 
 import org.jsoup.nodes.Element;
 
+import android.accounts.Account;
+import android.accounts.AccountManager;
 import android.content.Context;
+import android.content.Intent;
 import android.content.SharedPreferences;
 import android.net.ConnectivityManager;
 import android.net.NetworkInfo;
@@ -41,26 +44,22 @@ public class MainActivity extends ActionBarActivity implements ResponseListener,
 	AboutFragment mAboutFragment = null;
 	LoginFragment mLoginFragment = null;
 	MenuFragment mMenuFragment = null;
-
-	private final String URL = "https://account.watcard.uwaterloo.ca/watgopher661.asp";
-	private HTMLParser parser = new HTMLParser();
-	private String studentID = null;
-	private String studentPIN = null;
-
-	private static WatcardInfo person;
-	private Context context = this;
-
-	private static final String PREFERENCE_KEY = "Preferences";
-	public static final String STUDENT_ID_KEY = "studentID";
-	public static final String STUDENT_PIN_KEY = "studentPIN";
+	
 	private static final String TAG = "MainActivity";
+	
+	private static final int RC_LOGIN = 17;
 	
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
 		setContentView(R.layout.activity_main);
 		
-		// TODO Set up sync
+		int numAccounts = LoginActivity.numAccounts(this);
+		if (numAccounts == 0){
+			Intent intent = new Intent(this, LoginActivity.class);
+			intent.putExtra(LoginActivity.EXTRA_IS_ADDING_NEW_ACCOUNT, true);
+			startActivityForResult(intent, RC_LOGIN);
+		}
 
 		mBalanceFragment = new BalanceFragment();
 		mTransactionFragment = new TransactionFragment();
@@ -69,8 +68,19 @@ public class MainActivity extends ActionBarActivity implements ResponseListener,
 		mLoginFragment = new LoginFragment();
 		mMenuFragment = new MenuFragment();
 		
-		switchToFragment(mLoginFragment, false);
+		switchToFragment(mMenuFragment, false);
 		tryLoginFromPreferences();
+	}
+	
+	@Override
+	public void onActivityResult(int requestCode, int responseCode, Intent data){
+		switch(requestCode){
+		case RC_LOGIN:
+			if (responseCode != RESULT_OK)
+				// Close the app unless the user logged in
+				finish();
+			break;
+		}
 	}
 
 	private void setSharedPreferences(String name, String value) {
@@ -139,10 +149,14 @@ public class MainActivity extends ActionBarActivity implements ResponseListener,
 
 	@Override
 	public void onLogOutButtonClicked() {
+		// Old code
 		studentID = null;
 		studentPIN = null;
 		clearSharedPreferences(STUDENT_ID_KEY);
 		clearSharedPreferences(STUDENT_PIN_KEY);
+		
+		// Remove account from AccountManager
+		removeAllAccounts();
 		
 		switchToFragment(mLoginFragment, false);
 	}
@@ -233,5 +247,17 @@ public class MainActivity extends ActionBarActivity implements ResponseListener,
 	@Override
 	public void onStatsButtonClicked() {
 		switchToFragment(mStatsFragment, true);
+	}
+	
+	private AccountManager getAccountManager(){
+		return (AccountManager) context.getSystemService(Context.ACCOUNT_SERVICE);
+	}
+	
+	private void removeAllAccounts(){
+		AccountManager accountManager = getAccountManager();
+		Account[] accounts = accountManager.getAccountsByType(LoginActivity.ACCOUNT_TYPE);
+		for (Account account : accounts){
+			accountManager.removeAccount(account, null, null);
+		}
 	}
 }

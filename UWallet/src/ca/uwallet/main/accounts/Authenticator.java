@@ -10,10 +10,6 @@ import android.content.Intent;
 import android.os.Bundle;
 import ca.uwallet.main.LoginActivity;
 
-/*
- * Implement AbstractAccountAuthenticator and stub out all
- * of its methods
- */
 public class Authenticator extends AbstractAccountAuthenticator {
 	
 	private Context mContext = null;
