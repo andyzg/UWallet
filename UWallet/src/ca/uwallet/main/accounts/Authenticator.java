@@ -8,7 +8,7 @@ import android.accounts.NetworkErrorException;
 import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
-import ca.uwallet.main.AuthenticatorActivity;
+import ca.uwallet.main.LoginActivity;
 
 /*
  * Implement AbstractAccountAuthenticator and stub out all
@@ -32,8 +32,8 @@ public class Authenticator extends AbstractAccountAuthenticator {
     @Override
     public Bundle addAccount(AccountAuthenticatorResponse response, String accountType,
     		String authTokenType, String[] requiredFeatures, Bundle options) throws NetworkErrorException {
-        final Intent intent = new Intent(mContext, AuthenticatorActivity.class);
-        intent.putExtra(AuthenticatorActivity.EXTRA_IS_ADDING_NEW_ACCOUNT, true);
+        final Intent intent = new Intent(mContext, LoginActivity.class);
+        intent.putExtra(LoginActivity.EXTRA_IS_ADDING_NEW_ACCOUNT, true);
         intent.putExtra(AccountManager.KEY_ACCOUNT_AUTHENTICATOR_RESPONSE, response);
         final Bundle bundle = new Bundle();
         bundle.putParcelable(AccountManager.KEY_INTENT, intent);
@@ -63,9 +63,9 @@ public class Authenticator extends AbstractAccountAuthenticator {
     public Bundle updateCredentials(AccountAuthenticatorResponse response,
                                     Account account, String authTokenType, Bundle options)
             throws NetworkErrorException {
-    	final Intent intent = new Intent(mContext, AuthenticatorActivity.class);
-        intent.putExtra(AuthenticatorActivity.EXTRA_IS_ADDING_NEW_ACCOUNT, false);
-        intent.putExtra(AuthenticatorActivity.EXTRA_USERNAME, account.name);
+    	final Intent intent = new Intent(mContext, LoginActivity.class);
+        intent.putExtra(LoginActivity.EXTRA_IS_ADDING_NEW_ACCOUNT, false);
+        intent.putExtra(LoginActivity.EXTRA_USERNAME, account.name);
         intent.putExtra(AccountManager.KEY_ACCOUNT_AUTHENTICATOR_RESPONSE, response);
         final Bundle bundle = new Bundle();
         bundle.putParcelable(AccountManager.KEY_INTENT, intent);

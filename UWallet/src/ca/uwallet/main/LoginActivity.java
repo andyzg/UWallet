@@ -34,7 +34,7 @@ import ca.uwallet.main.sync.SyncAdapter;
  * Activity which displays a login screen to the user, offering registration as
  * well.
  */
-public class AuthenticatorActivity extends AccountAuthenticatorActivity {
+public class LoginActivity extends AccountAuthenticatorActivity {
 	/**
 	 * A dummy authentication store containing known user names and passwords.
 	 * TODO: remove after connecting to a real authentication system.

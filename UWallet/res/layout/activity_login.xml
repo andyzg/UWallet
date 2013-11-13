@@ -1,6 +1,6 @@
 <merge xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools"
-    tools:context=".AuthenticatorActivity" >
+    tools:context=".LoginActivity" >
 
     <!-- Login progress -->
 
