@@ -296,7 +296,7 @@ public class WatcardProvider extends ContentProvider{
 		
 		private static final String SQL_CREATE_ENTRIES =
 				"CREATE TABLE " + WatcardContract.Transaction.TABLE_NAME + "(" +
-				"_id" + " INTEGER PRIMARY KEY AUTOINCREMENT, " +
+				WatcardContract.Transaction._ID + " INTEGER PRIMARY KEY AUTOINCREMENT NOT NULL," +
 				WatcardContract.Transaction.COLUMN_NAME_AMOUNT + TYPE_TEXT + COMMA_SEP +
 				WatcardContract.Transaction.COLUMN_NAME_DATE + TYPE_INTEGER + COMMA_SEP +
 				WatcardContract.Transaction.COLUMN_NAME_TYPE + TYPE_INTEGER + COMMA_SEP + 

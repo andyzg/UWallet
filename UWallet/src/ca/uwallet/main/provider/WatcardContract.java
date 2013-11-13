@@ -57,8 +57,9 @@ public final class WatcardContract {
 
         /**
          * Table name where records are stored for "transaction" resources.
+         * Transaction is a sql reserved word
          */
-        public static final String TABLE_NAME = "transaction";
+        public static final String TABLE_NAME = "trans";
         
         /**
          * Transaction amount in cents.
