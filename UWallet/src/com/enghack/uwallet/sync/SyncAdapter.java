@@ -33,25 +33,6 @@ public class SyncAdapter extends AbstractThreadedSyncAdapter{
 	private static final String USERNAME_NAME = "acnt_1";
 	private static final String PASSWORD_NAME = "acnt_2";
 	
-	private static final String INVALID_LOGIN_ID = "oneweb_message_invalid_login";
-	private static final String TRANSACTION_TABLE_ID = "oneweb_financial_history_table";
-	private static final String BALANCE_TABLE_ID = "oneweb_balance_information_table";
-	private static final String TRANSACTION_TABLE_SELECTOR = "tr:gt(1)";
-	private static final String BALANCE_TABLE_SELECTOR = "tr:gt(1)";
-	
-	private static final String COLUMN_TRANSACTION_AMOUNT = "oneweb_financial_history_td_amount";
-	private static final String COLUMN_TRANSACTION_DATE = "oneweb_financial_history_td_date";
-	private static final String COLUMN_TRANSACTION_TIME = "oneweb_financial_history_td_time";
-	private static final String COLUMN_TRANSACTION_TYPE = "oneweb_financial_history_td_transtype";
-	private static final String COLUMN_TRANSACTION_TERMINAL = "oneweb_financial_history_td_terminal";
-	
-	private static final String COLUMN_BALANCE_NAME = "oneweb_balance_information_td_name";
-	private static final String COLUMN_BALANCE_AMOUNT = "oneweb_balance_information_td_amount";	
-	
-	private static final String DATE_FORMAT_STRING = "MM/dd/yyyyHH:mm:ss";
-	@SuppressLint("SimpleDateFormat") // Parse the format given by the WatCard server. Not generating a String.
-	private static final SimpleDateFormat DATE_FORMAT = new SimpleDateFormat(DATE_FORMAT_STRING);
-	
 	/**
 	 * Set up sync adapter.
 	 * @param context
@@ -59,17 +40,6 @@ public class SyncAdapter extends AbstractThreadedSyncAdapter{
 	 */
 	public SyncAdapter(Context context, boolean autoInitialize) {
 		super(context, autoInitialize);
-		mContentResolver = context.getContentResolver();
-	}
-	
-	/**
-	 * Set up sync adapter.
-	 * @param context
-	 * @param autoInitialize
-	 * @param allowParallelSyncs
-	 */
-	public SyncAdapter(Context context, boolean autoInitialize, boolean allowParallelSyncs){
-		super(context, autoInitialize, allowParallelSyncs);
 		mContentResolver = context.getContentResolver();
 	}
 
@@ -86,12 +56,12 @@ public class SyncAdapter extends AbstractThreadedSyncAdapter{
 		try{
 			Document transactionDoc = getTransactionDocument(username, password);
 			Document balanceDoc = getBalanceDocument(username, password);
-			if (!isLoginSuccessful(transactionDoc) || !isLoginSuccessful(balanceDoc)){
+			if (!Parser.isLoginSuccessful(transactionDoc) || !Parser.isLoginSuccessful(balanceDoc)){
 				// TODO invalid login info
 				return;
 			}
-			transactions = parseTransactions(transactionDoc);
-			balances = getBalances(balanceDoc);
+			transactions = Parser.parseTransactions(transactionDoc);
+			balances = Parser.parseBalances(balanceDoc);
 		} catch(IOException e){
 			// TODO sync failed
 			Log.e(TAG, "IOException", e);
@@ -143,89 +113,113 @@ public class SyncAdapter extends AbstractThreadedSyncAdapter{
 				.post();
 	}
 	
-	/**
-	 * Parse the HTML transaction history document into a list of Transaction.
-	 * @param doc The HTML transaction history.
-	 * @return The parsed transactions.
-	 * @throws IOException
-	 * @throws ParseException
-	 */
-	private ArrayList<Transaction> parseTransactions(Document doc) throws ParseException{
-		ArrayList<Transaction> transactions = new ArrayList<Transaction>();
-		Element table = doc.getElementById(TRANSACTION_TABLE_ID);
+	private static class Parser{
+		
+		private static final String INVALID_LOGIN_ID = "oneweb_message_invalid_login";
+		private static final String TRANSACTION_TABLE_ID = "oneweb_financial_history_table";
+		private static final String BALANCE_TABLE_ID = "oneweb_balance_information_table";
+		private static final String TRANSACTION_TABLE_SELECTOR = "tr:gt(1)";
+		private static final String BALANCE_TABLE_SELECTOR = "tr:gt(1)";
+		
+		private static final String COLUMN_TRANSACTION_AMOUNT = "oneweb_financial_history_td_amount";
+		private static final String COLUMN_TRANSACTION_DATE = "oneweb_financial_history_td_date";
+		private static final String COLUMN_TRANSACTION_TIME = "oneweb_financial_history_td_time";
+		private static final String COLUMN_TRANSACTION_TYPE = "oneweb_financial_history_td_transtype";
+		private static final String COLUMN_TRANSACTION_TERMINAL = "oneweb_financial_history_td_terminal";
+		
+		private static final String COLUMN_BALANCE_NAME = "oneweb_balance_information_td_name";
+		private static final String COLUMN_BALANCE_AMOUNT = "oneweb_balance_information_td_amount";	
+		
+		private static final String DATE_FORMAT_STRING = "MM/dd/yyyyHH:mm:ss";
+		@SuppressLint("SimpleDateFormat") // Parse the format given by the WatCard server. Not generating a String.
+		private static final SimpleDateFormat DATE_FORMAT = new SimpleDateFormat(DATE_FORMAT_STRING);
+		
+		private Parser(){}
+		
+		/**
+		 * Parse the HTML transaction history document into a list of Transaction.
+		 * @param doc The HTML transaction history.
+		 * @return The parsed transactions.
+		 * @throws IOException
+		 * @throws ParseException
+		 */
+		private static ArrayList<Transaction> parseTransactions(Document doc) throws ParseException{
+			ArrayList<Transaction> transactions = new ArrayList<Transaction>();
+			Element table = doc.getElementById(TRANSACTION_TABLE_ID);
+				
+			for (Element row : table.select(TRANSACTION_TABLE_SELECTOR)){
+				transactions.add(parseTransactionFromRow(row));
+			}
 			
-		for (Element row : table.select(TRANSACTION_TABLE_SELECTOR)){
-			transactions.add(parseTransactionFromRow(row));
+			return transactions;
 		}
 		
-		return transactions;
-	}
-	
-	/**
-	 * Parse the HTML balance document into a list of doubles representing each balance.
-	 * @param doc The HTML balance document.
-	 * @return A list of balances.
-	 * @throws IOException
-	 */
-	private ArrayList<Integer> getBalances(Document doc){
-		ArrayList<Integer> balances = new ArrayList<Integer>(); // TODO add expected number for performance
-		Element table = doc.getElementById(BALANCE_TABLE_ID);
-		
-		for (Element row : table.select(BALANCE_TABLE_SELECTOR)){
-			balances.add(parseBalanceFromRow(row));
+		/**
+		 * Parse the HTML balance document into a list of doubles representing each balance.
+		 * @param doc The HTML balance document.
+		 * @return A list of balances.
+		 * @throws IOException
+		 */
+		private static ArrayList<Integer> parseBalances(Document doc){
+			ArrayList<Integer> balances = new ArrayList<Integer>(); // TODO add expected number for performance
+			Element table = doc.getElementById(BALANCE_TABLE_ID);
+			
+			for (Element row : table.select(BALANCE_TABLE_SELECTOR)){
+				balances.add(parseBalanceFromRow(row));
+			}
+			return balances;
 		}
-		return balances;
-	}
-	
-	/**
-	 * Returns the Transaction that the row describes.
-	 * @param row The HTML table row.
-	 * @return The transaction information.
-	 * @throws ParseException
-	 */
-	private Transaction parseTransactionFromRow(Element row) throws ParseException{
-		return new Transaction(
-				parseAmount(row.getElementById(COLUMN_TRANSACTION_AMOUNT).text()),
-				parseDateAndTime(row.getElementById(COLUMN_TRANSACTION_DATE).text(),
-								 row.getElementById(COLUMN_TRANSACTION_TIME).text(),
-								 DATE_FORMAT),
-				parseTransactionType(row.getElementById(COLUMN_TRANSACTION_TYPE).text()),
-				parseTerminal(row.getElementById(COLUMN_TRANSACTION_TERMINAL).text()));
-	}
-	
-	private int parseBalanceFromRow(Element row){
-		return parseAmount(row.getElementById(COLUMN_BALANCE_AMOUNT).text());
-	}
-	
-	/**
-	 * Parses money text to a string.
-	 * @param s The string to parse.
-	 * @return The monetary amount in cents.
-	 */
-	private int parseAmount(String s){
-		s = s.trim().replace("[^0-9-]", ""); // Remove whitespace and all non-numerical or "-" characters
-		return Integer.parseInt(s);
-	}
-	
-	private long parseDateAndTime(String date, String time, DateFormat dateFormat) throws ParseException{
-		return dateFormat.parse(date + time).getTime();
-	}
-	
-	private int parseTransactionType(String s){
-		return Integer.parseInt(filterNonNumerical(s));
-	}
-	
-	private String parseTerminal(String s){
-		return s;
-	}
-	
-	private String filterNonNumerical(String s)
-	{
-		return s.replaceAll("[^0-9]", "");
-	}
-	
-	private static boolean isLoginSuccessful(Document doc){
-		// Checks whether the invalid login message is displayed
-		return doc.getElementById(INVALID_LOGIN_ID) == null;
+		
+		/**
+		 * Returns the Transaction that the row describes.
+		 * @param row The HTML table row.
+		 * @return The transaction information.
+		 * @throws ParseException
+		 */
+		private static Transaction parseTransactionFromRow(Element row) throws ParseException{
+			return new Transaction(
+					parseAmount(row.getElementById(COLUMN_TRANSACTION_AMOUNT).text()),
+					parseDateAndTime(row.getElementById(COLUMN_TRANSACTION_DATE).text(),
+									 row.getElementById(COLUMN_TRANSACTION_TIME).text(),
+									 DATE_FORMAT),
+					parseTransactionType(row.getElementById(COLUMN_TRANSACTION_TYPE).text()),
+					parseTerminal(row.getElementById(COLUMN_TRANSACTION_TERMINAL).text()));
+		}
+		
+		private static int parseBalanceFromRow(Element row){
+			return parseAmount(row.getElementById(COLUMN_BALANCE_AMOUNT).text());
+		}
+		
+		/**
+		 * Parses money text to a string.
+		 * @param s The string to parse.
+		 * @return The monetary amount in cents.
+		 */
+		private static int parseAmount(String s){
+			s = s.trim().replace("[^0-9-]", ""); // Remove whitespace and all non-numerical or "-" characters
+			return Integer.parseInt(s);
+		}
+		
+		private static long parseDateAndTime(String date, String time, DateFormat dateFormat) throws ParseException{
+			return dateFormat.parse(date + time).getTime();
+		}
+		
+		private static int parseTransactionType(String s){
+			return Integer.parseInt(filterNonNumerical(s));
+		}
+		
+		private static String parseTerminal(String s){
+			return s;
+		}
+		
+		private static String filterNonNumerical(String s)
+		{
+			return s.replaceAll("[^0-9]", "");
+		}
+		
+		private static boolean isLoginSuccessful(Document doc){
+			// Checks whether the invalid login message is displayed
+			return doc.getElementById(INVALID_LOGIN_ID) == null;
+		}
 	}
 }
