@@ -20,6 +20,7 @@ import org.jsoup.nodes.Element;
 import android.app.ProgressDialog;
 import android.content.Context;
 import android.os.AsyncTask;
+import android.util.Log;
 
 /**
  * Async task to do all of the network operations to connect
@@ -40,10 +41,11 @@ public class LoginTask extends AsyncTask<String, Void, Boolean>{
 	
 	ProgressDialog dialog;
 	
+	private static final String TAG = "LoginTask";
+	
 	public interface ResponseListener
 	{
 		public void onResponseFinish(Element histDoc, Element statusDoc, boolean valid);
-		public void onResponseFinish(boolean valid);
 	}
 
     public LoginTask(Context context,ResponseListener listener){
@@ -81,6 +83,7 @@ public class LoginTask extends AsyncTask<String, Void, Boolean>{
         statusDoc = connection(statusList);
         if (histDoc.getElementById("oneweb_message_invalid_login") != null)
         {
+        	Log.e(TAG, histDoc.getElementById("oneweb_message_invalid_login").toString());
         	return false;
         }
         return true;
@@ -92,10 +95,10 @@ public class LoginTask extends AsyncTask<String, Void, Boolean>{
 	 */
 	@Override
 	protected void onPostExecute(Boolean a) {
+		dialog.dismiss();
 		if (!a) // If there there was an error in background
 		{
-			mListener.onResponseFinish(false);
-			dialog.dismiss();
+			mListener.onResponseFinish(null, null, false);
 			return;
 		}
 		// Getting the table with all of the information
@@ -104,13 +107,13 @@ public class LoginTask extends AsyncTask<String, Void, Boolean>{
 		
 		// Send back the table to LoginFragment for parsing
 		mListener.onResponseFinish(histTable,statusTable,true);
-		dialog.dismiss();
 		return;
 	}
 
 	// Preparation for the network operations
 	@Override
 	protected void onPreExecute() {
+		// Exception if called after Activity exited
 		dialog.setTitle("Loading");
 		dialog.show();
 	}

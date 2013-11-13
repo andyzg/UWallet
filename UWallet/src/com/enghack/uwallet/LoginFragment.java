@@ -7,7 +7,6 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.View.OnClickListener;
 import android.view.ViewGroup;
-import android.widget.EditText;
 import android.widget.TextView;
 
 /**
@@ -20,7 +19,7 @@ public class LoginFragment extends Fragment implements OnClickListener {
 	private Listener mListener;
 
 	public interface Listener {
-		public void onLogInButtonClicked();
+		public void onLogInButtonClicked(String id, String pin);
 	}
 
 	public LoginFragment() {
@@ -64,12 +63,29 @@ public class LoginFragment extends Fragment implements OnClickListener {
 		super.onDetach();
 		mListener = null;
 	}
+	
+	public String getInputId(){
+		return ((TextView)getView().findViewById(R.id.username_input)).getText().toString();
+	}
+	
+	public String getInputPin(){
+		return ((TextView)getView().findViewById(R.id.password_input)).getText().toString();
+	}
+	
+	public void clearId(){
+		((TextView)getView().findViewById(R.id.username_input)).setText("");
+	}
+	
+	public void clearPin(){
+		((TextView)getView().findViewById(R.id.password_input)).setText("");
+	}
 
 	@Override
 	public void onClick(View view) {
 		switch (view.getId()) {
 		case R.id.login_button:
-			mListener.onLogInButtonClicked();
+			mListener.onLogInButtonClicked(getInputId(), getInputPin());
+			clearPin();
 			break;
 		}
 	}

@@ -1,4 +1,4 @@
-package com.enghack.watcard;
+package com.enghack.uwallet.watcard;
 
 import java.util.ArrayList;
 
@@ -20,14 +20,14 @@ public class WatcardInfo {
 	// List of all of the transactions
 	private ArrayList<Transaction> transList;
 	
-	private int studentID;
-	private int PIN;
+	private String studentID;
+	private String PIN;
 	
 	private double flexBalance;
 	private double mealBalance;
 	private double otherBalance;
 	
-	public WatcardInfo(ArrayList<Transaction> list,double mealBalance, double flexBalance,double otherBalance, int studentID, int PIN)
+	public WatcardInfo(ArrayList<Transaction> list,double mealBalance, double flexBalance,double otherBalance, String studentID, String PIN)
 	{
 		this.mInstance = true;
 		this.transList = list;
@@ -60,7 +60,7 @@ public class WatcardInfo {
 	 * Set student ID of the Watcard
 	 * @param id
 	 */
-	public void setID(int id)
+	public void setID(String id)
 	{
 		this.studentID = id;
 	}
@@ -69,7 +69,7 @@ public class WatcardInfo {
 	 * Get the student ID of the current Watcard
 	 * @return
 	 */
-	public int getID()
+	public String getID()
 	{
 		return this.studentID;
 	}
@@ -78,7 +78,7 @@ public class WatcardInfo {
 	 * Set the PIN of the Watcard
 	 * @param pin
 	 */
-	public void setPIN(int pin)
+	public void setPIN(String pin)
 	{
 		this.PIN = pin;
 	}
@@ -87,7 +87,7 @@ public class WatcardInfo {
 	 * Get the PIN of the current Watcard
 	 * @return
 	 */
-	public int getPIN()
+	public String getPIN()
 	{
 		return this.PIN;
 	}
