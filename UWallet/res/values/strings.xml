@@ -24,5 +24,6 @@
         and clean app to view all your WatCard expenses spent from the comfort and convenience of a 
         mobile device.</string>
     <string name="about_names">uWallet was made by Seikun Kambashi, Scott So, Gabriel Wong, Jessica Wu and Andy Zhang. </string>
+    <string name="error_connection_failed">Internet connection failed.</string>
 
 </resources>

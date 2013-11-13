@@ -1,4 +1,4 @@
-package ca.uwallet.main.sync.accounts;
+package ca.uwallet.main.accounts;
 
 import android.app.Service;
 import android.content.Intent;

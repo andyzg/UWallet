@@ -1,4 +1,4 @@
-package ca.uwallet.main.sync.provider;
+package ca.uwallet.main.provider;
 
 import java.util.ArrayList;
 
@@ -16,7 +16,7 @@ import android.database.sqlite.SQLiteDatabase;
 import android.database.sqlite.SQLiteOpenHelper;
 import android.net.Uri;
 import android.preference.PreferenceManager;
-import ca.uwallet.main.sync.util.SelectionBuilder;
+import ca.uwallet.main.util.SelectionBuilder;
 
 public class WatcardProvider extends ContentProvider{
 

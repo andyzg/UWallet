@@ -24,7 +24,7 @@ import android.content.SyncResult;
 import android.os.Bundle;
 import android.os.RemoteException;
 import android.util.Log;
-import ca.uwallet.main.sync.provider.WatcardContract;
+import ca.uwallet.main.provider.WatcardContract;
 
 /**
  * Handle syncing of WatCard data.
@@ -104,7 +104,7 @@ public class SyncAdapter extends AbstractThreadedSyncAdapter{
 	 * @return The document of transaction history.
 	 * @throws IOException
 	 */
-	private Document getTransactionDocument(String username, String password) throws IOException{
+	public static Document getTransactionDocument(String username, String password) throws IOException{
 		Log.i(TAG, "Fetching transactions from network");
 		Connection connection = Jsoup.connect(WAT_BASE_URL)
 				.data(USERNAME_NAME, username)
@@ -123,7 +123,7 @@ public class SyncAdapter extends AbstractThreadedSyncAdapter{
 	 * @return
 	 * @throws IOException
 	 */
-	private Document getBalanceDocument(String username, String password) throws IOException{
+	public static Document getBalanceDocument(String username, String password) throws IOException{
 		Log.i(TAG, "Fetching balances from network");
 		return Jsoup.connect(WAT_BASE_URL)
 				.data(USERNAME_NAME, username)
@@ -196,7 +196,7 @@ public class SyncAdapter extends AbstractThreadedSyncAdapter{
 		mContentResolver.notifyChange(WatcardContract.BASE_CONTENT_URI, null, false);
 	}
 	
-	private static class Parser{
+	public static class Parser{
 		private static final String TAG = "Parser";
 		
 		private static final String INVALID_LOGIN_ID = "oneweb_message_invalid_login";
@@ -227,7 +227,7 @@ public class SyncAdapter extends AbstractThreadedSyncAdapter{
 		 * @throws IOException
 		 * @throws ParseException
 		 */
-		private static ArrayList<Transaction> parseTransactions(Document doc) throws ParseException{
+		public static ArrayList<Transaction> parseTransactions(Document doc) throws ParseException{
 			Log.i(TAG, "Parsing transactions");
 			ArrayList<Transaction> transactions = new ArrayList<Transaction>();
 			Element table = doc.getElementById(TRANSACTION_TABLE_ID);
@@ -239,13 +239,31 @@ public class SyncAdapter extends AbstractThreadedSyncAdapter{
 			return transactions;
 		}
 		
+		private static ArrayList<ContentProviderOperation> parseTransactionsToInsertOperations(Document doc) throws ParseException{
+			Log.i(TAG, "Parsing transactions to ContentProviderOperation");
+			ArrayList<ContentProviderOperation> operations = new ArrayList<ContentProviderOperation>();
+			Element table = doc.getElementById(TRANSACTION_TABLE_ID);
+			
+			for (Element row : table.select(TRANSACTION_TABLE_SELECTOR)){
+				Transaction t = parseTransactionFromRow(row);
+				operations.add(ContentProviderOperation.newInsert(WatcardContract.Transaction.CONTENT_URI)
+						.withValue(WatcardContract.Transaction.COLUMN_NAME_AMOUNT, t.getAmount())
+						.withValue(WatcardContract.Transaction.COLUMN_NAME_DATE, t.getDate())
+						.withValue(WatcardContract.Transaction.COLUMN_NAME_TYPE, t.getType())
+						.withValue(WatcardContract.Transaction.COLUMN_NAME_TERMINAL, t.getTerminal())
+						.build());
+			}
+			
+			return operations;
+		}
+		
 		/**
 		 * Parse the balance document into a list of doubles representing each balance.
 		 * @param doc The Jsoup balance document.
 		 * @return A list of balances.
 		 * @throws IOException
 		 */
-		private static ArrayList<Integer> parseBalances(Document doc){
+		public static ArrayList<Integer> parseBalances(Document doc){
 			Log.i(TAG, "Parsing balances");
 			ArrayList<Integer> balances = new ArrayList<Integer>(); // TODO add expected number for performance
 			Element table = doc.getElementById(BALANCE_TABLE_ID);
@@ -262,7 +280,7 @@ public class SyncAdapter extends AbstractThreadedSyncAdapter{
 		 * @return The transaction information.
 		 * @throws ParseException
 		 */
-		private static Transaction parseTransactionFromRow(Element row) throws ParseException{
+		public static Transaction parseTransactionFromRow(Element row) throws ParseException{
 			return new Transaction(
 					parseAmount(row.getElementById(COLUMN_TRANSACTION_AMOUNT).text()),
 					parseDateAndTime(row.getElementById(COLUMN_TRANSACTION_DATE).text(),
@@ -272,7 +290,7 @@ public class SyncAdapter extends AbstractThreadedSyncAdapter{
 					parseTerminal(row.getElementById(COLUMN_TRANSACTION_TERMINAL).text()));
 		}
 		
-		private static int parseBalanceFromRow(Element row){
+		public static int parseBalanceFromRow(Element row){
 			return parseAmount(row.getElementById(COLUMN_BALANCE_AMOUNT).text());
 		}
 		
@@ -281,29 +299,29 @@ public class SyncAdapter extends AbstractThreadedSyncAdapter{
 		 * @param s The string to parse.
 		 * @return The monetary amount in cents.
 		 */
-		private static int parseAmount(String s){
+		public static int parseAmount(String s){
 			s = s.trim().replace("[^0-9-]", ""); // Remove whitespace and all non-numerical or "-" characters
 			return Integer.parseInt(s);
 		}
 		
-		private static long parseDateAndTime(String date, String time, DateFormat dateFormat) throws ParseException{
+		public static long parseDateAndTime(String date, String time, DateFormat dateFormat) throws ParseException{
 			return dateFormat.parse(date + time).getTime();
 		}
 		
-		private static int parseTransactionType(String s){
+		public static int parseTransactionType(String s){
 			return Integer.parseInt(filterNonNumerical(s));
 		}
 		
-		private static String parseTerminal(String s){
+		public static String parseTerminal(String s){
 			return s;
 		}
 		
-		private static String filterNonNumerical(String s)
+		public static String filterNonNumerical(String s)
 		{
 			return s.replaceAll("[^0-9]", "");
 		}
 		
-		private static boolean isLoginSuccessful(Document doc){
+		public static boolean isLoginSuccessful(Document doc){
 			// Checks whether the invalid login message is displayed
 			return doc.getElementById(INVALID_LOGIN_ID) == null;
 		}

@@ -54,6 +54,24 @@ public class MainActivity extends Activity implements ResponseListener,
 	public static final String STUDENT_ID_KEY = "studentID";
 	public static final String STUDENT_PIN_KEY = "studentPIN";
 	private static final String TAG = "MainActivity";
+	
+	@Override
+	protected void onCreate(Bundle savedInstanceState) {
+		super.onCreate(savedInstanceState);
+		setContentView(R.layout.activity_main);
+		
+		// TODO Set up sync
+
+		mBalanceFragment = new BalanceFragment();
+		mTransactionFragment = new TransactionFragment();
+		mStatsFragment = new StatsFragment();
+		mAboutFragment = new AboutFragment();
+		mLoginFragment = new LoginFragment();
+		mMenuFragment = new MenuFragment();
+		
+		switchToFragment(mLoginFragment, false);
+		tryLoginFromPreferences();
+	}
 
 	private void setSharedPreferences(String name, String value) {
 
@@ -73,22 +91,6 @@ public class MainActivity extends Activity implements ResponseListener,
 		SharedPreferences.Editor edit = getSharedPreferences(PREFERENCE_KEY, MODE_PRIVATE).edit();
 		edit.remove(name);
 		edit.commit();
-	}
-
-	@Override
-	protected void onCreate(Bundle savedInstanceState) {
-		super.onCreate(savedInstanceState);
-		setContentView(R.layout.activity_main);
-
-		mBalanceFragment = new BalanceFragment();
-		mTransactionFragment = new TransactionFragment();
-		mStatsFragment = new StatsFragment();
-		mAboutFragment = new AboutFragment();
-		mLoginFragment = new LoginFragment();
-		mMenuFragment = new MenuFragment();
-		
-		switchToFragment(mLoginFragment, false);
-		tryLoginFromPreferences();
 	}
 	
 	private void tryLoginFromPreferences(){
