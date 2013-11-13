@@ -4,14 +4,14 @@ import java.util.ArrayList;
 
 import org.jsoup.nodes.Element;
 
-import android.app.Activity;
-import android.app.Fragment;
-import android.app.FragmentTransaction;
 import android.content.Context;
 import android.content.SharedPreferences;
 import android.net.ConnectivityManager;
 import android.net.NetworkInfo;
 import android.os.Bundle;
+import android.support.v4.app.Fragment;
+import android.support.v4.app.FragmentTransaction;
+import android.support.v7.app.ActionBarActivity;
 import android.util.Log;
 import android.view.Menu;
 import android.view.MotionEvent;
@@ -31,7 +31,7 @@ import ca.uwallet.main.watcard.WatcardInfo;
  * 
  */
 
-public class MainActivity extends Activity implements ResponseListener,
+public class MainActivity extends ActionBarActivity implements ResponseListener,
 		BalanceFragment.Listener, TransactionFragment.Listener,
 		AboutFragment.Listener, LoginFragment.Listener, MenuFragment.Listener {
 
@@ -107,8 +107,7 @@ public class MainActivity extends Activity implements ResponseListener,
 	}
 
 	void switchToFragment(Fragment newFrag, boolean addToBackStack) {
-		FragmentTransaction transaction = getFragmentManager()
-				.beginTransaction();
+		FragmentTransaction transaction = getSupportFragmentManager().beginTransaction();
 		transaction.setCustomAnimations(R.anim.card_flip_right_in,
 				R.anim.card_flip_right_out).replace(R.id.fragment_container,
 				newFrag);
