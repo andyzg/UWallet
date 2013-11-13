@@ -5,13 +5,14 @@ import java.io.IOException;
 import org.jsoup.nodes.Document;
 
 import android.accounts.Account;
+import android.accounts.AccountAuthenticatorActivity;
 import android.accounts.AccountManager;
 import android.animation.Animator;
 import android.animation.AnimatorListenerAdapter;
 import android.annotation.TargetApi;
-import android.app.Activity;
 import android.content.ContentResolver;
 import android.content.Context;
+import android.content.Intent;
 import android.os.AsyncTask;
 import android.os.Build;
 import android.os.Bundle;
@@ -31,7 +32,7 @@ import ca.uwallet.main.sync.SyncAdapter;
  * Activity which displays a login screen to the user, offering registration as
  * well.
  */
-public class AuthenticatorActivity extends Activity {
+public class AuthenticatorActivity extends AccountAuthenticatorActivity {
 	/**
 	 * A dummy authentication store containing known user names and passwords.
 	 * TODO: remove after connecting to a real authentication system.
@@ -262,13 +263,22 @@ public class AuthenticatorActivity extends Activity {
 
 			switch(result){
 			case SUCCESS:
+				// Send back results to AccountManager
+				final Intent intent = new Intent();
+				intent.putExtra(AccountManager.KEY_ACCOUNT_NAME, mUsername);
+				intent.putExtra(AccountManager.KEY_ACCOUNT_TYPE, ACCOUNT_TYPE);
+				intent.putExtra(AccountManager.KEY_PASSWORD, mPassword);
+				setAccountAuthenticatorResult(intent.getExtras());
+				setResult(RESULT_OK);
 				finish();
 				break;
 			case INVALID_CREDENTIALS:
+				// Indicate incorrect password and prompt
 				mPasswordView.setError(getString(R.string.error_incorrect_password));
 				mPasswordView.requestFocus();
 				break;
 			case CONNECTION_ERROR:
+				// Inform that there is a connection error
 				showToast(getString(R.string.error_connection_failed), Toast.LENGTH_LONG);
 				break;
 			}
