@@ -305,7 +305,7 @@ public class LoginActivity extends AccountAuthenticatorActivity {
 				break;
 			case INVALID_CREDENTIALS:
 				// Indicate incorrect password and prompt
-				mPasswordView.setError(getString(R.string.error_incorrect_password));
+				mPasswordView.setError(getString(R.string.error_incorrect_credentials));
 				mPasswordView.requestFocus();
 				break;
 			case CONNECTION_ERROR:

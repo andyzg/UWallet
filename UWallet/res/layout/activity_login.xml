@@ -57,7 +57,7 @@
 		        android:singleLine="true"
 		        android:inputType="number"
 		        android:typeface="sans"
-		        android:hint="@string/username_input" />
+		        android:hint="@string/username_prompt" />
 		
 		    <EditText
 		        android:id="@+id/password_input"
@@ -69,7 +69,7 @@
                 android:imeOptions="actionUnspecified"
                 android:maxLines="1"
                 android:singleLine="true"
-		        android:hint="@string/password"
+		        android:hint="@string/password_prompt"
 		        android:inputType="textPassword" />
 		    
 		    <Button
