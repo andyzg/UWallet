@@ -20,7 +20,7 @@ import android.view.Menu;
  */
 
 public class MainActivity extends ActionBarActivity implements
-		BalanceFragment.Listener, TransactionFragment.Listener, MenuFragment.Listener, AboutFragment.Listener {
+	TransactionFragment.Listener, MenuFragment.Listener, AboutFragment.Listener {
 	
 	private static final String TAG = "MainActivity";
 	
