@@ -29,11 +29,6 @@
         android:src="@drawable/button_stats" />
 
     <ImageButton
-        android:id="@+id/about_button"
-        style="@style/ImageButton"
-        android:src="@drawable/button_about" />
-
-    <ImageButton
         android:id="@+id/logout_button"
         style="@style/ImageButton"
         android:src="@drawable/button_logout" />

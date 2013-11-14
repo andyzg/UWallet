@@ -20,7 +20,7 @@ import android.view.Menu;
  */
 
 public class MainActivity extends ActionBarActivity implements
-	TransactionFragment.Listener, MenuFragment.Listener, AboutFragment.Listener {
+	TransactionFragment.Listener, MenuFragment.Listener{
 	
 	private static final String TAG = "MainActivity";
 	
@@ -97,11 +97,6 @@ public class MainActivity extends ActionBarActivity implements
 	}
 
 	@Override
-	public void onAboutButtonClicked() {
-		switchToFragment(new AboutFragment());
-	}
-
-	@Override
 	public void onLogOutButtonClicked() {		
 		// Remove account from AccountManager
 		removeAllAccounts();
@@ -145,6 +140,12 @@ public class MainActivity extends ActionBarActivity implements
 	
 	@Override
 	public void onBackPressed(){
+		// TODO MAKE FASTER
+		// Slow returning from balances and transactions (transactions not yet with content) to menu
+		// Fast returning from statistics to menu
+		// When about button is removed, there's an increase in speed
+		// DDMS indicates that there are 9 MB bitmap iamges
+		// Possibly because of large drawables for ImageButton
 		getSupportFragmentManager().popBackStack();
 	}
 }
