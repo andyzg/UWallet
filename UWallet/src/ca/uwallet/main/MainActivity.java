@@ -21,12 +21,6 @@ import android.view.Menu;
 
 public class MainActivity extends ActionBarActivity implements
 		BalanceFragment.Listener, TransactionFragment.Listener, MenuFragment.Listener, AboutFragment.Listener {
-
-	private BalanceFragment mBalanceFragment = null;
-	private TransactionFragment mTransactionFragment = null;
-	private StatsFragment mStatsFragment = null;
-	private AboutFragment mAboutFragment = null;
-	private MenuFragment mMenuFragment = null;
 	
 	private static final String TAG = "MainActivity";
 	
@@ -37,40 +31,46 @@ public class MainActivity extends ActionBarActivity implements
 		super.onCreate(savedInstanceState);
 		setContentView(R.layout.activity_main);
 		
+		// Login if no account registered
 		int numAccounts = LoginActivity.numAccounts(this);
 		Log.v(TAG, numAccounts + " accounts registered");
 		if (numAccounts == 0){
 			doLogin();
 		}
-
-		mBalanceFragment = new BalanceFragment();
-		mTransactionFragment = new TransactionFragment();
-		mStatsFragment = new StatsFragment();
-		mAboutFragment = new AboutFragment();
-		mMenuFragment = new MenuFragment();
-		
-		switchToFragment(mMenuFragment, false);
+				
+		switchToFragment(new MenuFragment(), false);
 	}
 	
 	@Override
 	public void onActivityResult(int requestCode, int responseCode, Intent data){
 		Log.i(TAG, "onActivityResult, requestCode: " + requestCode + " responseCode: " + responseCode);
 		switch(requestCode){
+		// From LoginActivity
 		case RC_LOGIN:
 			Log.i(TAG, "Received login");
-			if (responseCode != RESULT_OK)
-				// Close the app unless the user logged in
+			// Close the app if the user aborted login. Can't do anything without login.
+			if (responseCode != RESULT_OK){
 				Log.i(TAG, "User cancelled login. Closing down.");
 				finish();
+			}
 			break;
 		}
 	}
 
-	void switchToFragment(Fragment newFrag) {
+	/**
+	 * Convenience method. Switch to fragment and add to back stack.
+	 * @param newFrag The fragment to switch to.
+	 */
+	private void switchToFragment(Fragment newFrag) {
 		switchToFragment(newFrag, true);
 	}
 
-	void switchToFragment(Fragment newFrag, boolean addToBackStack) {
+	/**
+	 * Switch to fragment.
+	 * @param newFrag The fragment to switch to.
+	 * @param addToBackStack Whether the transaction should be added to back stack.
+	 */
+	private void switchToFragment(Fragment newFrag, boolean addToBackStack) {
 		FragmentTransaction transaction = getSupportFragmentManager().beginTransaction();
 		transaction.replace(R.id.fragment_container, newFrag);
 		if (addToBackStack)
@@ -88,17 +88,17 @@ public class MainActivity extends ActionBarActivity implements
 
 	@Override
 	public void onBalanceButtonClicked() {
-		switchToFragment(mBalanceFragment);
+		switchToFragment(new BalanceFragment());
 	}
 
 	@Override
 	public void onTransactionsButtonClicked() {
-		switchToFragment(mTransactionFragment);
+		switchToFragment(new TransactionFragment());
 	}
 
 	@Override
 	public void onAboutButtonClicked() {
-		switchToFragment(mAboutFragment);
+		switchToFragment(new AboutFragment());
 	}
 
 	@Override
@@ -111,13 +111,20 @@ public class MainActivity extends ActionBarActivity implements
 
 	@Override
 	public void onStatsButtonClicked() {
-		switchToFragment(mStatsFragment, true);
+		switchToFragment(new StatsFragment(), true);
 	}
 	
+	/**
+	 * Returns the account manager for this activity.
+	 * @return
+	 */
 	private AccountManager getAccountManager(){
 		return (AccountManager) getSystemService(Context.ACCOUNT_SERVICE);
 	}
 	
+	/**
+	 * Removes all accounts from the account manager.
+	 */
 	private void removeAllAccounts(){
 		AccountManager accountManager = getAccountManager();
 		Account[] accounts = accountManager.getAccountsByType(LoginActivity.ACCOUNT_TYPE);
@@ -126,6 +133,9 @@ public class MainActivity extends ActionBarActivity implements
 		}
 	}
 	
+	/**
+	 * Launches the LoginActivity.
+	 */
 	private void doLogin(){
 		Intent intent = new Intent(this, LoginActivity.class);
 		intent.putExtra(LoginActivity.EXTRA_IS_ADDING_NEW_ACCOUNT, true);
