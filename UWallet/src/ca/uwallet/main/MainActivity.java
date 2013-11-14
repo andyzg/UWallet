@@ -6,19 +6,19 @@ import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
+import android.support.v4.app.FragmentManager;
 import android.support.v4.app.FragmentTransaction;
 import android.support.v7.app.ActionBarActivity;
 import android.util.Log;
 import android.view.Menu;
 
 /**
- * MainActivity, contains all fragment objects, listeners get methods for
- * ArrayList, and card balances
+ * Activity that is launched from the launcher. We switch between screens using fragments.
+ * Does not handle login.
  * 
- * @author Andy, Seikun
- * 
+ * @author Gabriel
+ *
  */
-
 public class MainActivity extends ActionBarActivity implements
 	TransactionFragment.Listener, MenuFragment.Listener{
 	
@@ -146,6 +146,10 @@ public class MainActivity extends ActionBarActivity implements
 		// When about button is removed, there's an increase in speed
 		// DDMS indicates that there are 9 MB bitmap iamges
 		// Possibly because of large drawables for ImageButton
-		getSupportFragmentManager().popBackStack();
+		FragmentManager manager = getSupportFragmentManager();
+		if (manager.getBackStackEntryCount() == 0)
+			super.onBackPressed();
+		else
+			manager.popBackStack();
 	}
 }

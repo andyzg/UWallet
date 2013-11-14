@@ -36,14 +36,7 @@ import ca.uwallet.main.sync.SyncAdapter;
  */
 public class LoginActivity extends AccountAuthenticatorActivity {
 	/**
-	 * A dummy authentication store containing known user names and passwords.
-	 * TODO: remove after connecting to a real authentication system.
-	 */
-	private static final String[] DUMMY_CREDENTIALS = new String[] {
-			"foo@example.com:hello", "bar@example.com:world" };
-
-	/**
-	 * The default email to populate the email field with.
+	 * The extra describing the default username to populate the field with.
 	 */
 	public static final String EXTRA_USERNAME = "ca.uwallet.main.extra.USERNAME";
 	
@@ -76,7 +69,7 @@ public class LoginActivity extends AccountAuthenticatorActivity {
 
 		setContentView(R.layout.activity_login);
 
-		// Set up the login form.
+		// Populate the username field if a username is given
 		mUsername = getIntent().getStringExtra(EXTRA_USERNAME);
 		mUsernameView = (EditText) findViewById(R.id.username_input);
 		if (mUsername != null){
