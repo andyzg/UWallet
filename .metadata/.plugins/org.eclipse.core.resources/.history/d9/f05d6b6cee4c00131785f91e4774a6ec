@@ -247,7 +247,7 @@ public class MainActivity extends Activity implements ResponseListener,
 		    // Prepare intent which is triggered if the
 		    // notification is selected
 		    Intent intent = new Intent(this, NotificationReceiverActivity.class);
-		    PendingIntent pIntent = PendingIntent.getActivity(this, 0, intent, 0);
+		    PendingIntent pIntent = PendingIntent.getActivity(NotificationReceiverActivity.class, 0, intent, 0);
 
 		    // Build notification
 		    // Actions are just fake

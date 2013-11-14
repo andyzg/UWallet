@@ -93,6 +93,7 @@ public class MainActivity extends Activity implements ResponseListener,
 		mLoginFragment = new LoginFragment();
 		mMenuFragment = new MenuFragment();
 		
+		
 		switchToFragment(mLoginFragment, false);
 		tryLoginFromPreferences();
 	}
@@ -131,8 +132,8 @@ public class MainActivity extends Activity implements ResponseListener,
 
 	@Override
 	public void onBalanceButtonClicked() {
-		// switchToFragment(mBalanceFragment);
-		createNotification(findViewById(R.id.balance_button));
+		//switchToFragment(mBalanceFragment);
+		createNotification(R.id.balance_button);
 	}
 
 	@Override
@@ -252,7 +253,7 @@ public class MainActivity extends Activity implements ResponseListener,
 		    // Build notification
 		    // Actions are just fake
 		    Notification noti = new Notification.Builder(this)
-		        .setContentTitle("Warning. You are running low !")
+		        .setContentTitle("New mail from " + "test@gmail.com")
 		        .setContentText("Subject").setSmallIcon(R.drawable.uwallet)
 		        .setContentIntent(pIntent)
 		        .addAction(R.drawable.uwallet, "Call", pIntent)

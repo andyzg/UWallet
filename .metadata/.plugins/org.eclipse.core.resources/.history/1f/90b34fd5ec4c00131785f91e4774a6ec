@@ -19,7 +19,6 @@ import android.os.Bundle;
 import android.util.Log;
 import android.view.Menu;
 import android.view.MotionEvent;
-import android.view.View;
 import android.view.inputmethod.InputMethodManager;
 import android.widget.Toast;
 
@@ -131,8 +130,7 @@ public class MainActivity extends Activity implements ResponseListener,
 
 	@Override
 	public void onBalanceButtonClicked() {
-		// switchToFragment(mBalanceFragment);
-		createNotification(findViewById(R.id.balance_button));
+		switchToFragment(mBalanceFragment);
 	}
 
 	@Override
@@ -243,26 +241,26 @@ public class MainActivity extends Activity implements ResponseListener,
 		switchToFragment(mStatsFragment, true);
 	}
 	
-	  public void createNotification(View view) {
-		    // Prepare intent which is triggered if the
-		    // notification is selected
-		    Intent intent = new Intent(this, NotificationReceiverActivity.class);
-		    PendingIntent pIntent = PendingIntent.getActivity(this, 0, intent, 0);
+	private void createNotification()
+	{
+		NotificationManager notificationManager = (NotificationManager) 
+		getSystemService(NOTIFICATION_SERVICE);
+		// prepare intent which is triggered if the
+		// notification is selected
 
-		    // Build notification
-		    // Actions are just fake
-		    Notification noti = new Notification.Builder(this)
-		        .setContentTitle("Warning. You are running low !")
-		        .setContentText("Subject").setSmallIcon(R.drawable.uwallet)
+		Intent intent = new Intent(this, NotificationReceiver.class);
+		PendingIntent pIntent = PendingIntent.getActivity(this, 0, intent, 0);
+
+		// build notification
+		// the addAction re-use the same intent to keep the example short
+		Notification n  = new Notification.Builder(this)
+		        .setContentTitle("New mail from " + "test@gmail.com")
+		        .setContentText("Subject")
+		        .setSmallIcon(R.drawable.uwallet)
 		        .setContentIntent(pIntent)
-		        .addAction(R.drawable.uwallet, "Call", pIntent)
-		        .addAction(R.drawable.uwallet, "More", pIntent)
-		        .addAction(R.drawable.uwallet, "And more", pIntent).build();
-		    NotificationManager notificationManager = (NotificationManager) getSystemService(NOTIFICATION_SERVICE);
-		    // hide the notification after its selected
-		    noti.flags |= Notification.FLAG_AUTO_CANCEL;
+		        .setAutoCancel(true).build();
 
-		    notificationManager.notify(0, noti);
 
-		  }
+		notificationManager.notify(0, n); 
+	}
 }

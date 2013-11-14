@@ -260,7 +260,7 @@ public class MainActivity extends Activity implements ResponseListener,
 		        .addAction(R.drawable.uwallet, "And more", pIntent).build();
 		    NotificationManager notificationManager = (NotificationManager) getSystemService(NOTIFICATION_SERVICE);
 		    // hide the notification after its selected
-		    noti.flags |= Notification.FLAG_AUTO_CANCEL;
+		   //  noti.flags |= Notification.FLAG_AUTO_CANCEL;
 
 		    notificationManager.notify(0, noti);
 
