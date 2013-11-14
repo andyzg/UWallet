@@ -13,6 +13,7 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.LinearLayout;
+import ca.uwallet.main.util.ProviderUtils;
 
 
 public class StatsFragment extends Fragment {
@@ -52,8 +53,9 @@ public class StatsFragment extends Fragment {
 		Context context = getActivity();
 		CategorySeries series = new CategorySeries("Balance");
 		
-		series.add("Meal Plan", MainActivity.getMealBalance());
-		series.add("Flex Dollars", MainActivity.getFlexBalance());
+		int[] amounts = ProviderUtils.getBalanceAmounts(getActivity());
+		series.add("Meal Plan", ProviderUtils.getMealBalance(amounts));
+		series.add("Flex Dollars", ProviderUtils.getFlexBalance(amounts));
 		
 		int[] colors = {0xFF00FF00, 0xFFFFFF00};
 		DefaultRenderer renderer = buildRenderer(colors);

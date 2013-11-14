@@ -8,6 +8,7 @@ import android.view.View;
 import android.view.View.OnClickListener;
 import android.view.ViewGroup;
 import android.widget.TextView;
+import ca.uwallet.main.util.ProviderUtils;
 
 /**
  * Balance fragment displays watcard balances in a really simple format
@@ -16,10 +17,7 @@ import android.widget.TextView;
  */
 
 public class BalanceFragment extends Fragment implements OnClickListener {
-	
-	private static final String[] labels = {"Meal Plan", "Flex Dollars"};
 
-	@SuppressWarnings("unused")
 	private Listener mListener;
 
 	public interface Listener {
@@ -40,13 +38,14 @@ public class BalanceFragment extends Fragment implements OnClickListener {
 		View v = inflater.inflate(R.layout.fragment_balance, container,
 				false);
 		
-		double mealBalance = MainActivity.getMealBalance();
-		double flexBalance = MainActivity.getFlexBalance();
-		String meal = getResources().getString(R.string.meal_plan) + String.format("%.2f", mealBalance);
-		String flex = getResources().getString(R.string.flex_dollars) + String.format("%.2f", flexBalance);
-		String total = getResources().getString(R.string.total)+ String.format("%.2f", (mealBalance + flexBalance));
-		((TextView)v.findViewById(R.id.meal_plan_label)).setText(meal);
-		((TextView)v.findViewById(R.id.flex_dollars_label)).setText(flex);
+		int[] amounts = ProviderUtils.getBalanceAmounts(getActivity());
+		int mealAmount = ProviderUtils.getMealBalance(amounts);
+		int flexAmount = ProviderUtils.getFlexBalance(amounts);
+		String mealLabel = getResources().getString(R.string.meal_plan) + " " + ProviderUtils.balanceToString(mealAmount);
+		String flexLabel = getResources().getString(R.string.flex_dollars) + " " +ProviderUtils.balanceToString(flexAmount);
+		String total = getResources().getString(R.string.total) + " " +ProviderUtils.balanceToString(mealAmount + flexAmount);
+		((TextView)v.findViewById(R.id.meal_plan_label)).setText(mealLabel);
+		((TextView)v.findViewById(R.id.flex_dollars_label)).setText(flexLabel);
 		((TextView)v.findViewById(R.id.total_label)).setText(total);
 		return v;
 	}
@@ -72,8 +71,9 @@ public class BalanceFragment extends Fragment implements OnClickListener {
 		super.onDetach();
 		mListener = null;
 	}
-
+	
 	@Override
-	public void onClick(View view) {
-	}
+	public void onClick(View view) {}
+	
+	
 }

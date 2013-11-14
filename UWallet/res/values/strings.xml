@@ -12,9 +12,9 @@
     <string name="title_activity_display_message">My Message</string>
     <string name="hello_world">Hello world!</string>
     <string name="about_us">This app was made by Andy, Jessica, Scott, and Seikun!</string>
-    <string name="meal_plan">Meal Plan: $</string>
-    <string name="flex_dollars">Flex Dollars: $</string>
-    <string name="total">Total: $</string>
+    <string name="meal_plan">Meal Plan:</string>
+    <string name="flex_dollars">Flex Dollars:</string>
+    <string name="total">Total:</string>
     <string name="balance">Balance</string>
     <string name="no_connection_message">Internet connection unavailable</string>
     <string name="invalid_credentials_message">WatCard number or PIN invalid.\nUse your WatCard number not your Quest ID.</string>
