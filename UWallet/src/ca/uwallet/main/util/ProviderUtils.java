@@ -59,6 +59,7 @@ public class ProviderUtils {
 	 * @param context
 	 * @return The balance amounts.
 	 */
+	@Deprecated
 	public static int[] getBalanceAmounts(Context context){
 		ContentResolver resolver = context.getContentResolver();
 		Cursor cursor = resolver.query(WatcardContract.Balance.CONTENT_URI, null, null, null, null);
@@ -72,6 +73,17 @@ public class ProviderUtils {
 			i++;
 		}
 		cursor.close();
+		return amounts;
+	}
+	
+	public static int[] getBalanceAmounts(Cursor cursor){
+		int columnIndex = cursor.getColumnIndex(WatcardContract.Balance.COLUMN_NAME_AMOUNT);
+		int[] amounts = new int[cursor.getCount()];
+		int i = 0;
+		for (cursor.moveToFirst(); !cursor.isAfterLast(); cursor.moveToNext()){
+			amounts[i] = cursor.getInt(columnIndex);
+			i++;
+		}
 		return amounts;
 	}
 	
