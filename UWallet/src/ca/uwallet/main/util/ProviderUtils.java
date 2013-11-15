@@ -74,4 +74,14 @@ public class ProviderUtils {
 		cursor.close();
 		return amounts;
 	}
+	
+	/**
+	 * Clears all user data from the content provider.
+	 * @param context
+	 */
+	public static void clearData(Context context){
+		ContentResolver resolver = context.getContentResolver();
+		resolver.delete(WatcardContract.Transaction.CONTENT_URI, null, null);
+		resolver.delete(WatcardContract.Balance.CONTENT_URI, null, null);
+	}
 }

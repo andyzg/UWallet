@@ -1,5 +1,6 @@
 package ca.uwallet.main;
 
+import ca.uwallet.main.util.ProviderUtils;
 import android.accounts.Account;
 import android.accounts.AccountManager;
 import android.content.Context;
@@ -100,6 +101,7 @@ public class MainActivity extends ActionBarActivity implements
 	public void onLogOutButtonClicked() {		
 		// Remove account from AccountManager
 		removeAllAccounts();
+		ProviderUtils.clearData(this);
 		
 		doLogin();
 	}
