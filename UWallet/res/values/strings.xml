@@ -17,5 +17,6 @@
     <string name="watcard_sync_process">:sync</string>
     <string name="error_incorrect_credentials">Invalid username or password</string>
     <string name="unknown">Unknown</string>
-
+	<string name="empty_transaction_message">No Transactions</string>
+    
 </resources>

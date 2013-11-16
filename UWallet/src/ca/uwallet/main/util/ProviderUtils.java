@@ -1,5 +1,6 @@
 package ca.uwallet.main.util;
 
+import java.text.DecimalFormat;
 import java.text.NumberFormat;
 import java.util.Locale;
 
@@ -13,7 +14,12 @@ public class ProviderUtils {
 	// Indices in array for each balance type
 	public static final int[] MEAL_PLAN_INDICES = {0, 1, 2};
 	public static final int[] FLEX_DOLLAR_INDICES = {3, 4, 5, 6};
-	
+	public static DecimalFormat CURRENCY_FORMAT;
+	static{
+		CURRENCY_FORMAT = (DecimalFormat)NumberFormat.getCurrencyInstance(Locale.CANADA);
+		CURRENCY_FORMAT.setNegativePrefix("$-");
+		CURRENCY_FORMAT.setNegativeSuffix("");
+	}
 	
 	private ProviderUtils(){}
 	
@@ -23,9 +29,7 @@ public class ProviderUtils {
 	 * @return A string representation of the amount.
 	 */
 	public static String balanceToString(int cents){
-		double dollars = cents / 100.;
-		NumberFormat currencyFormat = NumberFormat.getCurrencyInstance(Locale.CANADA);
-		return currencyFormat.format(dollars);
+		return CURRENCY_FORMAT.format(cents/100.);
 	}
 	
 	/**
