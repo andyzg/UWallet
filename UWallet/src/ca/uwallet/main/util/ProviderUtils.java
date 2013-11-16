@@ -25,11 +25,17 @@ public class ProviderUtils {
 	
 	/**
 	 * Formats the balance into a String for display.
-	 * @param cents The amount in cents.
+	 * @param amount The amount in cents.
 	 * @return A string representation of the amount.
 	 */
-	public static String balanceToString(int cents){
-		return CURRENCY_FORMAT.format(cents/100.);
+	public static String amountToString(int amount){
+		return CURRENCY_FORMAT.format(amount/100.);
+	}
+	
+	public static String formatCurrencyNoSymbol(int amount){
+		int cents = Math.abs(amount % 100);
+		int dollars = amount / 100;
+		return String.format("%d.%02d", dollars, cents);
 	}
 	
 	/**

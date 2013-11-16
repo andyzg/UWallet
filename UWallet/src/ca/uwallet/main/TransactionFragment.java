@@ -110,7 +110,7 @@ public class TransactionFragment extends ListFragment implements LoaderCallbacks
 			((TextView) view).setText(s);
 			return true;
 		} else if (cursor.getColumnName(columnIndex).equals(WatcardContract.Transaction.COLUMN_NAME_AMOUNT)){
-			String s = ProviderUtils.balanceToString(cursor.getInt(columnIndex));
+			String s = ProviderUtils.formatCurrencyNoSymbol(cursor.getInt(columnIndex));
 			((TextView) view).setText(s);
 			return true;
 		}

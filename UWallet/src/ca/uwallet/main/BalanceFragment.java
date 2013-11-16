@@ -75,9 +75,9 @@ public class BalanceFragment extends Fragment implements LoaderCallbacks<Cursor>
 		}else{ // Show the data
 			int mealAmount = ProviderUtils.getMealBalance(amounts);
 			int flexAmount = ProviderUtils.getFlexBalance(amounts);
-			mealLabel = res.getString(R.string.meal_plan) + " " + ProviderUtils.balanceToString(mealAmount);
-			flexLabel = res.getString(R.string.flex_dollars) + " " +ProviderUtils.balanceToString(flexAmount);
-			totalLabel = res.getString(R.string.total) + " " +ProviderUtils.balanceToString(mealAmount + flexAmount);
+			mealLabel = res.getString(R.string.meal_plan) + " " + ProviderUtils.amountToString(mealAmount);
+			flexLabel = res.getString(R.string.flex_dollars) + " " +ProviderUtils.amountToString(flexAmount);
+			totalLabel = res.getString(R.string.total) + " " +ProviderUtils.amountToString(mealAmount + flexAmount);
 		}
 		((TextView)v.findViewById(R.id.meal_plan_label)).setText(mealLabel);
 		((TextView)v.findViewById(R.id.flex_dollars_label)).setText(flexLabel);
