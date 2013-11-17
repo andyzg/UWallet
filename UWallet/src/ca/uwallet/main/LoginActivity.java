@@ -28,7 +28,8 @@ import android.widget.EditText;
 import android.widget.TextView;
 import android.widget.Toast;
 import ca.uwallet.main.provider.WatcardContract;
-import ca.uwallet.main.sync.SyncAdapter;
+import ca.uwallet.main.provider.utils.ConnectionHelper;
+import ca.uwallet.main.provider.utils.ParseHelper;
 
 /**
  * Activity which displays a login screen to the user, offering registration as
@@ -249,13 +250,13 @@ public class LoginActivity extends AccountAuthenticatorActivity {
 			// Authenticate the login by fetching the balance document
 			Document doc;
 			try {
-				doc = SyncAdapter.getBalanceDocument(mUsername, mPassword);
+				doc = ConnectionHelper.getBalanceDocument(mUsername, mPassword);
 			} catch (IOException e) {
 				Log.e(TAG, e.toString());
 				return LoginTaskResult.CONNECTION_ERROR;
 			}
 			
-			boolean loginSuccessful = SyncAdapter.Parser.isLoginSuccessful(doc);
+			boolean loginSuccessful = ParseHelper.isLoginSuccessful(doc);
 			if (!loginSuccessful)
 				return LoginTaskResult.INVALID_CREDENTIALS;
 

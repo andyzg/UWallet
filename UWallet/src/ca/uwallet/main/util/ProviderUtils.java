@@ -1,7 +1,9 @@
 package ca.uwallet.main.util;
 
+import java.text.DateFormat;
 import java.text.DecimalFormat;
 import java.text.NumberFormat;
+import java.util.Date;
 import java.util.Locale;
 
 import android.content.ContentResolver;
@@ -15,10 +17,12 @@ public class ProviderUtils {
 	public static final int[] MEAL_PLAN_INDICES = {0, 1, 2};
 	public static final int[] FLEX_DOLLAR_INDICES = {3, 4, 5, 6};
 	public static DecimalFormat CURRENCY_FORMAT;
+	public static DateFormat DATE_FORMAT;
 	static{
 		CURRENCY_FORMAT = (DecimalFormat)NumberFormat.getCurrencyInstance(Locale.CANADA);
 		CURRENCY_FORMAT.setNegativePrefix("$-");
 		CURRENCY_FORMAT.setNegativeSuffix("");
+		DATE_FORMAT = DateFormat.getDateInstance(DateFormat.MEDIUM, Locale.US);
 	}
 	
 	private ProviderUtils(){}
@@ -33,9 +37,14 @@ public class ProviderUtils {
 	}
 	
 	public static String formatCurrencyNoSymbol(int amount){
+		// TODO Fix on negative amounts less than dollar
 		int cents = Math.abs(amount % 100);
 		int dollars = amount / 100;
-		return String.format("%d.%02d", dollars, cents);
+		return String.format(Locale.CANADA, "%d.%02d", dollars, cents);
+	}
+	
+	public static String formatDate(long time){
+		return DATE_FORMAT.format(new Date(time));
 	}
 	
 	/**

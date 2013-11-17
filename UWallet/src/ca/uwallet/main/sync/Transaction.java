@@ -12,13 +12,13 @@ public class Transaction {
 	private int mAmount;
 	private long mDate;
 	private int mTransactionType;
-	private String mTerminal;
+	private int mTerminal;
 	
 	private static final int DEFAULT_ID = 0;
 	private static final int DEFAULT_AMOUNT = 0;
 	private static final long DEFAULT_DATE = 0;
 	private static final int DEFAULT_TRANSACTION_TYPE = 0;
-	private static final String DEFAULT_TERMINAL = "";
+	private static final int DEFAULT_TERMINAL = 0;
 
 
 	public Transaction() {
@@ -33,7 +33,7 @@ public class Transaction {
 	 * @param transactionType The transaction type (flex or meal plan, etc).
 	 * @param terminal The transaction terminal (vendor / description).
 	 */
-	public Transaction(int id, int amount, long date, int transactionType, String terminal) {
+	public Transaction(int id, int amount, long date, int transactionType, int terminal) {
 		this.mId = id;
 		this.mAmount = amount;
 		this.mDate = date;
@@ -41,7 +41,7 @@ public class Transaction {
 		this.mTerminal = terminal;
 	}
 	
-	public Transaction(int amount, long date, int transactionType, String terminal) {
+	public Transaction(int amount, long date, int transactionType, int terminal) {
 		this(DEFAULT_ID, amount, date, transactionType, terminal);
 	}
 
@@ -77,11 +77,11 @@ public class Transaction {
 		this.mTransactionType = transactionType;
 	}
 
-	public String getTerminal() {
+	public int getTerminal() {
 		return mTerminal;
 	}
 
-	public void setTerminal(String terminal) {
+	public void setTerminal(int terminal) {
 		this.mTerminal = terminal;
 	}
 }

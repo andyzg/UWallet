@@ -104,9 +104,8 @@ public class TransactionFragment extends ListFragment implements LoaderCallbacks
 	public boolean setViewValue(View view, Cursor cursor, int columnIndex) {
 		// Display the formatted date
 		if (cursor.getColumnName(columnIndex).equals(WatcardContract.Transaction.COLUMN_NAME_DATE)){
-			DateFormat format = DateFormat.getDateInstance(DateFormat.MEDIUM, Locale.CANADA);
 			long time = cursor.getLong(columnIndex);
-			String s = format.format(new Date(time));
+			String s = ProviderUtils.formatDate(time);
 			((TextView) view).setText(s);
 			return true;
 		} else if (cursor.getColumnName(columnIndex).equals(WatcardContract.Transaction.COLUMN_NAME_AMOUNT)){

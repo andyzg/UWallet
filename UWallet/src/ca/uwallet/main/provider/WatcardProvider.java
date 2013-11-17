@@ -20,38 +20,35 @@ import ca.uwallet.main.util.SelectionBuilder;
 
 public class WatcardProvider extends ContentProvider{
 
-	private TransactionDatabaseHelper mDatabaseHelper = null;
-	
-	// Balance Data
-	private ArrayList<Integer> mBalanceList = null;
-	private static final String[] BALANCE_COLUMN_NAMES = {WatcardContract.Balance._ID,
-														  WatcardContract.Balance.COLUMN_NAME_AMOUNT};
-	
-	/** Database variables **/
-	private static final int DATABASE_VERSION = 1; 
-	
-	private static final String PREFS_KEY_BALANCE = "WatBalance";
+	private WatcardDatabaseHelper mDatabaseHelper = null;
 	
 	// Create the UriMatcher
 	private static final String AUTHORITY = WatcardContract.CONTENT_AUTHORITY;
 	private static final UriMatcher sUriMatcher;
-	private static final int ROUTE_TRANSACTIONS = 1,
-							 ROUTE_TRANSACTIONS_ID = 2,
-							 ROUTE_BALANCES = 3,
-							 ROUTE_BALANCES_ID = 4;
+	private static final int ROUTE_TRANSACTION = 1,
+							 ROUTE_TRANSACTION_ID = 2,
+							 ROUTE_BALANCE = 3,
+							 ROUTE_BALANCE_ID = 4,
+							 ROUTE_TERMINAL = 5,
+							 ROUTE_TERMINAL_ID = 6,
+							 ROUTE_CATEGORY = 7,
+							 ROUTE_CATEGORY_ID = 8;
 	static{
 		sUriMatcher = new UriMatcher(UriMatcher.NO_MATCH);
-		sUriMatcher.addURI(AUTHORITY, WatcardContract.PATH_TRANSACTIONS , ROUTE_TRANSACTIONS);
-		sUriMatcher.addURI(AUTHORITY, WatcardContract.PATH_TRANSACTIONS + "/#", ROUTE_TRANSACTIONS_ID);
-		sUriMatcher.addURI(AUTHORITY, WatcardContract.PATH_BALANCES, ROUTE_BALANCES);
-		sUriMatcher.addURI(AUTHORITY, WatcardContract.PATH_BALANCES + "/#", ROUTE_BALANCES_ID);
+		sUriMatcher.addURI(AUTHORITY, WatcardContract.PATH_TRANSACTION , ROUTE_TRANSACTION);
+		sUriMatcher.addURI(AUTHORITY, WatcardContract.PATH_TRANSACTION + "/#", ROUTE_TRANSACTION_ID);
+		sUriMatcher.addURI(AUTHORITY, WatcardContract.PATH_BALANCE, ROUTE_BALANCE);
+		sUriMatcher.addURI(AUTHORITY, WatcardContract.PATH_BALANCE + "/#", ROUTE_BALANCE_ID);
+		sUriMatcher.addURI(AUTHORITY, WatcardContract.PATH_TERMINAL , ROUTE_TERMINAL);
+		sUriMatcher.addURI(AUTHORITY, WatcardContract.PATH_TERMINAL + "/#", ROUTE_TERMINAL_ID);
+		sUriMatcher.addURI(AUTHORITY, WatcardContract.PATH_CATEGORY, ROUTE_CATEGORY);
+		sUriMatcher.addURI(AUTHORITY, WatcardContract.PATH_CATEGORY + "/#", ROUTE_CATEGORY_ID);
 	}
 	
 	@Override
 	public boolean onCreate() {
 		// Create database helper
-		mDatabaseHelper = new TransactionDatabaseHelper(getContext());
-		mBalanceList = getIntegerArrayPref(getContext(), PREFS_KEY_BALANCE);
+		mDatabaseHelper = new WatcardDatabaseHelper(getContext());
 		return true;
 	}
 	
@@ -61,14 +58,22 @@ public class WatcardProvider extends ContentProvider{
      */
 	public String getType(Uri uri) {
 		switch(sUriMatcher.match(uri)){
-		case ROUTE_TRANSACTIONS:
+		case ROUTE_TRANSACTION:
 			return WatcardContract.Transaction.CONTENT_TYPE;
-		case ROUTE_TRANSACTIONS_ID:
+		case ROUTE_TRANSACTION_ID:
 			return WatcardContract.Transaction.CONTENT_ITEM_TYPE;
-		case ROUTE_BALANCES:
+		case ROUTE_BALANCE:
 			return WatcardContract.Balance.CONTENT_TYPE;
-		case ROUTE_BALANCES_ID:
+		case ROUTE_BALANCE_ID:
 			return WatcardContract.Transaction.CONTENT_ITEM_TYPE;
+		case ROUTE_TERMINAL:
+			return WatcardContract.Terminal.CONTENT_TYPE;
+		case ROUTE_TERMINAL_ID:
+			return WatcardContract.Terminal.CONTENT_ITEM_TYPE;
+		case ROUTE_CATEGORY:
+			return WatcardContract.Category.CONTENT_TYPE;
+		case ROUTE_CATEGORY_ID:
+			return WatcardContract.Category.CONTENT_ITEM_TYPE;
 		default:
             throw new UnsupportedOperationException("Unknown uri: " + uri);
 		}
@@ -85,45 +90,67 @@ public class WatcardProvider extends ContentProvider{
 			String[] selectionArgs, String sortOrder) {
 		SQLiteDatabase db = mDatabaseHelper.getReadableDatabase();
         SelectionBuilder builder = new SelectionBuilder();
+        String id;
+        Cursor c;
+        Context ctx = getContext();
         int uriMatch = sUriMatcher.match(uri);
         switch (uriMatch) {
-            case ROUTE_TRANSACTIONS_ID:{
+            case ROUTE_TRANSACTION_ID:
                 // Return a single entry, by ID.
-                String id = uri.getLastPathSegment();
+                id = uri.getLastPathSegment();
                 builder.where(WatcardContract.Transaction._ID + "=?", id);
-            }
-            case ROUTE_TRANSACTIONS:{
+            case ROUTE_TRANSACTION:
                 // Return all known entries.
                 builder.table(WatcardContract.Transaction.TABLE_NAME)
                        .where(selection, selectionArgs);
-                Cursor c = builder.query(db, projection, sortOrder);
+                c = builder.query(db, projection, sortOrder);
                 // Note: Notification URI must be manually set here for loaders to correctly
                 // register ContentObservers.
-                Context ctx = getContext();
                 assert ctx != null;
                 c.setNotificationUri(ctx.getContentResolver(), uri);
                 return c;
-            }
-            case ROUTE_BALANCES:{
-            	// Return all balance entries
-            	// Ignore sort order
-            	MatrixCursor mc = new MatrixCursor(BALANCE_COLUMN_NAMES, mBalanceList.size());
-            	for (int i = 0; i < mBalanceList.size(); i++){ // Populate cursor
-            		Integer[] row = {i, mBalanceList.get(i)};
-            		mc.addRow(row);
-            	}
-            	return mc;
-            }
-            case ROUTE_BALANCES_ID:{
-            	int id = Integer.parseInt(uri.getLastPathSegment());
-            	if (id < 0 || id >= mBalanceList.size()) // If id not in list
-            		return null;
-            	MatrixCursor mc = new MatrixCursor(BALANCE_COLUMN_NAMES, 1);
-            	Integer[] row = {id, mBalanceList.get(id)};
-            	mc.addRow(row);
-            	return mc;
-            }
-            	
+            case ROUTE_BALANCE_ID:
+            	// Return a single entry, by ID
+            	id = uri.getLastPathSegment();
+            	builder.where(WatcardContract.Balance._ID + "=?", id);
+            case ROUTE_BALANCE:
+            	// Return all known entries
+            	builder.table(WatcardContract.Balance.TABLE_NAME)
+            		   .where(selection, selectionArgs);
+            	c = builder.query(db, projection, sortOrder);
+            	// Note: Notification URI must be manually set here for loaders to correctly
+                // register ContentObservers.
+                assert ctx != null;
+                c.setNotificationUri(ctx.getContentResolver(), uri);
+                return c;
+            case ROUTE_TERMINAL_ID:
+            	// Return a single entry, by ID
+            	id = uri.getLastPathSegment();
+            	builder.where(WatcardContract.Terminal._ID + "=?", id);
+            case ROUTE_TERMINAL:
+            	// Return all known entries
+            	builder.table(WatcardContract.Terminal.TABLE_NAME)
+            		   .where(selection, selectionArgs);
+            	c = builder.query(db, projection, sortOrder);
+            	// Note: Notification URI must be manually set here for loaders to correctly
+                // register ContentObservers.
+                assert ctx != null;
+                c.setNotificationUri(ctx.getContentResolver(), uri);
+                return c;
+            case ROUTE_CATEGORY_ID:
+            	// Return a single entry, by ID
+            	id = uri.getLastPathSegment();
+            	builder.where(WatcardContract.Category._ID + "=?", id);
+            case ROUTE_CATEGORY:
+            	// Return all known entries
+            	builder.table(WatcardContract.Category.TABLE_NAME)
+            		   .where(selection, selectionArgs);
+            	c = builder.query(db, projection, sortOrder);
+            	// Note: Notification URI must be manually set here for loaders to correctly
+                // register ContentObservers.
+                assert ctx != null;
+                c.setNotificationUri(ctx.getContentResolver(), uri);
+                return c;
             default:
                 throw new UnsupportedOperationException("Unknown uri: " + uri);
         }
@@ -138,18 +165,28 @@ public class WatcardProvider extends ContentProvider{
         assert db != null;
         final int match = sUriMatcher.match(uri);
         Uri result;
+        long id;
         switch (match) {
-            case ROUTE_TRANSACTIONS:
-                long id = db.insertOrThrow(WatcardContract.Transaction.TABLE_NAME, null, values);
+            case ROUTE_TRANSACTION:
+                id = db.insertOrThrow(WatcardContract.Transaction.TABLE_NAME, null, values);
                 result = Uri.parse(WatcardContract.Transaction.CONTENT_URI + "/" + id);
                 break;
-            case ROUTE_BALANCES:
-            	mBalanceList.add(values.getAsInteger(WatcardContract.Balance.COLUMN_NAME_AMOUNT));
-            	result = Uri.parse(WatcardContract.Balance.CONTENT_URI + "/" + (mBalanceList.size() - 1));
-            	setIntegerArrayPref(getContext(), PREFS_KEY_BALANCE, mBalanceList);
+            case ROUTE_BALANCE:
+            	id = db.insertOrThrow(WatcardContract.Balance.TABLE_NAME, null, values);
+            	result = Uri.parse(WatcardContract.Balance.CONTENT_URI + "/" + id);
             	break;
-            case ROUTE_TRANSACTIONS_ID:
-            case ROUTE_BALANCES_ID:
+            case ROUTE_TERMINAL:
+            	id = db.insertOrThrow(WatcardContract.Terminal.TABLE_NAME, null, values);
+            	result = Uri.parse(WatcardContract.Terminal.CONTENT_URI + "/" + id);
+            	break;
+            case ROUTE_CATEGORY:
+            	id = db.insertOrThrow(WatcardContract.Category.TABLE_NAME, null, values);
+            	result = Uri.parse(WatcardContract.Category.CONTENT_URI + "/" + id);
+            	break;
+            case ROUTE_TRANSACTION_ID:
+            case ROUTE_BALANCE_ID:
+            case ROUTE_TERMINAL_ID:
+            case ROUTE_CATEGORY_ID:
                 throw new UnsupportedOperationException("Insert not supported on URI: " + uri);
             default:
                 throw new UnsupportedOperationException("Unknown uri: " + uri);
@@ -170,28 +207,55 @@ public class WatcardProvider extends ContentProvider{
         final SQLiteDatabase db = mDatabaseHelper.getWritableDatabase();
         final int match = sUriMatcher.match(uri);
         int count;
+        String id;
         switch (match) {
-            case ROUTE_TRANSACTIONS:
+            case ROUTE_TRANSACTION:
                 count = builder.table(WatcardContract.Transaction.TABLE_NAME)
                         .where(selection, selectionArgs)
                         .delete(db);
                 break;
-            case ROUTE_TRANSACTIONS_ID:
-                String id = uri.getLastPathSegment();
+            case ROUTE_TRANSACTION_ID:
+                id = uri.getLastPathSegment();
                 count = builder.table(WatcardContract.Transaction.TABLE_NAME)
                        .where(WatcardContract.Transaction._ID + "=?", id)
                        .where(selection, selectionArgs)
                        .delete(db);
                 break;
-            case ROUTE_BALANCES:
-            	count = mBalanceList.size();
-            	mBalanceList = new ArrayList<Integer>();
-            	setIntegerArrayPref(getContext(), PREFS_KEY_BALANCE, mBalanceList);
+            case ROUTE_BALANCE:
+            	count = builder.table(WatcardContract.Balance.TABLE_NAME)
+            				   .where(selection, selectionArgs)
+            				   .delete(db);
             	break;
-            case ROUTE_BALANCES_ID:
-            	mBalanceList.remove((int) Integer.parseInt(uri.getLastPathSegment()));
-            	setIntegerArrayPref(getContext(), PREFS_KEY_BALANCE, mBalanceList);
-            	count = 1;
+            case ROUTE_BALANCE_ID:
+            	id = uri.getLastPathSegment();
+            	count = builder.table(WatcardContract.Balance.TABLE_NAME)
+            				   .where(WatcardContract.Balance._ID + "=?", id)
+            				   .where(selection, selectionArgs)
+            				   .delete(db);
+            	break;
+            case ROUTE_TERMINAL:
+            	count = builder.table(WatcardContract.Terminal.TABLE_NAME)
+            				   .where(selection, selectionArgs)
+            				   .delete(db);
+            	break;
+            case ROUTE_TERMINAL_ID:
+            	id = uri.getLastPathSegment();
+            	count = builder.table(WatcardContract.Terminal.TABLE_NAME)
+            				   .where(WatcardContract.Terminal._ID + "=?", id)
+            				   .where(selection, selectionArgs)
+            				   .delete(db);
+            	break;
+            case ROUTE_CATEGORY:
+            	count = builder.table(WatcardContract.Category.TABLE_NAME)
+            				   .where(selection, selectionArgs)
+            				   .delete(db);
+            	break;
+            case ROUTE_CATEGORY_ID:
+            	id = uri.getLastPathSegment();
+            	count = builder.table(WatcardContract.Category.TABLE_NAME)
+            				   .where(WatcardContract.Category._ID + "=?", id)
+            				   .where(selection, selectionArgs)
+            				   .delete(db);
             	break;
             default:
                 throw new UnsupportedOperationException("Unknown uri: " + uri);
@@ -212,26 +276,50 @@ public class WatcardProvider extends ContentProvider{
        final SQLiteDatabase db = mDatabaseHelper.getWritableDatabase();
        final int match = sUriMatcher.match(uri);
        int count;
+       String id;
        switch (match) {
-           case ROUTE_TRANSACTIONS:
+           case ROUTE_TRANSACTION:
                count = builder.table(WatcardContract.Transaction.TABLE_NAME)
                        .where(selection, selectionArgs)
                        .update(db, values);
                break;
-           case ROUTE_TRANSACTIONS_ID:
-               String id = uri.getLastPathSegment();
+           case ROUTE_TRANSACTION_ID:
+               id = uri.getLastPathSegment();
                count = builder.table(WatcardContract.Transaction.TABLE_NAME)
                        .where(WatcardContract.Transaction._ID + "=?", id)
                        .where(selection, selectionArgs)
                        .update(db, values);
                break;
-           case ROUTE_BALANCES_ID:
-        	   int index = Integer.parseInt(uri.getLastPathSegment());
-        	   mBalanceList.set(index, values.getAsInteger(WatcardContract.Balance.COLUMN_NAME_AMOUNT));
-        	   count = 1;
-        	   break;
-           case ROUTE_BALANCES:
-        	   throw new UnsupportedOperationException("Update not support on URI: " + uri);
+           case ROUTE_BALANCE:
+        	   count = builder.table(WatcardContract.Balance.TABLE_NAME)
+        	   				  .where(selection, selectionArgs)
+        	   				  .update(db, values);
+           case ROUTE_BALANCE_ID:
+        	   id = uri.getLastPathSegment();
+        	   count = builder.table(WatcardContract.Balance.TABLE_NAME)
+        			   		  .where(WatcardContract.Balance._ID + "=?", id)
+        			   		  .where(selection, selectionArgs)
+        			   		  .update(db, values);
+           case ROUTE_TERMINAL:
+        	   count = builder.table(WatcardContract.Terminal.TABLE_NAME)
+        	   				  .where(selection, selectionArgs)
+        	   				  .update(db, values);
+           case ROUTE_TERMINAL_ID:
+        	   id = uri.getLastPathSegment();
+        	   count = builder.table(WatcardContract.Terminal.TABLE_NAME)
+        			   		  .where(WatcardContract.Terminal._ID + "=?", id)
+        			   		  .where(selection, selectionArgs)
+        			   		  .update(db, values);
+           case ROUTE_CATEGORY:
+        	   count = builder.table(WatcardContract.Category.TABLE_NAME)
+        	   				  .where(selection, selectionArgs)
+        	   				  .update(db, values);
+           case ROUTE_CATEGORY_ID:
+        	   id = uri.getLastPathSegment();
+        	   count = builder.table(WatcardContract.Category.TABLE_NAME)
+        			   		  .where(WatcardContract.Category._ID + "=?", id)
+        			   		  .where(selection, selectionArgs)
+        			   		  .update(db, values);
            default:
                throw new UnsupportedOperationException("Unknown uri: " + uri);
        }
@@ -240,72 +328,54 @@ public class WatcardProvider extends ContentProvider{
        ctx.getContentResolver().notifyChange(uri, null, false);
        return count;
    }
-   
-   /**
-    * Saves an ArrayList of Integer to SharedPreferences.
-    * @param context The context.
-    * @param key The key to store the list in.
-    * @param values The list to store.
-    */
-   public static void setIntegerArrayPref(Context context, String key, ArrayList<Integer> values) {
-	    SharedPreferences prefs = PreferenceManager.getDefaultSharedPreferences(context);
-	    SharedPreferences.Editor editor = prefs.edit();
-	    JSONArray a = new JSONArray();
-	    for (int i = 0; i < values.size(); i++) {
-	        a.put(values.get(i));
-	    }
-	    if (!values.isEmpty()) {
-	        editor.putString(key, a.toString());
-	    } else {
-	        editor.putString(key, null);
-	    }
-	    editor.commit();
-	}
-
-   /**
-    * Loads an ArrayList of Integer from SharedPreferences.
-    * @param context The context.
-    * @param key The key the list is stored in.
-    * @return The list.
-    */
-	public static ArrayList<Integer> getIntegerArrayPref(Context context, String key) {
-	    SharedPreferences prefs = PreferenceManager.getDefaultSharedPreferences(context);
-	    String json = prefs.getString(key, null);
-	    ArrayList<Integer> list = new ArrayList<Integer>();
-	    if (json != null) {
-	        try {
-	            JSONArray a = new JSONArray(json);
-	            for (int i = 0; i < a.length(); i++) {
-	                int url = a.optInt(i);
-	                list.add(url);
-	            }
-	        } catch (JSONException e) {
-	            e.printStackTrace();
-	        }
-	    }
-	    return list;
-	}
 	
-	public class TransactionDatabaseHelper extends SQLiteOpenHelper{
+	public class WatcardDatabaseHelper extends SQLiteOpenHelper{
 		
 		private static final String DATABASE_NAME = "watcard.db";
+		private static final int DATABASE_VERSION = 3; 
 		
 		private static final String TYPE_TEXT = " TEXT";
 		private static final String TYPE_INTEGER = " INTEGER";
 		private static final String COMMA_SEP = ",";
 		
-		private static final String SQL_CREATE_ENTRIES =
+		private static final String SQL_CREATE_TRANSACTION =
 				"CREATE TABLE " + WatcardContract.Transaction.TABLE_NAME + "(" +
 				WatcardContract.Transaction._ID + " INTEGER PRIMARY KEY AUTOINCREMENT NOT NULL," +
-				WatcardContract.Transaction.COLUMN_NAME_AMOUNT + TYPE_TEXT + COMMA_SEP +
+				WatcardContract.Transaction.COLUMN_NAME_AMOUNT + TYPE_INTEGER + COMMA_SEP +
 				WatcardContract.Transaction.COLUMN_NAME_DATE + TYPE_INTEGER + COMMA_SEP +
-				WatcardContract.Transaction.COLUMN_NAME_TYPE + TYPE_INTEGER + COMMA_SEP + 
-				WatcardContract.Transaction.COLUMN_NAME_TERMINAL + TYPE_TEXT + ")";
+				WatcardContract.Transaction.COLUMN_NAME_MONEY_TYPE + TYPE_INTEGER + COMMA_SEP + 
+				WatcardContract.Transaction.COLUMN_NAME_TERMINAL + TYPE_INTEGER + ")";
 		
-		private static final String SQL_DELETE_ENTRIES = 
+		private static final String SQL_CREATE_BALANCE =
+				"CREATE TABLE " + WatcardContract.Balance.TABLE_NAME + "(" +
+				WatcardContract.Balance._ID + " INTEGER PRIMARY KEY AUTOINCREMENT NOT NULL, " +
+				WatcardContract.Balance.COLUMN_NAME_AMOUNT + TYPE_INTEGER + ")";
+		
+		private static final String SQL_CREATE_TERMINAL = 
+				"CREATE TABLE " + WatcardContract.Terminal.TABLE_NAME + "(" + 
+				WatcardContract.Terminal._ID + " INTEGER PRIMARY KEY," +
+				WatcardContract.Terminal.COLUMN_NAME_TERMINAL_TEXT + TYPE_TEXT + COMMA_SEP +
+				WatcardContract.Terminal.COLUMN_NAME_CATEGORY + TYPE_INTEGER + COMMA_SEP +
+				WatcardContract.Terminal.COLUMN_NAME_ADDED_BY + TYPE_INTEGER + ")";
+		
+		private static final String SQL_CREATE_CATEGORY = 
+				"CREATE TABLE " + WatcardContract.Category.TABLE_NAME + "(" +
+			    WatcardContract.Category._ID + " INTEGER PRIMARY KEY," +
+			    WatcardContract.Category.COLUMN_NAME_CATEGORY_TEXT + TYPE_TEXT + ")";
+		
+		private static final String SQL_DELETE_TRANSACTION = 
 				"DROP TABLE IF EXISTS " + WatcardContract.Transaction.TABLE_NAME;
+		
+		private static final String SQL_DELETE_BALANCE =
+				"DROP TABLE IF EXISTS " + WatcardContract.Balance.TABLE_NAME;
+		
+		private static final String SQL_DELETE_TERMINAL =
+				"DROP TABLE IF EXISTS " + WatcardContract.Terminal.TABLE_NAME;
+		
+		private static final String SQL_DELETE_CATEGORY =
+				"DROP TABLE IF EXISTS " + WatcardContract.Category.TABLE_NAME;
 
-		public TransactionDatabaseHelper(Context context){
+		public WatcardDatabaseHelper(Context context){
 			super(context, DATABASE_NAME, null, DATABASE_VERSION);
 		}
 
@@ -314,7 +384,10 @@ public class WatcardProvider extends ContentProvider{
 		 * Build the tables
 		 */
 		public void onCreate(SQLiteDatabase db) {
-			db.execSQL(SQL_CREATE_ENTRIES);
+			db.execSQL(SQL_CREATE_TRANSACTION);
+			db.execSQL(SQL_CREATE_BALANCE);
+			db.execSQL(SQL_CREATE_TERMINAL);
+			db.execSQL(SQL_CREATE_CATEGORY);
 		}
 
 		@Override
@@ -322,7 +395,10 @@ public class WatcardProvider extends ContentProvider{
 		 * Called with new database version. Drop the entire table and rebuild.
 		 */
 		public void onUpgrade(SQLiteDatabase db, int oldVersion, int newVersion) {
-			db.execSQL(SQL_DELETE_ENTRIES);
+			db.execSQL(SQL_DELETE_TRANSACTION);
+			db.execSQL(SQL_DELETE_BALANCE);
+			db.execSQL(SQL_DELETE_TERMINAL);
+			db.execSQL(SQL_DELETE_CATEGORY);
 			onCreate(db);
 		}
 	}

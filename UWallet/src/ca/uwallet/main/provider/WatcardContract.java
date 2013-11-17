@@ -26,18 +26,27 @@ public final class WatcardContract {
     /**
      * Path component for "transactions"-type resources..
      */
-    public static final String PATH_TRANSACTIONS = "transaction";
+    public static final String PATH_TRANSACTION = "transaction";
     
     /**
      * Path component for balance
      */
-    public static final String PATH_BALANCES = "balance";
+    public static final String PATH_BALANCE = "balance";
+    
+    /**
+     * Path component for terminal.
+     */
+    public static final String PATH_TERMINAL = "terminal";
+    
+    /**
+     * Path component for category.
+     */
+    public static final String PATH_CATEGORY = "category";
     
     /**
      * Columns supported by "transaction" records.
      */
     public static final class Transaction implements BaseColumns {
-    	// TODO change first two
         /**
          * MIME type for lists of transactions.
          */
@@ -53,7 +62,7 @@ public final class WatcardContract {
          * Fully qualified URI for "transaction" resources.
          */
         public static final Uri CONTENT_URI =
-                BASE_CONTENT_URI.buildUpon().appendPath(PATH_TRANSACTIONS).build();
+                BASE_CONTENT_URI.buildUpon().appendPath(PATH_TRANSACTION).build();
 
         /**
          * Table name where records are stored for "transaction" resources.
@@ -72,7 +81,7 @@ public final class WatcardContract {
         /**
          * The transaction type.
          */
-        public static final String COLUMN_NAME_TYPE = "type";
+        public static final String COLUMN_NAME_MONEY_TYPE = "moneyType";
         /**
          * The transaction's terminal (vendor / description).
          */
@@ -80,10 +89,9 @@ public final class WatcardContract {
     }
     
     /**
-     * Columns supported by "transaction" records.
+     * Gives info on how to access balance data.
      */
     public static final class Balance implements BaseColumns {
-    	// TODO change first two
         /**
          * MIME type for lists of transactions.
          */
@@ -94,16 +102,95 @@ public final class WatcardContract {
          */
         public static final String CONTENT_ITEM_TYPE =
                 ContentResolver.CURSOR_ITEM_BASE_TYPE + "/vnd.ca.uwallet.main.provider.balance";
+        
+        /**
+         * Table name where records are stored for "balance" resources.
+         */
+        public static final String TABLE_NAME = "balance";
 
         /**
          * Fully qualified URI for "transaction" resources.
          */
         public static final Uri CONTENT_URI =
-                BASE_CONTENT_URI.buildUpon().appendPath(PATH_BALANCES).build();
+                BASE_CONTENT_URI.buildUpon().appendPath(PATH_BALANCE).build();
         
         /**
          * The balance amount for the category.
          */
         public static final String COLUMN_NAME_AMOUNT = "amount";
+    }
+    
+    /**
+     * Information on how to access Terminal data.
+     */
+    public static final class Terminal implements BaseColumns {
+    	/**
+         * MIME type for lists of terminals.
+         */
+        public static final String CONTENT_TYPE =
+                ContentResolver.CURSOR_DIR_BASE_TYPE + "/vnd.ca.uwallet.main.provider.terminal";
+        /**
+         * MIME type for individual entries.
+         */
+        public static final String CONTENT_ITEM_TYPE =
+                ContentResolver.CURSOR_ITEM_BASE_TYPE + "/vnd.ca.uwallet.main.provider.terminal";
+        
+        /**
+         * Table name where records are stored for "terminal" resources.
+         */
+        public static final String TABLE_NAME = "terminal";
+
+        /**
+         * Fully qualified URI for "terminal" resources.
+         */
+        public static final Uri CONTENT_URI =
+                BASE_CONTENT_URI.buildUpon().appendPath(PATH_TERMINAL).build();
+        
+        /**
+         * The description of the terminal.
+         */
+        public static final String COLUMN_NAME_TERMINAL_TEXT = "terminalText";
+        
+        /**
+         * Whether the description is from Watcard site, synced from the central list or by user.
+         */
+        public static final String COLUMN_NAME_ADDED_BY = "addedBy";
+        
+        /**
+         * The category of the terminal.
+         */
+        public static final String COLUMN_NAME_CATEGORY = "category";
+    }
+    
+    /**
+     * Information on how to access Terminal data.
+     */
+    public static final class Category implements BaseColumns {
+    	/**
+         * MIME type for lists of terminals.
+         */
+        public static final String CONTENT_TYPE =
+                ContentResolver.CURSOR_DIR_BASE_TYPE + "/vnd.ca.uwallet.main.provider.category";
+        /**
+         * MIME type for individual entries.
+         */
+        public static final String CONTENT_ITEM_TYPE =
+                ContentResolver.CURSOR_ITEM_BASE_TYPE + "/vnd.ca.uwallet.main.provider.category";
+        
+        /**
+         * Table name where records are stored for "category" resources.
+         */
+        public static final String TABLE_NAME = "category";
+
+        /**
+         * Fully qualified URI for "category" resources.
+         */
+        public static final Uri CONTENT_URI =
+                BASE_CONTENT_URI.buildUpon().appendPath(PATH_CATEGORY).build();
+        
+        /**
+         * The description of the category.
+         */
+        public static final String COLUMN_NAME_CATEGORY_TEXT = "categoryText";
     }
 }
