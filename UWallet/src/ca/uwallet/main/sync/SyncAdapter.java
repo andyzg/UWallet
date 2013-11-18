@@ -3,6 +3,7 @@ package ca.uwallet.main.sync;
 import java.io.IOException;
 import java.text.ParseException;
 import java.util.ArrayList;
+import java.util.HashMap;
 
 import org.jsoup.nodes.Document;
 
@@ -31,6 +32,9 @@ public class SyncAdapter extends AbstractThreadedSyncAdapter{
 	
 	private ContentResolver mContentResolver = null;
 	private static final String TAG = "SyncAdapter";
+	public static final int ADDED_BY_WATCARD = 0;
+	public static final int ADDED_BY_COMPILED = 1;
+	public static final int ADDED_BY_USER = 2;
 	
 	/**
 	 * Set up sync adapter.
@@ -51,45 +55,102 @@ public class SyncAdapter extends AbstractThreadedSyncAdapter{
 		String username = account.name;
 		String password = accountManager.getPassword(account);
 		
-		ArrayList<Transaction> transactions;
-		ArrayList<Integer> balances;
-		Log.i(TAG, "Fetching from network");
+		syncBalances(username, password, syncResult);
+		syncTransactions(username, password, syncResult);
+	}
+	
+	/**
+	 * Syncs the transactions from the WatCard server.
+	 * @param username
+	 * @param password
+	 * @param syncResult
+	 */
+	public void syncTransactions(String username, String password, SyncResult syncResult){
+		// Fetch the document
+		Log.i(TAG, "Fetching transaction HTML from network");
+		Document doc;
 		try{
-			Document transactionDoc = ConnectionHelper.getTransactionDocument(username, password);
-			Document balanceDoc = ConnectionHelper.getBalanceDocument(username, password);
-			if (!ParseHelper.isLoginSuccessful(transactionDoc) || !ParseHelper.isLoginSuccessful(balanceDoc)){
-				Log.e(TAG, "Log in unnsucessful");
-				syncResult.stats.numAuthExceptions++;
-				return;
-			}
-			transactions = ParseHelper.parseTransactions(transactionDoc);
-			balances = ParseHelper.parseBalances(balanceDoc);
+		doc = ConnectionHelper.getTransactionDocument(username, password);
 		} catch(IOException e){
 			Log.e(TAG, "Error reading from network: " + e.toString());
             syncResult.stats.numIoExceptions++;
             return;
+		}
+		
+		// Check if login was successful
+		if (!ParseHelper.isLoginSuccessful(doc)){
+			Log.e(TAG, "Login unsucessful");
+			syncResult.stats.numAuthExceptions++;
+			return;
+		}
+		
+		// Parse the data
+		ArrayList<Transaction> transactions;
+		try{
+			transactions = ParseHelper.parseTransactions(doc);
 		} catch(ParseException e){
 			Log.e(TAG, "Error parsing data: " + e.toString());
             syncResult.stats.numParseExceptions++;
             return;
 		}
-		// We have all transaction objects and balances
+		
+		HashMap<Integer, String> terminalMap = ParseHelper.parseTransactionsToTerminal(doc);
+		
+		// Update db
 		try{
 			updateTransactionData(transactions, syncResult);
-			updateBalanceData(balances, syncResult);
 		} catch (RemoteException e){
-			Log.e(TAG, "Error updating database: " + e.toString());
+			Log.e(TAG, "Error updating transaction database: " + e.toString());
 			syncResult.databaseError = true;
 			return;
 		} catch (OperationApplicationException e){
-			Log.e(TAG, "Error updating database: " + e.toString());
+			Log.e(TAG, "Error updating transaction database: " + e.toString());
             syncResult.databaseError = true;
             return;
 		}
-		Log.i(TAG, "Network synchronization complete");
 	}
 	
-	
+	/**
+	 * Sync balances from Watcard server.
+	 * @param username
+	 * @param password
+	 * @param syncResult
+	 */
+	public void syncBalances(String username, String password, SyncResult syncResult){
+		// Fetch balance HTML
+		Log.i(TAG, "Fetching balances HTML from network");
+		Document doc;
+		try{
+			doc = ConnectionHelper.getBalanceDocument(username, password);
+		} catch(IOException e){
+			Log.e(TAG, "Error reading from network: " + e.toString());
+            syncResult.stats.numIoExceptions++;
+            return;
+		}
+		
+		// Check login success
+		if (!ParseHelper.isLoginSuccessful(doc)){
+			Log.e(TAG, "Balance login unsucessful");
+			syncResult.stats.numAuthExceptions++;
+			return;
+		}
+		
+		// Parse balances
+		ArrayList<Integer> balances = ParseHelper.parseBalances(doc);
+		
+		// Update DB
+		try{
+			updateBalanceData(balances, syncResult);
+		} catch (RemoteException e){
+			Log.e(TAG, "Error updating balance table: " + e.toString());
+			syncResult.databaseError = true;
+			return;
+		} catch (OperationApplicationException e){
+			Log.e(TAG, "Error updating balance table: " + e.toString());
+            syncResult.databaseError = true;
+            return;
+		}
+	}
 	
 	/**
 	 * Updates the transaction database with new transactions. For now it deletes all the old data and inserts the new.
@@ -148,5 +209,9 @@ public class SyncAdapter extends AbstractThreadedSyncAdapter{
 		Log.i(TAG, "Applying batch update of balances");
 		mContentResolver.applyBatch(WatcardContract.CONTENT_AUTHORITY, batch);
 		mContentResolver.notifyChange(WatcardContract.BASE_CONTENT_URI, null, false);
+	}
+	
+	public void updateTerminalData(HashMap<Integer, String> map, int addedBy){
+		
 	}
 }

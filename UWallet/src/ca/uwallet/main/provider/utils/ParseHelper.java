@@ -5,6 +5,8 @@ import java.text.DateFormat;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
+import java.util.HashMap;
+import java.util.HashSet;
 
 import org.jsoup.nodes.Document;
 import org.jsoup.nodes.Element;
@@ -74,6 +76,25 @@ public class ParseHelper{
 		}
 		
 		return operations;
+	}
+	
+	/**
+	 * Get the text associated 
+	 * @param doc
+	 * @return
+	 */
+	@SuppressLint("UseSparseArrays")
+	public static HashMap<Integer, String> parseTransactionsToTerminal(Document doc){
+		HashMap<Integer, String> map = new HashMap<Integer, String>();
+		Element table = doc.getElementById(TRANSACTION_TABLE_ID);
+		
+		for (Element row : table.select(TRANSACTION_TABLE_SELECTOR)){
+			String s = row.getElementById(COLUMN_TRANSACTION_TERMINAL).text();
+			String text = parseTerminalToDescription(s);
+			int id = parseTerminalToId(s);
+			map.put(id, text);
+		}
+		return map;
 	}
 	
 	/**
