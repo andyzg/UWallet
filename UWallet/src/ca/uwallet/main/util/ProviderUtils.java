@@ -117,5 +117,7 @@ public class ProviderUtils {
 		ContentResolver resolver = context.getContentResolver();
 		resolver.delete(WatcardContract.Transaction.CONTENT_URI, null, null);
 		resolver.delete(WatcardContract.Balance.CONTENT_URI, null, null);
+		resolver.delete(WatcardContract.Terminal.CONTENT_URI, null, null);
+		resolver.delete(WatcardContract.Category.CONTENT_URI, null, null);
 	}
 }

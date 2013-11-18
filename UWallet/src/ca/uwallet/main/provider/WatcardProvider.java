@@ -305,6 +305,7 @@ public class WatcardProvider extends ContentProvider{
         			   		  .where(WatcardContract.Balance._ID + "=?", id)
         			   		  .where(selection, selectionArgs)
         			   		  .update(db, values);
+        	   break;
            case ROUTE_TERMINAL:
         	   count = builder.table(WatcardContract.Terminal.TABLE_NAME)
         	   				  .where(selection, selectionArgs)
@@ -315,6 +316,7 @@ public class WatcardProvider extends ContentProvider{
         			   		  .where(WatcardContract.Terminal._ID + "=?", id)
         			   		  .where(selection, selectionArgs)
         			   		  .update(db, values);
+        	   break;
            case ROUTE_CATEGORY:
         	   count = builder.table(WatcardContract.Category.TABLE_NAME)
         	   				  .where(selection, selectionArgs)
@@ -325,6 +327,7 @@ public class WatcardProvider extends ContentProvider{
         			   		  .where(WatcardContract.Category._ID + "=?", id)
         			   		  .where(selection, selectionArgs)
         			   		  .update(db, values);
+        	   break;
            default:
                throw new UnsupportedOperationException("Unknown uri: " + uri);
        }
@@ -337,7 +340,7 @@ public class WatcardProvider extends ContentProvider{
 	public class WatcardDatabaseHelper extends SQLiteOpenHelper{
 		
 		private static final String DATABASE_NAME = "watcard.db";
-		private static final int DATABASE_VERSION = 4; 
+		private static final int DATABASE_VERSION = 5; 
 		
 		private static final String TYPE_TEXT = " TEXT";
 		private static final String TYPE_INTEGER = " INTEGER";
@@ -361,7 +364,8 @@ public class WatcardProvider extends ContentProvider{
 				WatcardContract.Terminal._ID + " INTEGER PRIMARY KEY," +
 				WatcardContract.Terminal.COLUMN_NAME_TEXT + TYPE_TEXT + COMMA_SEP +
 				WatcardContract.Terminal.COLUMN_NAME_CATEGORY + TYPE_INTEGER + COMMA_SEP +
-				WatcardContract.Terminal.COLUMN_NAME_TEXT_PRIORITY + TYPE_INTEGER + ")";
+				WatcardContract.Terminal.COLUMN_NAME_TEXT_PRIORITY + TYPE_INTEGER +  COMMA_SEP +
+				WatcardContract.Terminal.COLUMN_NAME_CATEGORY_PRIORITY + TYPE_INTEGER +")";
 		
 		private static final String SQL_CREATE_CATEGORY = 
 				"CREATE TABLE " + WatcardContract.Category.TABLE_NAME + "(" +
