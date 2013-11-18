@@ -22,6 +22,11 @@ public class WatcardProvider extends ContentProvider{
 
 	private WatcardDatabaseHelper mDatabaseHelper = null;
 	
+	private static final String JOINED_TRANSACTION_TABLE =
+			WatcardContract.Transaction.TABLE_NAME + " LEFT OUTER JOIN " + WatcardContract.Terminal.TABLE_NAME + 
+			" ON " + WatcardContract.Transaction.TABLE_NAME + "." + WatcardContract.Transaction.COLUMN_NAME_TERMINAL +
+			" = " + WatcardContract.Terminal.TABLE_NAME + "." + WatcardContract.Terminal._ID; // TODO join category
+	
 	// Create the UriMatcher
 	private static final String AUTHORITY = WatcardContract.CONTENT_AUTHORITY;
 	private static final UriMatcher sUriMatcher;
@@ -101,7 +106,7 @@ public class WatcardProvider extends ContentProvider{
                 builder.where(WatcardContract.Transaction._ID + "=?", id);
             case ROUTE_TRANSACTION:
                 // Return all known entries.
-                builder.table(WatcardContract.Transaction.TABLE_NAME)
+                builder.table(JOINED_TRANSACTION_TABLE)
                        .where(selection, selectionArgs);
                 c = builder.query(db, projection, sortOrder);
                 // Note: Notification URI must be manually set here for loaders to correctly
@@ -332,7 +337,7 @@ public class WatcardProvider extends ContentProvider{
 	public class WatcardDatabaseHelper extends SQLiteOpenHelper{
 		
 		private static final String DATABASE_NAME = "watcard.db";
-		private static final int DATABASE_VERSION = 3; 
+		private static final int DATABASE_VERSION = 4; 
 		
 		private static final String TYPE_TEXT = " TEXT";
 		private static final String TYPE_INTEGER = " INTEGER";
@@ -354,9 +359,9 @@ public class WatcardProvider extends ContentProvider{
 		private static final String SQL_CREATE_TERMINAL = 
 				"CREATE TABLE " + WatcardContract.Terminal.TABLE_NAME + "(" + 
 				WatcardContract.Terminal._ID + " INTEGER PRIMARY KEY," +
-				WatcardContract.Terminal.COLUMN_NAME_TERMINAL_TEXT + TYPE_TEXT + COMMA_SEP +
+				WatcardContract.Terminal.COLUMN_NAME_TEXT + TYPE_TEXT + COMMA_SEP +
 				WatcardContract.Terminal.COLUMN_NAME_CATEGORY + TYPE_INTEGER + COMMA_SEP +
-				WatcardContract.Terminal.COLUMN_NAME_ADDED_BY + TYPE_INTEGER + ")";
+				WatcardContract.Terminal.COLUMN_NAME_TEXT_PRIORITY + TYPE_INTEGER + ")";
 		
 		private static final String SQL_CREATE_CATEGORY = 
 				"CREATE TABLE " + WatcardContract.Category.TABLE_NAME + "(" +

@@ -16,6 +16,8 @@ import android.content.ContentResolver;
 import android.content.Context;
 import android.content.OperationApplicationException;
 import android.content.SyncResult;
+import android.database.Cursor;
+import android.net.Uri;
 import android.os.Bundle;
 import android.os.RemoteException;
 import android.util.Log;
@@ -99,6 +101,7 @@ public class SyncAdapter extends AbstractThreadedSyncAdapter{
 		// Update db
 		try{
 			updateTransactionData(transactions, syncResult);
+			updateTerminalData(terminalMap, ADDED_BY_WATCARD, syncResult);
 		} catch (RemoteException e){
 			Log.e(TAG, "Error updating transaction database: " + e.toString());
 			syncResult.databaseError = true;
@@ -211,7 +214,51 @@ public class SyncAdapter extends AbstractThreadedSyncAdapter{
 		mContentResolver.notifyChange(WatcardContract.BASE_CONTENT_URI, null, false);
 	}
 	
-	public void updateTerminalData(HashMap<Integer, String> map, int addedBy){
+	public void updateTerminalData(HashMap<Integer, String> map, int priority, final SyncResult syncResult) throws RemoteException, OperationApplicationException{
+		//TODO deal with category
+		ArrayList<ContentProviderOperation> batch = new ArrayList<ContentProviderOperation>();
 		
+		Log.i(TAG, "Fetching local terminal entries for merge");
+		Uri uri = WatcardContract.Terminal.CONTENT_URI;
+		Cursor c = mContentResolver.query(uri, null, null, null, null);
+		assert c != null;
+		int idColumn = c.getColumnIndex(WatcardContract.Terminal._ID);
+		int textPriorityColumn = c.getColumnIndex(WatcardContract.Terminal.COLUMN_NAME_TEXT_PRIORITY);
+		Log.i(TAG, "Found " + c.getCount() + " local entries. Computing merge solution...");
+		while(c.moveToNext()){
+			int id = c.getInt(idColumn);
+			int oldPriority = c.getInt(textPriorityColumn);
+			// Skip if we would be overriding an entry with higher priority
+			if (priority < oldPriority){
+				map.remove(id);
+				continue;
+			}
+			String match = map.get(id);
+			// There's an entry that needs updating
+			if (match != null){
+				Uri existingUri = WatcardContract.Terminal.CONTENT_URI.buildUpon()
+                        .appendPath(Integer.toString(id)).build();
+				batch.add(ContentProviderOperation.newUpdate(existingUri)
+						.withValue(WatcardContract.Terminal.COLUMN_NAME_TEXT, map.get(id))
+						.withValue(WatcardContract.Terminal.COLUMN_NAME_TEXT_PRIORITY, priority)
+						.build());
+				syncResult.stats.numUpdates++;
+				map.remove(id);
+			}
+		}
+		c.close();
+		
+		for (int id : map.keySet()){
+			batch.add(ContentProviderOperation.newInsert(WatcardContract.Terminal.CONTENT_URI)
+					.withValue(WatcardContract.Terminal._ID, id)
+					.withValue(WatcardContract.Terminal.COLUMN_NAME_TEXT, map.get(id))
+					.withValue(WatcardContract.Terminal.COLUMN_NAME_TEXT_PRIORITY, priority)
+					.build());
+			syncResult.stats.numUpdates++;
+		}
+		
+		Log.i(TAG, "Applying batch update of terminals");
+		mContentResolver.applyBatch(WatcardContract.CONTENT_AUTHORITY, batch);
+		mContentResolver.notifyChange(WatcardContract.BASE_CONTENT_URI, null, false);
 	}
 }

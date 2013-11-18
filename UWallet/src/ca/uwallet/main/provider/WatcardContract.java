@@ -149,17 +149,22 @@ public final class WatcardContract {
         /**
          * The description of the terminal.
          */
-        public static final String COLUMN_NAME_TERMINAL_TEXT = "terminalText";
+        public static final String COLUMN_NAME_TEXT = "terminalText";
         
         /**
          * Whether the description is from Watcard site, synced from the central list or by user.
          */
-        public static final String COLUMN_NAME_ADDED_BY = "addedBy";
+        public static final String COLUMN_NAME_TEXT_PRIORITY = "textPriority";
         
         /**
          * The category of the terminal.
          */
         public static final String COLUMN_NAME_CATEGORY = "category";
+        
+        /**
+         * Whether the category is the default, synced or given by user.
+         */
+        public static final String COLUMN_NAME_CATEGORY_PRIORITY = "categoryPriority";
     }
     
     /**

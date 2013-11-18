@@ -49,7 +49,7 @@ public class TransactionFragment extends ListFragment implements LoaderCallbacks
 		// Create the adapter
 		int[] to = {R.id.date, R.id.description, R.id.amount};
 		String[] from = {WatcardContract.Transaction.COLUMN_NAME_DATE,
-				WatcardContract.Transaction.COLUMN_NAME_TERMINAL,
+				WatcardContract.Terminal.COLUMN_NAME_TEXT,
 				WatcardContract.Transaction.COLUMN_NAME_AMOUNT};
 		mAdapter = new SimpleCursorAdapter(getActivity(),
 				R.layout.simple_list_transactions, null,

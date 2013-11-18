@@ -17,11 +17,17 @@ public class ProviderUtils {
 	public static final int[] MEAL_PLAN_INDICES = {0, 1, 2};
 	public static final int[] FLEX_DOLLAR_INDICES = {3, 4, 5, 6};
 	public static DecimalFormat CURRENCY_FORMAT;
+	public static DecimalFormat CURRENCY_FORMAT_NO_SYMBOL;
 	public static DateFormat DATE_FORMAT;
 	static{
 		CURRENCY_FORMAT = (DecimalFormat)NumberFormat.getCurrencyInstance(Locale.CANADA);
 		CURRENCY_FORMAT.setNegativePrefix("$-");
 		CURRENCY_FORMAT.setNegativeSuffix("");
+		CURRENCY_FORMAT_NO_SYMBOL = (DecimalFormat)NumberFormat.getCurrencyInstance(Locale.CANADA);
+		CURRENCY_FORMAT_NO_SYMBOL.setPositivePrefix("");
+		CURRENCY_FORMAT_NO_SYMBOL.setNegativePrefix("-");
+		CURRENCY_FORMAT_NO_SYMBOL.setNegativeSuffix("");
+		
 		DATE_FORMAT = DateFormat.getDateInstance(DateFormat.MEDIUM, Locale.US);
 	}
 	
@@ -37,10 +43,7 @@ public class ProviderUtils {
 	}
 	
 	public static String formatCurrencyNoSymbol(int amount){
-		// TODO Fix on negative amounts less than dollar
-		int cents = Math.abs(amount % 100);
-		int dollars = amount / 100;
-		return String.format(Locale.CANADA, "%d.%02d", dollars, cents);
+		return CURRENCY_FORMAT_NO_SYMBOL.format(amount/100.);
 	}
 	
 	public static String formatDate(long time){
