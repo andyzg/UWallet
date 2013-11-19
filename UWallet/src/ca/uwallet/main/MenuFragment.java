@@ -41,7 +41,7 @@ public class MenuFragment extends Fragment implements OnClickListener {
 
 		v.findViewById(R.id.balance_button).setOnClickListener(this);
 		v.findViewById(R.id.transactions_button).setOnClickListener(this);
-		v.findViewById(R.id.stats_button).setOnClickListener(this);
+		v.findViewById(R.id.statistics_button).setOnClickListener(this);
 		v.findViewById(R.id.logout_button).setOnClickListener(this);
 
 		return v;
@@ -78,7 +78,7 @@ public class MenuFragment extends Fragment implements OnClickListener {
 		case R.id.transactions_button:
 			mListener.onTransactionsButtonClicked();
 			break;
-		case R.id.stats_button:
+		case R.id.statistics_button:
 			mListener.onStatsButtonClicked();
 			break;
 		case R.id.logout_button:
