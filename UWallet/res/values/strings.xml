@@ -18,5 +18,9 @@
     <string name="error_incorrect_credentials">Invalid username or password</string>
     <string name="unknown">Unknown</string>
 	<string name="empty_transaction_message">No Transactions</string>
+	<string name="balance_button">Balance</string>
+	<string name="transactions_button">Transactions</string>
+	<string name="statistics_button">Statistics</string>
+	<string name="logout_button">Logout</string>
     
 </resources>
