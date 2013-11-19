@@ -1,1 +1,7 @@
+com.enghack.uwallet
 com.enghack.uwallet.login
+com.enghack.uwallet.sync
+com.enghack.uwallet.sync.accounts
+com.enghack.uwallet.sync.provider
+com.enghack.uwallet.sync.util
+com.enghack.uwallet.watcard

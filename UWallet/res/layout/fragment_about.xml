@@ -19,14 +19,6 @@
         android:layout_height="100dp"
         android:layout_gravity="center"
         android:src="@drawable/about_ab" />
-
-    <TextView
-        android:id="@+id/about_info"
-        android:layout_width="268dp"
-        android:layout_height="222dp"
-        android:layout_gravity="center"
-        android:text="@string/about_information"
-        android:textSize="15sp" />
     
     <TextView
         android:id="@+id/about_n"

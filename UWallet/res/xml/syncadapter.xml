@@ -1,0 +1,12 @@
+<?xml version="1.0" encoding="utf-8"?>
+<sync-adapter
+        xmlns:android="http://schemas.android.com/apk/res/android"
+        android:contentAuthority="ca.uwallet.main.provider"
+        android:accountType="watcard.uwaterloo.ca"
+        android:userVisible="true"
+        android:supportsUploading="false"
+        android:allowParallelSyncs="false"
+        android:isAlwaysSyncable="true"
+        android:label="@string/watcard_sync_label"
+        android:description="@string/watcard_sync_description"
+        android:icon="@drawable/uwallet"/>
