@@ -53,6 +53,9 @@ public class MainActivity extends ActionBarActivity implements
 			if (responseCode != RESULT_OK){
 				Log.i(TAG, "User cancelled login. Closing down.");
 				finish();
+			} else{
+				Account account = data.getParcelableExtra(LoginActivity.KEY_ACCOUNT);
+				ProviderUtils.onRefresh(account);
 			}
 			break;
 		}

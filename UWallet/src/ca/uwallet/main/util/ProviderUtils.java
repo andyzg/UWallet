@@ -6,9 +6,11 @@ import java.text.NumberFormat;
 import java.util.Date;
 import java.util.Locale;
 
+import android.accounts.Account;
 import android.content.ContentResolver;
 import android.content.Context;
 import android.database.Cursor;
+import android.os.Bundle;
 import ca.uwallet.main.provider.WatcardContract;
 
 public class ProviderUtils {
@@ -120,4 +122,21 @@ public class ProviderUtils {
 		resolver.delete(WatcardContract.Terminal.CONTENT_URI, null, null);
 		resolver.delete(WatcardContract.Category.CONTENT_URI, null, null);
 	}
+	
+	/**
+     * Perform a sync.
+     */
+    public static void onRefresh(Account account) {
+        // Pass the settings flags by inserting them in a bundle
+        Bundle settingsBundle = new Bundle();
+        settingsBundle.putBoolean(
+                ContentResolver.SYNC_EXTRAS_MANUAL, true);
+        settingsBundle.putBoolean(
+                ContentResolver.SYNC_EXTRAS_EXPEDITED, true);
+        /*
+         * Request the sync for the default account, authority, and
+         * manual sync settings
+         */
+        ContentResolver.requestSync(account, WatcardContract.CONTENT_AUTHORITY, settingsBundle);
+    }
 }
