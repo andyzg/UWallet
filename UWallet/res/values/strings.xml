@@ -3,7 +3,7 @@
 
     <string name="app_name">UWallet</string>
     <string name="action_settings">Settings</string>
-    <string name="username_prompt">WatCard Number</string>
+    <string name="username_prompt">Student Number</string>
     <string name="password_prompt">PIN</string>
     <string name="login_button">Login</string>
     <string name="meal_plan">Meal Plan:</string>
@@ -18,5 +18,9 @@
     <string name="error_incorrect_credentials">Invalid username or password</string>
     <string name="unknown">Unknown</string>
 	<string name="empty_transaction_message">No Transactions</string>
+	<string name="balance_button">Balance</string>
+	<string name="transactions_button">Transactions</string>
+	<string name="statistics_button">Statistics</string>
+	<string name="logout_button">Logout</string>
     
 </resources>

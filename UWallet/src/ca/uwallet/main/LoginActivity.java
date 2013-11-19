@@ -45,6 +45,7 @@ public class LoginActivity extends AccountAuthenticatorActivity {
 	
 	private static final String CONTENT_AUTHORITY = WatcardContract.CONTENT_AUTHORITY;
 	public static final String ACCOUNT_TYPE = "watcard.uwaterloo.ca";
+	public static final String KEY_ACCOUNT = "ca.uwallet.main.extra.ACCOUNT";
 	
 	private static final String TAG = "AuthenticatorActivity";
 
@@ -244,6 +245,7 @@ public class LoginActivity extends AccountAuthenticatorActivity {
 	 */
 	public class UserLoginTask extends AsyncTask<Void, Void, LoginTaskResult> {
 
+		private Account account;
 		
 		@Override
 		protected LoginTaskResult doInBackground(Void... params) {
@@ -261,7 +263,7 @@ public class LoginActivity extends AccountAuthenticatorActivity {
 				return LoginTaskResult.INVALID_CREDENTIALS;
 
 			// Add the account to the AccountManager
-			Account account = new Account(mUsername, ACCOUNT_TYPE);
+			account = new Account(mUsername, ACCOUNT_TYPE);
 			AccountManager accountManager = (AccountManager) getSystemService(Context.ACCOUNT_SERVICE);
 			boolean addSuccess = accountManager.addAccountExplicitly(account, mPassword, null);
 			if (addSuccess){
@@ -289,12 +291,14 @@ public class LoginActivity extends AccountAuthenticatorActivity {
 			switch(result){
 			case SUCCESS:
 				// Send back results to AccountManager
-				final Intent intent = new Intent();
-				intent.putExtra(AccountManager.KEY_ACCOUNT_NAME, mUsername);
-				intent.putExtra(AccountManager.KEY_ACCOUNT_TYPE, ACCOUNT_TYPE);
-				intent.putExtra(AccountManager.KEY_PASSWORD, mPassword);
-				setAccountAuthenticatorResult(intent.getExtras());
-				setResult(RESULT_OK);
+				final Intent authenticatorIntent = new Intent();
+				authenticatorIntent.putExtra(AccountManager.KEY_ACCOUNT_NAME, mUsername);
+				authenticatorIntent.putExtra(AccountManager.KEY_ACCOUNT_TYPE, ACCOUNT_TYPE);
+				authenticatorIntent.putExtra(AccountManager.KEY_PASSWORD, mPassword);
+				setAccountAuthenticatorResult(authenticatorIntent.getExtras());
+				final Intent resultIntent = new Intent();
+				resultIntent.putExtra(KEY_ACCOUNT, account);
+				setResult(RESULT_OK, resultIntent);
 				finish();
 				break;
 			case INVALID_CREDENTIALS:
