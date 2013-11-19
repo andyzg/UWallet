@@ -5,6 +5,7 @@
     android:orientation="vertical"
     tools:context=".MenuFragment" >
 
+    <!-- Image logo below -->
     <ImageView
         android:id="@+id/main_menu_logo"
         style="@style/ImageButton"
