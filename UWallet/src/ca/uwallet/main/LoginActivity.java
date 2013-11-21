@@ -22,6 +22,7 @@ import android.view.KeyEvent;
 import android.view.Menu;
 import android.view.MotionEvent;
 import android.view.View;
+import android.view.View.OnTouchListener;
 import android.view.inputmethod.EditorInfo;
 import android.view.inputmethod.InputMethodManager;
 import android.widget.EditText;
@@ -35,7 +36,7 @@ import ca.uwallet.main.sync.utils.ParseHelper;
  * Activity which displays a login screen to the user, offering registration as
  * well.
  */
-public class LoginActivity extends AccountAuthenticatorActivity {
+public class LoginActivity extends AccountAuthenticatorActivity implements OnTouchListener {
 	/**
 	 * The extra describing the default username to populate the field with.
 	 */
@@ -70,6 +71,7 @@ public class LoginActivity extends AccountAuthenticatorActivity {
 		super.onCreate(savedInstanceState);
 
 		setContentView(R.layout.activity_login);
+		findViewById(R.id.login_form).setOnTouchListener(this);
 
 		// Populate the username field if a username is given
 		mUsername = getIntent().getStringExtra(EXTRA_USERNAME);
@@ -113,17 +115,17 @@ public class LoginActivity extends AccountAuthenticatorActivity {
 	}
 	
 	@Override
-	public boolean onTouchEvent(MotionEvent event) {
+	public boolean onTouch(View view, MotionEvent event) {
 		// Dismiss keyboard by tapping
 		// TODO fix
-		try {
-			InputMethodManager imm = (InputMethodManager) getSystemService(Context.INPUT_METHOD_SERVICE);
-			imm.hideSoftInputFromWindow(getCurrentFocus().getWindowToken(), 0);
-			return true;
-		} catch (Exception e) {
-
-		}
-		return false;
+		Log.i(TAG, "Touch registered");
+		hideSoftKeyboard();
+		return true;
+	}
+	
+	public void hideSoftKeyboard(){
+		InputMethodManager imm = (InputMethodManager) getSystemService(Context.INPUT_METHOD_SERVICE);
+		imm.hideSoftInputFromWindow(getCurrentFocus().getWindowToken(), 0);
 	}
 	
 	/**

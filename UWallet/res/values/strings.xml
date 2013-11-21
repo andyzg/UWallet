@@ -16,8 +16,8 @@
     <string name="watcard_sync_description">Connect to WatCard servers to get balance and transaction information.</string>
     <string name="watcard_sync_process">:sync</string>
     <string name="error_incorrect_credentials">Invalid username or password</string>
-    <string name="unknown">Unknown</string>
-	<string name="empty_transaction_message">No Transactions</string>
+    <string name="unknown">Loading</string>
+	<string name="empty_transaction_message">Loading transactions&#8230;</string>
 	<string name="balance_button">Balance</string>
 	<string name="transactions_button">Transactions</string>
 	<string name="statistics_button">Statistics</string>
