@@ -95,8 +95,14 @@ public class SyncAdapter extends AbstractThreadedSyncAdapter{
             syncResult.stats.numParseExceptions++;
             return;
 		}
-		
-		HashMap<Integer, String> terminalMap = ParseHelper.parseTransactionsToTerminal(doc);
+		HashMap<Integer, String> terminalMap;
+		try{
+			terminalMap = ParseHelper.parseTransactionsToTerminal(doc);
+		} catch(ParseException e){
+			Log.e(TAG, e.toString());
+			syncResult.stats.numParseExceptions++;
+			return;
+		}
 		
 		// Update db
 		try{
@@ -139,7 +145,14 @@ public class SyncAdapter extends AbstractThreadedSyncAdapter{
 		}
 		
 		// Parse balances
-		ArrayList<Integer> balances = ParseHelper.parseBalances(doc);
+		ArrayList<Integer> balances;
+		try{
+		balances = ParseHelper.parseBalances(doc);
+		} catch (ParseException e){
+			Log.e(TAG, e.toString());
+			syncResult.stats.numParseExceptions++;
+			return;
+		}
 		
 		// Update DB
 		try{
