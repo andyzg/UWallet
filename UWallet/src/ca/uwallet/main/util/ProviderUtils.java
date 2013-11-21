@@ -16,11 +16,17 @@ import ca.uwallet.main.provider.WatcardContract;
 public class ProviderUtils {
 	
 	// Indices in array for each balance type
-	public static final int[] MEAL_PLAN_INDICES = {0, 1, 2};
-	public static final int[] FLEX_DOLLAR_INDICES = {3, 4, 5, 6};
-	public static DecimalFormat CURRENCY_FORMAT;
-	public static DecimalFormat CURRENCY_FORMAT_NO_SYMBOL;
-	public static DateFormat DATE_FORMAT;
+	public static final int[] MEAL_PLAN_INDICES = {0, 1, 2, 6};
+	public static final int[] FLEX_DOLLAR_INDICES = {3, 4, 5, 7, 8, 9, 10, 11};
+	public static final int MEAL_PLAN = 0,
+							FLEX_DOLLAR = 1,
+							TOTAL = 2;
+	public static final int BALANCE_CURSOR_COUNT = 12;
+	private static final int BALANCE_ARRAY_LENGTH = 3;
+	
+	private static DecimalFormat CURRENCY_FORMAT;
+	private static DecimalFormat CURRENCY_FORMAT_NO_SYMBOL;
+	private static DateFormat DATE_FORMAT;
 	static{
 		CURRENCY_FORMAT = (DecimalFormat)NumberFormat.getCurrencyInstance(Locale.CANADA);
 		CURRENCY_FORMAT.setNegativePrefix("$-");
@@ -36,79 +42,86 @@ public class ProviderUtils {
 	private ProviderUtils(){}
 	
 	/**
-	 * Formats the balance into a String for display.
+	 * Formats the amount to a String including the currency symbol.
 	 * @param amount The amount in cents.
 	 * @return A string representation of the amount.
 	 */
-	public static String amountToString(int amount){
+	public static String formatCurrency(int amount){
 		return CURRENCY_FORMAT.format(amount/100.);
 	}
 	
+	/**
+	 * Formats the amount into a String without the currency symbol.
+	 * @param amount
+	 * @return
+	 */
 	public static String formatCurrencyNoSymbol(int amount){
 		return CURRENCY_FORMAT_NO_SYMBOL.format(amount/100.);
 	}
 	
+	/**
+	 * Formats the amount into a String.
+	 * @param amount The amount to format.
+	 * @param showSymbol Whether the currency symbol should be shown.
+	 * @return
+	 */
+	public static String formatCurrency(int amount, boolean showSymbol){
+		return showSymbol ? formatCurrency(amount) : formatCurrencyNoSymbol(amount);
+	}
+	
+	/**
+	 * Formats the Unix time given into a date string.
+	 * @param time The time to format.
+	 * @return A string representation of the date.
+	 */
 	public static String formatDate(long time){
 		return DATE_FORMAT.format(new Date(time));
 	}
 	
 	/**
-	 * Returns the meal plan balance given an array of balances.
-	 * @param balanceAmounts
-	 * @return The meal plan balance.
+	 * Calculates the balances of all types.
+	 * @param cursor
+	 * @return
 	 */
-	public static int getMealBalance(int[] balanceAmounts){
-		int sum = 0;
-		for (int i : MEAL_PLAN_INDICES){
-			sum += balanceAmounts[i];
-		}
-		return sum;
-	}
-	
-	/**
-	 * Return the flex dollar balance given an array of balances.
-	 * @param balanceAmounts
-	 * @return The flex dollar balance.
-	 */
-	public static int getFlexBalance(int[] balanceAmounts){
-		int sum = 0;
-		for (int i : FLEX_DOLLAR_INDICES){
-			sum += balanceAmounts[i];
-		}
-		return sum;
-	}
-	
-	/**
-	 * Returns an array of the balance amounts. The index of the array is the _id of the amount.
-	 * @param context
-	 * @return The balance amounts.
-	 */
-	@Deprecated
-	public static int[] getBalanceAmounts(Context context){
-		ContentResolver resolver = context.getContentResolver();
-		Cursor cursor = resolver.query(WatcardContract.Balance.CONTENT_URI, null, null, null, null);
-		assert (cursor != null);
-		
-		int columnIndex = cursor.getColumnIndex(WatcardContract.Balance.COLUMN_NAME_AMOUNT);
-		int[] amounts = new int[cursor.getCount()];
-		int i = 0;
-		for (cursor.moveToFirst(); !cursor.isAfterLast(); cursor.moveToNext()){
-			amounts[i] = cursor.getInt(columnIndex);
-			i++;
-		}
-		cursor.close();
-		return amounts;
-	}
-	
 	public static int[] getBalanceAmounts(Cursor cursor){
-		int columnIndex = cursor.getColumnIndex(WatcardContract.Balance.COLUMN_NAME_AMOUNT);
-		int[] amounts = new int[cursor.getCount()];
-		int i = 0;
-		for (cursor.moveToFirst(); !cursor.isAfterLast(); cursor.moveToNext()){
-			amounts[i] = cursor.getInt(columnIndex);
-			i++;
-		}
+		int[] amounts = new int[BALANCE_ARRAY_LENGTH];
+		
+		amounts[MEAL_PLAN] = getBalanceAmount(cursor, MEAL_PLAN);
+		amounts[FLEX_DOLLAR] = getBalanceAmount(cursor, FLEX_DOLLAR);
+		amounts[TOTAL] = amounts[MEAL_PLAN] + amounts[FLEX_DOLLAR]; // We make this assumption
+		
 		return amounts;
+	}
+	
+	/**
+	 * Calculates the balance amount for a given type. 
+	 * @param cursor
+	 * @param balanceType
+	 * @return
+	 */
+	public static int getBalanceAmount(Cursor cursor, int balanceType){
+		int columnIndex = cursor.getColumnIndex(WatcardContract.Balance.COLUMN_NAME_AMOUNT);
+		int amount = 0;
+		switch(balanceType){
+		case MEAL_PLAN:
+			for(int i : MEAL_PLAN_INDICES){
+				if (cursor.moveToPosition(i))
+					amount += cursor.getInt(columnIndex);
+			}
+			return amount;
+		case FLEX_DOLLAR:
+			for (int i : FLEX_DOLLAR_INDICES){
+				if (cursor.moveToPosition(i))
+					amount += cursor.getInt(columnIndex);
+			}
+			return amount;
+		case TOTAL:
+			for (cursor.moveToFirst(); !cursor.isAfterLast(); cursor.moveToNext()){
+				amount += cursor.getInt(columnIndex);
+			}
+			return amount;
+		default: throw new IllegalArgumentException("balanceType: " + balanceType + " is not valid.");
+		}
 	}
 	
 	/**

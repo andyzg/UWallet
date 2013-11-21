@@ -28,8 +28,8 @@ import android.widget.EditText;
 import android.widget.TextView;
 import android.widget.Toast;
 import ca.uwallet.main.provider.WatcardContract;
-import ca.uwallet.main.provider.utils.ConnectionHelper;
-import ca.uwallet.main.provider.utils.ParseHelper;
+import ca.uwallet.main.sync.utils.ConnectionHelper;
+import ca.uwallet.main.sync.utils.ParseHelper;
 
 /**
  * Activity which displays a login screen to the user, offering registration as
