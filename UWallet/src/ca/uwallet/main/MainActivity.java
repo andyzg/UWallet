@@ -1,6 +1,5 @@
 package ca.uwallet.main;
 
-import ca.uwallet.main.util.ProviderUtils;
 import android.accounts.Account;
 import android.accounts.AccountManager;
 import android.content.Context;
@@ -12,6 +11,7 @@ import android.support.v4.app.FragmentTransaction;
 import android.support.v7.app.ActionBarActivity;
 import android.util.Log;
 import android.view.Menu;
+import ca.uwallet.main.util.ProviderUtils;
 
 /**
  * Activity that is launched from the launcher. We switch between screens using fragments.

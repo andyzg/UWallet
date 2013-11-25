@@ -1,21 +1,13 @@
 package ca.uwallet.main.provider;
 
-import java.util.ArrayList;
-
-import org.json.JSONArray;
-import org.json.JSONException;
-
 import android.content.ContentProvider;
 import android.content.ContentValues;
 import android.content.Context;
-import android.content.SharedPreferences;
 import android.content.UriMatcher;
 import android.database.Cursor;
-import android.database.MatrixCursor;
 import android.database.sqlite.SQLiteDatabase;
 import android.database.sqlite.SQLiteOpenHelper;
 import android.net.Uri;
-import android.preference.PreferenceManager;
 import ca.uwallet.main.util.SelectionBuilder;
 
 public class WatcardProvider extends ContentProvider{

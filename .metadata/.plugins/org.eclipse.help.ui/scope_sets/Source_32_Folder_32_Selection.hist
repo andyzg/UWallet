@@ -1,0 +1,4 @@
+#Fri Nov 22 18:08:41 EST 2013
+__DEFAULT__=false
+org.eclipse.help.ui.localSearch.master=true
+expression=Source Folder Selection

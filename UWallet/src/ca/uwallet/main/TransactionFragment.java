@@ -1,9 +1,5 @@
 package ca.uwallet.main;
 
-import java.text.DateFormat;
-import java.util.Date;
-import java.util.Locale;
-
 import android.app.Activity;
 import android.database.Cursor;
 import android.os.Bundle;
@@ -12,9 +8,7 @@ import android.support.v4.app.LoaderManager.LoaderCallbacks;
 import android.support.v4.content.CursorLoader;
 import android.support.v4.content.Loader;
 import android.support.v4.widget.SimpleCursorAdapter;
-import android.view.LayoutInflater;
 import android.view.View;
-import android.view.ViewGroup;
 import android.widget.TextView;
 import ca.uwallet.main.provider.WatcardContract;
 import ca.uwallet.main.util.ProviderUtils;
