@@ -28,7 +28,6 @@ import org.achartengine.renderer.SimpleSeriesRenderer;
 import android.graphics.Canvas;
 import android.graphics.Color;
 import android.graphics.Paint;
-import android.graphics.Paint.Align;
 import android.graphics.Paint.Style;
 import android.graphics.Path;
 import android.graphics.Rect;
@@ -195,14 +194,13 @@ public class DoughnutChart extends RoundChart {
     if (mRenderer.isCenterDisplay() != -1)
     {
       Paint textPaint = new Paint();
-      textPaint.setTextAlign(Align.CENTER);
-      textPaint.setTextSize(60);
-      textPaint.setColor(mRenderer.getDisplayColor());
+      paint.setTextSize(60);
+      paint.setColor(mRenderer.getDisplayColor());
       NumberFormat formatter = NumberFormat.getCurrencyInstance();
       drawString(canvas, 
           mDataset.getTitles(0)[mRenderer.isCenterDisplay()]+"\n"+
       formatter.format(mDataset.getValues(0)[mRenderer.isCenterDisplay()])
-          , mCenterX, mCenterY, textPaint);
+          , mCenterX, mCenterY, paint);
     }
   }
 

@@ -188,7 +188,7 @@ public class DoughnutChart extends RoundChart {
     canvas.clipRect(oldClipBounds, Region.Op.REPLACE);
     prevLabelsBounds.clear();
     drawLegend(canvas, mRenderer, categories, left, right, y, width, height, legendSize, paint,
-        false);
+        true);
     drawTitle(canvas, x, y, width, paint);
     
     

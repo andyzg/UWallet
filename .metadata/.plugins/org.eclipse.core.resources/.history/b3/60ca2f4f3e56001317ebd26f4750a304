@@ -167,7 +167,7 @@ public class DoughnutChart extends RoundChart {
         canvas.drawArc(oval, currentAngle+marginAngle, angle-marginAngle, true, paint);
         drawLabel(canvas, mDataset.getTitles(category)[i], mRenderer, prevLabelsBounds, mCenterX,
             mCenterY, shortLegendRadius, longLegendRadius, currentAngle, angle, left, right,
-            mRenderer.getLabelsColor(), paint, true, false);
+            mRenderer.getLabelsColor(), paint, true, true);
         
         // Save details for getSeries functionality
         if (loadDoughnutCfg) {

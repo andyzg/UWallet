@@ -118,6 +118,7 @@ public class StatsFragment extends Fragment implements LoaderCallbacks<Cursor>, 
 		renderer.setZoomEnabled(false);
 		renderer.setLabelsTextSize(30);
 		renderer.setShowLegend(true);
+		renderer.setLegendTextSize(30);
 		renderer.setClickEnabled(true);
 		renderer.setShowLabels(false);
 	    return renderer;

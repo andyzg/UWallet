@@ -111,15 +111,14 @@ public class StatsFragment extends Fragment implements LoaderCallbacks<Cursor>, 
 	        SimpleSeriesRenderer r = new SimpleSeriesRenderer();
 	        r.setColor(colors[i]);
 	        renderer.addSeriesRenderer(r);
-	        r.setShowLegendItem(true);
+	        Log.d("COLOR", "Color was set as "+Integer.toString(colors[i]));
 	    }
 		renderer.setBackgroundColor(0xFF000000);
 		renderer.setPanEnabled(false);
 		renderer.setZoomEnabled(false);
-		renderer.setLabelsTextSize(30);
-		renderer.setShowLegend(true);
+		// renderer.setLabelsTextSize(30);
+		renderer.setShowLegend(false);
 		renderer.setClickEnabled(true);
-		renderer.setShowLabels(false);
 	    return renderer;
 	}
 	
