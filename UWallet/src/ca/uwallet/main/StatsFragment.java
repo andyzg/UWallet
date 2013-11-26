@@ -1,7 +1,5 @@
 package ca.uwallet.main;
 
-
-
 import java.util.Arrays;
 
 import org.achartengine.ChartFactory;
@@ -41,8 +39,10 @@ public class StatsFragment extends Fragment implements LoaderCallbacks<Cursor>, 
 	private MultipleCategorySeries series;
 	private DefaultRenderer renderer;
 	
-	private int colors[];
+	public int colors[];
+	private int darkColors[];
 	private int lightColors[];
+	
 	private int indexPreviousTouch = -1;
 
 	public StatsFragment() {
@@ -58,28 +58,21 @@ public class StatsFragment extends Fragment implements LoaderCallbacks<Cursor>, 
 			
 			@Override
 			public void onClick(View v) {	
-
 				SeriesSelection seriesSelection = dataChart.getCurrentSeriesAndPoint();
-				// double[] xy = dataChart.toRealPoint(0);
-		        if (seriesSelection == null) {
-		            Toast.makeText(getActivity(), "No chart element was clicked", Toast.LENGTH_SHORT)
-		                .show();
-		          } else {
-		        	  if (indexPreviousTouch != -1)
-		        	  {
-			        	  renderer.getSeriesRendererAt(indexPreviousTouch).setHighlighted(false);
-			        	  renderer.getSeriesRendererAt(indexPreviousTouch).setColor(colors[indexPreviousTouch]);
-		        	  }
-		        	  
-		        	  indexPreviousTouch = seriesSelection.getPointIndex();
-		        	  Toast.makeText(
-		                    getActivity(),
-		                "Chart element in series index " + seriesSelection.getSeriesIndex()
-		                    + " data point index " + indexPreviousTouch + " was clicked"
-		                    , 500).show();
-		            
+				
+		        if (seriesSelection != null) 
+		        {
+		        	if (indexPreviousTouch != -1)
+		        	{
+			        	renderer.getSeriesRendererAt(indexPreviousTouch).setHighlighted(false);
+			        	renderer.getSeriesRendererAt(indexPreviousTouch).setColor(colors[indexPreviousTouch]);
+		        	}
+		        	
+		        	indexPreviousTouch = seriesSelection.getPointIndex();
+		            renderer.setCenterDisplay(indexPreviousTouch);
+		            renderer.setDisplayColor(lightColors[indexPreviousTouch]);
 		            // renderer.getSeriesRendererAt(indexPreviousTouch).setHighlighted(true);
-		            renderer.getSeriesRendererAt(indexPreviousTouch).setColor(lightColors[indexPreviousTouch]);
+		            renderer.getSeriesRendererAt(indexPreviousTouch).setColor(darkColors[indexPreviousTouch]);
 		            dataChart.repaint();
 		            
 		          }
@@ -98,12 +91,17 @@ public class StatsFragment extends Fragment implements LoaderCallbacks<Cursor>, 
 				getResources().getColor(R.color.GREEN),
 				getResources().getColor(R.color.ORANGE),
 				getResources().getColor(R.color.RED)};
+		darkColors = new int[]{getResources().getColor(R.color.DARK_BLUE),
+				getResources().getColor(R.color.DARK_PURPLE),
+				getResources().getColor(R.color.DARK_GREEN),
+				getResources().getColor(R.color.DARK_ORANGE),
+				getResources().getColor(R.color.DARK_RED)};
 		lightColors = new int[]{getResources().getColor(R.color.LIGHT_BLUE),
 				getResources().getColor(R.color.LIGHT_PURPLE),
 				getResources().getColor(R.color.LIGHT_GREEN),
 				getResources().getColor(R.color.LIGHT_ORANGE),
-				getResources().getColor(R.color.LIGHT_RED)};
-		Log.d("COLORS", Arrays.toString(colors));
+				getResources().getColor(R.color.LIGHT_RED)}; 
+		
 		getLoaderManager().initLoader(LOADER_BALANCES_ID, null, this);
 	}
 
@@ -129,7 +127,7 @@ public class StatsFragment extends Fragment implements LoaderCallbacks<Cursor>, 
 		series = new MultipleCategorySeries("Balance");
 		series.add(new String[] {"Meal Plan",  "Flex Dollars", "Other", "Test amount"}, 
 				new double[] {/*ProviderUtils.getMealBalance(amounts)*/ 13,
-				ProviderUtils.getFlexBalance(amounts), 4, 16});
+				3/*ProviderUtils.getFlexBalance(amounts)*/, 4, 16});
 		
 		renderer = buildRenderer(series.getItemCount(0));
 		return ChartFactory.getDoughnutChartView(context, series, renderer);

@@ -15,6 +15,7 @@
  */
 package org.achartengine.chart;
 
+import java.text.NumberFormat;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -188,6 +189,18 @@ public class DoughnutChart extends RoundChart {
     drawLegend(canvas, mRenderer, categories, left, right, y, width, height, legendSize, paint,
         false);
     drawTitle(canvas, x, y, width, paint);
+    
+    
+    if (mRenderer.isCenterDisplay() != -1)
+    {
+      paint.setTextSize(60);
+      paint.setColor(mRenderer.getDisplayColor());
+      NumberFormat formatter = NumberFormat.getCurrencyInstance();
+      drawString(canvas, 
+          mDataset.getTitles(0)[mRenderer.isCenterDisplay()]+"\n"+
+      formatter.format(mDataset.getValues(0)[mRenderer.isCenterDisplay()])
+          , mCenterX, mCenterY, paint);
+    }
   }
 
   /**
