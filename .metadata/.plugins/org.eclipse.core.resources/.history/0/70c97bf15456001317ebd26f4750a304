@@ -230,7 +230,7 @@ public class DoughnutChart extends RoundChart {
   public void drawLegendShape(Canvas canvas, SimpleSeriesRenderer renderer, float x, float y,
       int seriesIndex, Paint paint) {
     // mStep--;
-    canvas.drawCircle(x + SHAPE_WIDTH - mStep, y - mStep, mStep, paint);
+    canvas.drawCircle(x + SHAPE_WIDTH - mStep, y, mStep, paint);
   }
 
   @Override

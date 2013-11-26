@@ -120,7 +120,7 @@ public abstract class AbstractChart implements Serializable {
           for (float value : widths) {
             sum += value;
           }
-          float extraSize = renderer.getLegendTextSize() + 5;
+          float extraSize = lineSize + 10 + sum;
           float currentWidth = currentX + extraSize;
 
           if (i > 0 && getExceed(currentWidth, renderer, right, width)) {

@@ -100,7 +100,7 @@ public abstract class AbstractChart implements Serializable {
     float size = 32;
     if (renderer.isShowLegend()) {
       float currentX = left+size;
-      float currentY = y + height - legendSize;
+      float currentY = y + height - legendSize + size;
       paint.setTextAlign(Align.LEFT);
       paint.setTextSize(renderer.getLegendTextSize());
       int sLength = Math.min(titles.length, renderer.getSeriesRendererCount());
@@ -120,7 +120,7 @@ public abstract class AbstractChart implements Serializable {
           for (float value : widths) {
             sum += value;
           }
-          float extraSize = renderer.getLegendTextSize() + 5;
+          float extraSize = lineSize + 10 + sum;
           float currentWidth = currentX + extraSize;
 
           if (i > 0 && getExceed(currentWidth, renderer, right, width)) {
@@ -141,7 +141,7 @@ public abstract class AbstractChart implements Serializable {
             drawLegendShape(canvas, r, currentX, currentY, i, paint);
             drawString(canvas, text, currentX + lineSize + 5, currentY + 5, paint);
           }
-          currentY += extraSize;
+          currentX += extraSize;
         }
       }
     }

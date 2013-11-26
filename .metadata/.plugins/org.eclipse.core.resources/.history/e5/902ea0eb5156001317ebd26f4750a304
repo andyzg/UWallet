@@ -34,7 +34,6 @@ import android.graphics.Path;
 import android.graphics.Rect;
 import android.graphics.RectF;
 import android.graphics.Region;
-import android.util.Log;
 
 /**
  * The doughnut chart rendering class.
@@ -188,7 +187,7 @@ public class DoughnutChart extends RoundChart {
     }
     canvas.clipRect(oldClipBounds, Region.Op.REPLACE);
     prevLabelsBounds.clear();
-    drawLegend(canvas, mRenderer, mDataset.getTitles(0), left, right, y, width, height, legendSize, paint,
+    drawLegend(canvas, mRenderer, categories, left, right, y, width, height, legendSize, paint,
         false);
     drawTitle(canvas, x, y, width, paint);
     
@@ -229,34 +228,12 @@ public class DoughnutChart extends RoundChart {
    */
   public void drawLegendShape(Canvas canvas, SimpleSeriesRenderer renderer, float x, float y,
       int seriesIndex, Paint paint) {
-    // mStep--;
-    canvas.drawCircle(x + SHAPE_WIDTH - mStep, y - mStep, mStep, paint);
+    mStep--;
+    canvas.drawCircle(x + SHAPE_WIDTH - mStep, y, mStep, paint);
   }
 
   @Override
   public SeriesSelection getSeriesAndPointForScreenCoordinate(Point screenPoint) {
     return mDoughnutMapper.getSeriesAndPointForScreenCoordinate(screenPoint);
   }
-
- /**
-  * Draw a multiple lines string.
-  * 
-  * @param canvas the canvas to paint to
-  * @param text the text to be painted
-  * @param x the x value of the area to draw to
-  * @param y the y value of the area to draw to
-  * @param paint the paint to be used for drawing
-  */
- public void drawString(Canvas canvas, String text, float x, float y, Paint paint) {
-   if (text != null) {
-     String[] lines = text.split("\n");
-     Rect rect = new Rect();
-     int yOff = 0;
-     for (int i = 0; i < lines.length; ++i) {
-       canvas.drawText(lines[i], x, y + yOff, paint);
-       paint.getTextBounds(lines[i], 0, lines[i].length(), rect);
-       yOff = yOff + rect.height() + 5; // space between lines is 5
-     }
-   }
- }
 }

@@ -34,7 +34,6 @@ import android.graphics.Path;
 import android.graphics.Rect;
 import android.graphics.RectF;
 import android.graphics.Region;
-import android.util.Log;
 
 /**
  * The doughnut chart rendering class.
@@ -188,7 +187,7 @@ public class DoughnutChart extends RoundChart {
     }
     canvas.clipRect(oldClipBounds, Region.Op.REPLACE);
     prevLabelsBounds.clear();
-    drawLegend(canvas, mRenderer, mDataset.getTitles(0), left, right, y, width, height, legendSize, paint,
+    drawLegend(canvas, mRenderer, categories, left, right, y, width, height, legendSize, paint,
         false);
     drawTitle(canvas, x, y, width, paint);
     
@@ -229,14 +228,90 @@ public class DoughnutChart extends RoundChart {
    */
   public void drawLegendShape(Canvas canvas, SimpleSeriesRenderer renderer, float x, float y,
       int seriesIndex, Paint paint) {
-    // mStep--;
-    canvas.drawCircle(x + SHAPE_WIDTH - mStep, y - mStep, mStep, paint);
+    mStep--;
+    canvas.drawCircle(x + SHAPE_WIDTH - mStep, y, mStep, paint);
   }
 
   @Override
   public SeriesSelection getSeriesAndPointForScreenCoordinate(Point screenPoint) {
     return mDoughnutMapper.getSeriesAndPointForScreenCoordinate(screenPoint);
   }
+  
+  /**
+  * Draws the chart legend.
+  * 
+  * @param canvas the canvas to paint to
+  * @param renderer the series renderer
+  * @param titles the titles to go to the legend
+  * @param left the left X value of the area to draw to
+  * @param right the right X value of the area to draw to
+  * @param y the y value of the area to draw to
+  * @param width the width of the area to draw to
+  * @param height the height of the area to draw to
+  * @param legendSize the legend size
+  * @param paint the paint to be used for drawing
+  * @param calculate if only calculating the legend size
+  * 
+  * @return the legend height
+  */
+@Override
+ protected int drawLegend(Canvas canvas, DefaultRenderer renderer, String[] titles, int left,
+     int right, int y, int width, int height, int legendSize, Paint paint, boolean calculate) {
+   float size = 32;
+   // Check if renderer enabled legend
+   if (renderer.isShowLegend()) {
+     
+     // Defining the variables
+     float currentX = left;
+     float currentY = y + height - legendSize + size;
+     paint.setTextAlign(Align.LEFT);
+     paint.setTextSize(renderer.getLegendTextSize());
+     int sLength = Math.min(titles.length, renderer.getSeriesRendererCount());
+     
+     for (int i = 0; i < sLength; i++) {
+       
+       SimpleSeriesRenderer r = renderer.getSeriesRendererAt(i);
+       final float lineSize = getLegendShapeWidth(i);
+       if (r.isShowLegendItem()) {
+         String text = titles[i];
+         if (titles.length == renderer.getSeriesRendererCount()) {
+           paint.setColor(r.getColor());
+         } else {
+           paint.setColor(Color.LTGRAY);
+         }
+         float[] widths = new float[text.length()];
+         paint.getTextWidths(text, widths);
+         float sum = 0;
+         for (float value : widths) {
+           sum += value;
+         }
+         float extraSize = lineSize + 10 + sum;
+         float currentWidth = currentX + extraSize;
+
+        /* if (i > 0 && getExceed(currentWidth, renderer, right, width)) {
+           currentX = left;
+           currentY += renderer.getLegendTextSize();
+           size += renderer.getLegendTextSize();
+           currentWidth = currentX + extraSize;
+         }
+         if (getExceed(currentWidth, renderer, right, width)) {
+           float maxWidth = right - currentX - lineSize - 10;
+           if (isVertical(renderer)) {
+             maxWidth = width - currentX - lineSize - 10;
+           }
+           int nr = paint.breakText(text, true, maxWidth, widths);
+           text = text.substring(0, nr) + "...";
+         }*/
+         if (!calculate) {
+           drawLegendShape(canvas, r, currentX, currentY, i, paint);
+           drawString(canvas, text, currentX + lineSize + 5, currentY + 5, paint);
+         }
+         currentX += extraSize;
+       }
+     }
+   }
+   return Math.round(size + renderer.getLegendTextSize());
+ }
 
  /**
   * Draw a multiple lines string.
