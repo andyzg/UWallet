@@ -127,11 +127,9 @@ public class StatsFragment extends Fragment implements LoaderCallbacks<Cursor>, 
 	private GraphicalView getBalanceChart(int[] amounts){
 		Context context = getActivity();
 		series = new MultipleCategorySeries("Balance");
-		series.add(new String[] {"Meal Plan",  "Flex Dollars", "Other", "Test amount"}, 
-				new double[] {ProviderUtils.getMealBalance(amounts),
-				ProviderUtils.getFlexBalance(amounts)});
-
-		
+		series.add(new String[] {"Meal Plan",  "Flex Dollars"}, 
+				new double[] {(double)amounts[0]/100,
+				(double)amounts[1]/100});
 		renderer = buildRenderer(series.getItemCount(0));
 		return ChartFactory.getDoughnutChartView(context, series, renderer);
 	}
