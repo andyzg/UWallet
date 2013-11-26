@@ -1,4 +1,4 @@
-package ca.uwallet.main.provider.utils;
+package ca.uwallet.main.sync.utils;
 
 import java.io.IOException;
 import java.text.DateFormat;
@@ -65,6 +65,9 @@ public class ParseHelper{
 		ArrayList<ContentProviderOperation> operations = new ArrayList<ContentProviderOperation>();
 		Element table = doc.getElementById(TRANSACTION_TABLE_ID);
 		
+		if (table == null)
+			throw new ParseException("Element " + TRANSACTION_TABLE_ID + " is null", 0);
+		
 		for (Element row : table.select(TRANSACTION_TABLE_SELECTOR)){
 			Transaction t = parseTransactionFromRow(row);
 			operations.add(ContentProviderOperation.newInsert(WatcardContract.Transaction.CONTENT_URI)
@@ -84,9 +87,12 @@ public class ParseHelper{
 	 * @return
 	 */
 	@SuppressLint("UseSparseArrays")
-	public static HashMap<Integer, String> parseTransactionsToTerminal(Document doc){
+	public static HashMap<Integer, String> parseTransactionsToTerminal(Document doc) throws ParseException{
 		HashMap<Integer, String> map = new HashMap<Integer, String>();
 		Element table = doc.getElementById(TRANSACTION_TABLE_ID);
+		
+		if (table == null)
+			throw new ParseException("Element " + TRANSACTION_TABLE_ID + " is null", 0);
 		
 		for (Element row : table.select(TRANSACTION_TABLE_SELECTOR)){
 			String s = row.getElementById(COLUMN_TRANSACTION_TERMINAL).text();
@@ -103,10 +109,12 @@ public class ParseHelper{
 	 * @return A list of balances.
 	 * @throws IOException
 	 */
-	public static ArrayList<Integer> parseBalances(Document doc){
+	public static ArrayList<Integer> parseBalances(Document doc) throws ParseException{
 		Log.i(TAG, "Parsing balances");
 		ArrayList<Integer> balances = new ArrayList<Integer>(); // TODO add expected number for performance
 		Element table = doc.getElementById(BALANCE_TABLE_ID);
+		if (table == null)
+			throw new ParseException("Element " + BALANCE_TABLE_ID + " is null", 0);
 		
 		for (Element row : table.select(BALANCE_TABLE_SELECTOR)){
 			balances.add(parseBalanceFromRow(row));

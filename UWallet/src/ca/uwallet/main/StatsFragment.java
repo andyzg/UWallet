@@ -60,12 +60,12 @@ public class StatsFragment extends Fragment implements LoaderCallbacks<Cursor>{
 	    return renderer;
 	}
 	
-	private GraphicalView getBalanceChart(int[] amounts){
+	private GraphicalView getBalanceChart(Cursor cursor){
 		Context context = getActivity();
 		CategorySeries series = new CategorySeries("Balance");
 		
-		series.add("Meal Plan", ProviderUtils.getMealBalance(amounts));
-		series.add("Flex Dollars", ProviderUtils.getFlexBalance(amounts));
+		series.add("Meal Plan", ProviderUtils.getBalanceAmount(cursor, ProviderUtils.MEAL_PLAN));
+		series.add("Flex Dollars", ProviderUtils.getBalanceAmount(cursor, ProviderUtils.FLEX_DOLLAR));
 		
 		int[] colors = {0xFF00FF00, 0xFFFFFF00};
 		DefaultRenderer renderer = buildRenderer(colors);
@@ -92,8 +92,7 @@ public class StatsFragment extends Fragment implements LoaderCallbacks<Cursor>{
 
 	@Override
 	public void onLoadFinished(Loader<Cursor> loader, Cursor data) {
-		int[] amounts = ProviderUtils.getBalanceAmounts(data);
-		GraphicalView pieChart = getBalanceChart(amounts);
+		GraphicalView pieChart = getBalanceChart(data);
 		appendView(pieChart, BALANCE_CHART_ID);
 	}
 
