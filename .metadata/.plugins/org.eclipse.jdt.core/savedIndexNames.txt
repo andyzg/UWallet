@@ -1,16 +1,7 @@
 INDEX VERSION 1.126+C:\Users\Andy\Documents\GitHub\UWallet\.metadata\.plugins\org.eclipse.jdt.core
-1502888407.index
-3515282563.index
-3014154114.index
-3229930594.index
-743312920.index
-953290347.index
 3613135197.index
-739704923.index
-3857101292.index
-3692456705.index
-2987804150.index
-2874003846.index
-3695233402.index
 3527716986.index
-1893375324.index
+1945609499.index
+3515282563.index
+3857101292.index
+4144675614.index
