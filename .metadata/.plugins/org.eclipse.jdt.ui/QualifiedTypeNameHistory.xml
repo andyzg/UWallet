@@ -7,9 +7,14 @@
 <fullyQualifiedTypeName name="android.widget.LinearLayout"/>
 <fullyQualifiedTypeName name="android.view.ViewGroup.LayoutParams"/>
 <fullyQualifiedTypeName name="org.achartengine.renderer.SimpleSeriesRenderer"/>
-<fullyQualifiedTypeName name="android.view.View.OnClickListener"/>
 <fullyQualifiedTypeName name="org.achartengine.model.SeriesSelection"/>
 <fullyQualifiedTypeName name="android.widget.Toast"/>
-<fullyQualifiedTypeName name="android.util.Log"/>
 <fullyQualifiedTypeName name="android.view.View.OnTouchListener"/>
+<fullyQualifiedTypeName name="android.view.View.OnClickListener"/>
+<fullyQualifiedTypeName name="android.graphics.Path.Direction"/>
+<fullyQualifiedTypeName name="android.graphics.Region.Op"/>
+<fullyQualifiedTypeName name="ca.uwallet.main.R.color"/>
+<fullyQualifiedTypeName name="android.util.Log"/>
+<fullyQualifiedTypeName name="java.lang.Integer"/>
+<fullyQualifiedTypeName name="java.util.Arrays"/>
 </qualifiedTypeNameHistroy>

@@ -2,8 +2,8 @@
 <section name="Workbench">
 	<section name="org.eclipse.ui.texteditor.FindReplaceDialog_dialogBounds">
 		<item value="305" key="DIALOG_WIDTH"/>
-		<item value="139" key="DIALOG_Y_ORIGIN"/>
-		<item value="1375" key="DIALOG_X_ORIGIN"/>
+		<item value="149" key="DIALOG_Y_ORIGIN"/>
+		<item value="1070" key="DIALOG_X_ORIGIN"/>
 		<item value="444" key="DIALOG_HEIGHT"/>
 		<item value="1|Segoe UI|9.0|0|WINDOWS|1|-15|0|0|0|400|0|0|0|1|0|0|0|0|Segoe UI" key="DIALOG_FONT_NAME"/>
 	</section>
@@ -13,18 +13,20 @@
 		<item value="false" key="isRegEx"/>
 		<item value="false" key="incremental"/>
 		<item value="false" key="wholeword"/>
-		<item value="canvas" key="selection"/>
+		<item value="0xFF" key="selection"/>
 		<list key="findhistory">
-			<item value="canvas"/>
+			<item value="#"/>
+			<item value="buildRender"/>
+			<item value="drawLegend"/>
 			<item value="draw"/>
-			<item value="String"/>
-			<item value="addString"/>
-			<item value="addText"/>
-			<item value="add"/>
-			<item value="Overr"/>
-			<item value="click"/>
+			<item value="prevLabel"/>
+			<item value="drawLabel"/>
+			<item value="prevLab"/>
+			<item value="mStep"/>
 		</list>
 		<list key="replacehistory">
+			<item value="0xFF"/>
+			<item value="mDoughnutMapper"/>
 		</list>
 	</section>
 </section>

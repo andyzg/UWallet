@@ -2,6 +2,8 @@ package ca.uwallet.main;
 
 
 
+import java.util.Arrays;
+
 import org.achartengine.ChartFactory;
 import org.achartengine.GraphicalView;
 import org.achartengine.model.MultipleCategorySeries;
@@ -16,8 +18,8 @@ import android.support.v4.app.Fragment;
 import android.support.v4.app.LoaderManager.LoaderCallbacks;
 import android.support.v4.content.CursorLoader;
 import android.support.v4.content.Loader;
+import android.util.Log;
 import android.view.LayoutInflater;
-import android.view.MotionEvent;
 import android.view.View;
 import android.view.View.OnClickListener;
 import android.view.ViewGroup;
@@ -38,6 +40,10 @@ public class StatsFragment extends Fragment implements LoaderCallbacks<Cursor>, 
 	private GraphicalView dataChart;
 	private MultipleCategorySeries series;
 	private DefaultRenderer renderer;
+	
+	private int colors[];
+	private int lightColors[];
+	private int indexPreviousTouch = -1;
 
 	public StatsFragment() {
 		// Required empty public constructor
@@ -59,14 +65,21 @@ public class StatsFragment extends Fragment implements LoaderCallbacks<Cursor>, 
 		            Toast.makeText(getActivity(), "No chart element was clicked", Toast.LENGTH_SHORT)
 		                .show();
 		          } else {
-		            Toast.makeText(
+		        	  if (indexPreviousTouch != -1)
+		        	  {
+			        	  renderer.getSeriesRendererAt(indexPreviousTouch).setHighlighted(false);
+			        	  renderer.getSeriesRendererAt(indexPreviousTouch).setColor(colors[indexPreviousTouch]);
+		        	  }
+		        	  
+		        	  indexPreviousTouch = seriesSelection.getPointIndex();
+		        	  Toast.makeText(
 		                    getActivity(),
 		                "Chart element in series index " + seriesSelection.getSeriesIndex()
-		                    + " data point index " + seriesSelection.getPointIndex() + " was clicked"
-		                    + " closest point value X=" + seriesSelection.getXValue() + ", Y=" + seriesSelection.getValue()
-		                    /*+ " clicked point value X=" + (float) xy[0] + ", Y=" + (float) xy[1]*/, 500).show();
-		            renderer.getSeriesRendererAt(seriesSelection.getPointIndex()).setHighlighted(true);
-		            renderer.getSeriesRendererAt(seriesSelection.getPointIndex()).setColor(0xFF888888);
+		                    + " data point index " + indexPreviousTouch + " was clicked"
+		                    , 500).show();
+		            
+		            // renderer.getSeriesRendererAt(indexPreviousTouch).setHighlighted(true);
+		            renderer.getSeriesRendererAt(indexPreviousTouch).setColor(lightColors[indexPreviousTouch]);
 		            dataChart.repaint();
 		            
 		          }
@@ -80,15 +93,27 @@ public class StatsFragment extends Fragment implements LoaderCallbacks<Cursor>, 
 	@Override
 	public void onActivityCreated(Bundle savedInstanceState){
 		super.onActivityCreated(savedInstanceState);
+		colors = new int[]{getResources().getColor(R.color.BLUE),
+				getResources().getColor(R.color.PURPLE),
+				getResources().getColor(R.color.GREEN),
+				getResources().getColor(R.color.ORANGE),
+				getResources().getColor(R.color.RED)};
+		lightColors = new int[]{getResources().getColor(R.color.LIGHT_BLUE),
+				getResources().getColor(R.color.LIGHT_PURPLE),
+				getResources().getColor(R.color.LIGHT_GREEN),
+				getResources().getColor(R.color.LIGHT_ORANGE),
+				getResources().getColor(R.color.LIGHT_RED)};
+		Log.d("COLORS", Arrays.toString(colors));
 		getLoaderManager().initLoader(LOADER_BALANCES_ID, null, this);
 	}
 
-	private DefaultRenderer buildRenderer(int[] colors){
+	private DefaultRenderer buildRenderer(int length){
 		DefaultRenderer renderer = new DefaultRenderer();
-		for (int color : colors) {
+		for (int i=0; i<length;i++) {
 	        SimpleSeriesRenderer r = new SimpleSeriesRenderer();
-	        r.setColor(color);
+	        r.setColor(colors[i]);
 	        renderer.addSeriesRenderer(r);
+	        Log.d("COLOR", "Color was set as "+Integer.toString(colors[i]));
 	    }
 		renderer.setBackgroundColor(0xFF000000);
 		renderer.setPanEnabled(false);
@@ -102,12 +127,11 @@ public class StatsFragment extends Fragment implements LoaderCallbacks<Cursor>, 
 	private GraphicalView getBalanceChart(int[] amounts){
 		Context context = getActivity();
 		series = new MultipleCategorySeries("Balance");
-		series.add(new String[] {"Meal Plan",  "Flex Dollars"}, 
-				new double[] {/*ProviderUtils.getMealBalance(amounts)*/ 13.2,
-				ProviderUtils.getFlexBalance(amounts)});
+		series.add(new String[] {"Meal Plan",  "Flex Dollars", "Other", "Test amount"}, 
+				new double[] {/*ProviderUtils.getMealBalance(amounts)*/ 13,
+				ProviderUtils.getFlexBalance(amounts), 4, 16});
 		
-		int[] colors = {0xFF00FF00, 0xFFFFFF00};
-		renderer = buildRenderer(colors);
+		renderer = buildRenderer(series.getItemCount(0));
 		return ChartFactory.getDoughnutChartView(context, series, renderer);
 	}
 	
