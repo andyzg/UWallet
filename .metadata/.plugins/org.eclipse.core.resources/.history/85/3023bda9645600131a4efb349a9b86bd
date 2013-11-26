@@ -128,8 +128,8 @@ public class StatsFragment extends Fragment implements LoaderCallbacks<Cursor>, 
 		Context context = getActivity();
 		series = new MultipleCategorySeries("Balance");
 		series.add(new String[] {"Meal Plan",  "Flex Dollars", "Other", "Test amount"}, 
-				new double[] {ProviderUtils.getMealBalance(amounts),
-				ProviderUtils.getFlexBalance(amounts)});
+				new double[] {/*ProviderUtils.getMealBalance(amounts)*/ 13,
+				3/*ProviderUtils.getFlexBalance(amounts)*/, 4, 16});
 
 		
 		renderer = buildRenderer(series.getItemCount(0));

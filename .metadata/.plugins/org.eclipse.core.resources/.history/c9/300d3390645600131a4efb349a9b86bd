@@ -124,13 +124,19 @@ public class StatsFragment extends Fragment implements LoaderCallbacks<Cursor>, 
 	    return renderer;
 	}
 	
-	private GraphicalView getBalanceChart(int[] amounts){
+	private GraphicalView getBalanceChart(Cursor cursor){
 		Context context = getActivity();
+<<<<<<< HEAD
 		series = new MultipleCategorySeries("Balance");
 		series.add(new String[] {"Meal Plan",  "Flex Dollars", "Other", "Test amount"}, 
-				new double[] {ProviderUtils.getMealBalance(amounts),
-				ProviderUtils.getFlexBalance(amounts)});
-
+				new double[] {/*ProviderUtils.getMealBalance(amounts)*/ 13,
+				3/*ProviderUtils.getFlexBalance(amounts)*/, 4, 16});
+=======
+		CategorySeries series = new CategorySeries("Balance");
+		
+		series.add("Meal Plan", ProviderUtils.getBalanceAmount(cursor, ProviderUtils.MEAL_PLAN));
+		series.add("Flex Dollars", ProviderUtils.getBalanceAmount(cursor, ProviderUtils.FLEX_DOLLAR));
+>>>>>>> development
 		
 		renderer = buildRenderer(series.getItemCount(0));
 		return ChartFactory.getDoughnutChartView(context, series, renderer);
@@ -156,11 +162,14 @@ public class StatsFragment extends Fragment implements LoaderCallbacks<Cursor>, 
 
 	@Override
 	public void onLoadFinished(Loader<Cursor> loader, Cursor data) {
-
+<<<<<<< HEAD
 		int[] amounts = ProviderUtils.getBalanceAmounts(data);
 		dataChart= getBalanceChart(amounts);
 		appendView(dataChart, BALANCE_CHART_ID);
-
+=======
+		GraphicalView pieChart = getBalanceChart(data);
+		appendView(pieChart, BALANCE_CHART_ID);
+>>>>>>> development
 	}
 
 	@Override

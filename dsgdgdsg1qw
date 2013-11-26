@@ -1,0 +1,970 @@
+[33mcommit 9d35f234795e0beea50a98ca8f98932494ae59e9[m
+Merge: 9fb42c7 6276c41
+Author: Andy <zhangandy94@gmail.com>
+Date:   Tue Nov 26 01:31:30 2013 -0500
+
+    Merge branch 'development' into stats
+    
+    Conflicts:
+    	UWallet/src/ca/uwallet/main/StatsFragment.java
+
+[33mcommit 6276c4115ddb7a3f9d440809ddbacd62f3e41f40[m
+Author: Andy <zhangandy94@gmail.com>
+Date:   Tue Nov 26 01:21:29 2013 -0500
+
+    Pulling from development before merging with stats
+
+[33mcommit 39910f147d2cec31f2e8529f5afd81337fd6816a[m
+Merge: 15328fa 8ad4ad0
+Author: Andy <zhangandy94@gmail.com>
+Date:   Tue Nov 26 01:20:16 2013 -0500
+
+    Merge branch 'development' of https://github.com/monkeyCee/UWallet into development
+
+[33mcommit 9fb42c7000d31360ac337aa1768750eca7838255[m
+Author: Andy <zhangandy94@gmail.com>
+Date:   Tue Nov 26 01:19:45 2013 -0500
+
+    Finalized the statistics for Beta. Ready for merge
+
+[33mcommit a1a4979a852e90ff380261f5043e935ef9bd6aba[m
+Author: Andy <zhangandy94@gmail.com>
+Date:   Mon Nov 25 23:58:06 2013 -0500
+
+    Added a cool legend
+
+[33mcommit 53ee5fd2cec95b4d9530e0faea97211f7746d6bc[m
+Author: Andy <zhangandy94@gmail.com>
+Date:   Mon Nov 25 21:42:16 2013 -0500
+
+    Adjusted the text formatting
+
+[33mcommit f5397e2b759e2d73793f76eba72df1aede6435cb[m
+Author: Andy <zhangandy94@gmail.com>
+Date:   Mon Nov 25 20:36:23 2013 -0500
+
+    Added the beautiful text centered text on the doughnut
+
+[33mcommit 5d4fd8d26ecd17368e1ac99e4ff26fb859f2978f[m
+Author: Andy <zhangandy94@gmail.com>
+Date:   Mon Nov 25 19:05:02 2013 -0500
+
+    Touch works perfectly now. Fixed the AChartEngine library and minor issues
+
+[33mcommit 009006b09c1b4f2886f373787682a1cb1ffefbf1[m
+Author: Andy <zhangandy94@gmail.com>
+Date:   Sun Nov 24 22:47:45 2013 -0500
+
+    Modified the AChartEngine Library and added a class DoughnutMapper to handle the selections on the doughnut chart in the stats page
+
+[33mcommit 8ad4ad07e95416c72e45b0cd11afd10623ecf600[m
+Author: Gabriel Wong <contact@gabrielwong.net>
+Date:   Wed Nov 20 22:45:08 2013 -0500
+
+    Dismiss soft keyboard on tap
+
+[33mcommit 29a3e5727f7c852ab9298ceff1f241a0c78eea7b[m
+Author: Gabriel Wong <contact@gabrielwong.net>
+Date:   Wed Nov 20 22:25:19 2013 -0500
+
+    Fix null pointer exception when document is not loaded
+
+[33mcommit f6f86a7014f45e98964907ee7bff8635f8dcd072[m
+Author: Gabriel Wong <contact@gabrielwong.net>
+Date:   Wed Nov 20 22:15:55 2013 -0500
+
+    Correct package name and fix crash when checking balance
+
+[33mcommit 3ad2eb1081c6049c233c2dd2af7e79a39aeb6afa[m
+Author: Scott So <scottso@crescentschool.org>
+Date:   Tue Nov 19 14:32:29 2013 -0500
+
+    Test commit. No changes.
+
+[33mcommit 15328fabef83245b05b1c2feaa7c0d62c901389b[m
+Merge: b07cca4 c9522bc
+Author: Andy <zhangandy94@gmail.com>
+Date:   Tue Nov 19 11:50:25 2013 -0500
+
+    Merge branch 'development' of https://github.com/monkeyCee/UWallet into development
+
+[33mcommit b07cca4bb1366e895d8c06b8bfa469a1e82a831d[m
+Author: Andy <zhangandy94@gmail.com>
+Date:   Tue Nov 19 11:42:37 2013 -0500
+
+    Added the doughnut chart
+
+[33mcommit c9522bc9a7bf084a2ef335f6fc65a82d7ce336c0[m
+Author: Gabriel Wong <contact@gabrielwong.net>
+Date:   Tue Nov 19 02:29:33 2013 -0500
+
+    v. 0.0.0
+
+[33mcommit 5703f1afebed80fdd977c1258f6adc91c18da1b7[m
+Author: Gabriel Wong <contact@gabrielwong.net>
+Date:   Tue Nov 19 01:34:04 2013 -0500
+
+    Sync on login
+
+[33mcommit 0074109759a7f6a88b7a3b66b293bd80c129f853[m
+Author: Gabriel Wong <contact@gabrielwong.net>
+Date:   Tue Nov 19 01:19:29 2013 -0500
+
+    misc fixes
+
+[33mcommit 89f39a158dd9b0f254a44fa71d978747339b6cf4[m
+Author: jessicawoot <jessica.wu022@gmail.com>
+Date:   Tue Nov 19 01:00:33 2013 -0500
+
+    Changed Buttons to texts instead of images
+
+[33mcommit df07b7c39471c4df39a9e4d187f7c6e57c23147a[m
+Author: Andy <zhangandy94@gmail.com>
+Date:   Tue Nov 19 00:25:05 2013 -0500
+
+    Empty dir
+
+[33mcommit dcbfd8ad95ea5d9940e3150819fdda52f897bab2[m
+Author: Gabriel Wong <contact@gabrielwong.net>
+Date:   Mon Nov 18 18:22:01 2013 -0500
+
+    Add missing break in switch in update method
+
+[33mcommit 9f3a4ac8938c6512fcd105d577911a82807c648a[m
+Author: Gabriel Wong <contact@gabrielwong.net>
+Date:   Mon Nov 18 00:59:12 2013 -0500
+
+    Descriptions visible in transaction fragment
+
+[33mcommit e84b65e2e4b3fd3dca54aba722050d64e8eb41ef[m
+Author: Gabriel Wong <contact@gabrielwong.net>
+Date:   Sun Nov 17 22:28:08 2013 -0500
+
+    separate onPerform sync into methods
+
+[33mcommit 73f324c91e240d1a0ce56ab49f43f4f14fcbd736[m
+Author: Gabriel Wong <contact@gabrielwong.net>
+Date:   Sun Nov 17 18:03:38 2013 -0500
+
+    New db schema
+
+[33mcommit c0012b0c0d336a2e37dc8155742221e0fccbf312[m
+Author: Gabriel Wong <contact@gabrielwong.net>
+Date:   Sat Nov 16 17:09:48 2013 -0500
+
+    better currency display in transactions
+
+[33mcommit f66079c3d485286ec15f1dab96a4c0daa6288c06[m
+Author: Gabriel Wong <contact@gabrielwong.net>
+Date:   Sat Nov 16 16:49:43 2013 -0500
+
+    Display transactions
+
+[33mcommit c18ab8b129fe7cd5855e491fb55efcedb214ecb5[m
+Author: Gabriel Wong <contact@gabrielwong.net>
+Date:   Fri Nov 15 17:51:52 2013 -0500
+
+    Async loading of balance
+
+[33mcommit 19dddefa316413d6074c2111079581ab052a4446[m
+Author: Gabriel Wong <contact@gabrielwong.net>
+Date:   Fri Nov 15 17:11:45 2013 -0500
+
+    Clear data on logout. Fix crash when not synced.
+
+[33mcommit 4d2e68c06ed97cb8e1443be6e80cc41a171d107c[m
+Author: Gabriel Wong <contact@gabrielwong.net>
+Date:   Thu Nov 14 13:20:13 2013 -0500
+
+    Close on back button press on main menu
+
+[33mcommit 94bd1e0642eabfff948914e369883293610ca68e[m
+Author: Gabriel Wong <contact@gabrielwong.net>
+Date:   Thu Nov 14 02:26:48 2013 -0500
+
+    remove about page
+
+[33mcommit 0ba751a48d56286921d9afe3538c83f5c398dea6[m
+Author: Gabriel Wong <contact@gabrielwong.net>
+Date:   Thu Nov 14 02:21:12 2013 -0500
+
+    More lightweight
+
+[33mcommit 8320a73c13143e01a38d7c8013a39a321f444f97[m
+Author: Gabriel Wong <contact@gabrielwong.net>
+Date:   Thu Nov 14 01:19:26 2013 -0500
+
+    Don't keep fragments alive
+
+[33mcommit fef6d6efff126dea58637a0c53b28f6ffbf3ecfd[m
+Author: Gabriel Wong <contact@gabrielwong.net>
+Date:   Thu Nov 14 00:00:19 2013 -0500
+
+    clean strings
+
+[33mcommit c307f8270e47d10e02b88aa55a1971aaba9f09f1[m
+Author: Gabriel Wong <contact@gabrielwong.net>
+Date:   Wed Nov 13 23:51:18 2013 -0500
+
+    Implement LoginActivity. Balances using content provider.
+
+[33mcommit b1c5556c8ab83bcaa4fd031f6bc5ab9980fdf808[m
+Author: Gabriel Wong <contact@gabrielwong.net>
+Date:   Wed Nov 13 18:59:15 2013 -0500
+
+    Gutting down MainActivity for new code
+
+[33mcommit 4d8badc70fa8c994642e6090b0891ee438e14263[m
+Author: Gabriel Wong <contact@gabrielwong.net>
+Date:   Wed Nov 13 14:47:20 2013 -0500
+
+    Renamed AuthenticatorActivity to LoginActivity
+
+[33mcommit b34bd8d6d2e07cacb16aadd8301e6b5e329b5b82[m
+Author: Gabriel Wong <contact@gabrielwong.net>
+Date:   Wed Nov 13 14:33:33 2013 -0500
+
+    Fixes for v7 compatibility
+
+[33mcommit 257e0297729b90375cde93d91fff74b7702ad3b7[m
+Author: Gabriel Wong <contact@gabrielwong.net>
+Date:   Wed Nov 13 14:02:26 2013 -0500
+
+    Android v7 compatibility
+
+[33mcommit 96aab8a5b6b22dcc921207dd03ea03af14e28cb4[m
+Author: Gabriel Wong <contact@gabrielwong.net>
+Date:   Wed Nov 13 03:32:04 2013 -0500
+
+    Changed transaction table name. transaction is a SQL reserved word
+
+[33mcommit ed741ae3112cc8e128e14d6058b5dac69abac0c4[m
+Author: Gabriel Wong <contact@gabrielwong.net>
+Date:   Wed Nov 13 03:13:27 2013 -0500
+
+    Fixes to parsing
+
+[33mcommit f547d9d3cc5361a757f64dfdc6914f9273fdcaf9[m
+Author: Gabriel Wong <contact@gabrielwong.net>
+Date:   Wed Nov 13 03:04:24 2013 -0500
+
+    Fix icon in Android settings app
+
+[33mcommit ede572687fb3e655e28be78736bc73d26e6eba40[m
+Author: Gabriel Wong <contact@gabrielwong.net>
+Date:   Wed Nov 13 02:53:52 2013 -0500
+
+    Added app to accounts in settings
+
+[33mcommit f272029ae8a15a911ed221d9a9feaa30fd5d3d5e[m
+Author: Gabriel Wong <contact@gabrielwong.net>
+Date:   Wed Nov 13 02:06:29 2013 -0500
+
+    More authentication features
+
+[33mcommit 51783f7b740c60344ce9159afa94aa9565a11ef0[m
+Author: Gabriel Wong <contact@gabrielwong.net>
+Date:   Wed Nov 13 01:44:13 2013 -0500
+
+    AuthenticatorActivity added
+
+[33mcommit 19e0dceeeb1f80dd86604d1f9720cdafa0020d94[m
+Author: Gabriel Wong <contact@gabrielwong.net>
+Date:   Wed Nov 13 00:11:07 2013 -0500
+
+    Renamed packages
+
+[33mcommit 693506c96b8208c935b81ab9f0b8ae84bfc6b510[m
+Author: Gabriel Wong <contact@gabrielwong.net>
+Date:   Tue Nov 12 23:34:06 2013 -0500
+
+    Changed package name
+
+[33mcommit 8862f6f5aea0a93bd4c492a53e9cbe44184eeea8[m
+Author: Gabriel Wong <contact@gabrielwong.net>
+Date:   Tue Nov 12 23:11:29 2013 -0500
+
+    Can now add downloaded data to content provider
+
+[33mcommit fa53363618ea16e12abd9d8b42262f36c413278d[m
+Author: Gabriel Wong <contact@gabrielwong.net>
+Date:   Tue Nov 12 21:32:41 2013 -0500
+
+    Move parsing in SyncAdapter to Parser nested class
+
+[33mcommit 17a506f6a4e34d03fbbc2db1691834f2ad1dd349[m
+Author: Gabriel Wong <contact@gabrielwong.net>
+Date:   Tue Nov 12 21:02:43 2013 -0500
+
+    Balances added to content provided in ArrayList form
+
+[33mcommit 86192a6c193dd66d48e9eddbd0eeca0707be8a02[m
+Author: Gabriel Wong <contact@gabrielwong.net>
+Date:   Tue Nov 12 14:34:44 2013 -0500
+
+    Parse balance
+
+[33mcommit 84dda27a4b1b606ff18a2a2cda2f2ec28f2c27eb[m
+Author: Gabriel Wong <contact@gabrielwong.net>
+Date:   Tue Nov 12 13:17:34 2013 -0500
+
+    Get transactions
+
+[33mcommit 56e1b37a5e762e39eef58c36109c4274d3091046[m
+Author: Gabriel Wong <contact@gabrielwong.net>
+Date:   Tue Nov 12 01:03:42 2013 -0500
+
+    More SyncAdapter functionality
+
+[33mcommit eaed20c1b9cefcca48762d0c0e00451a3c7b53ae[m
+Author: Gabriel Wong <contact@gabrielwong.net>
+Date:   Tue Nov 12 00:00:49 2013 -0500
+
+    Init of several classes. Copied mostly from Google samples.
+
+[33mcommit bddeef2e19f4eaf07e2c9c9816a10c6cf7671e8a[m
+Author: Gabriel Wong <contact@gabrielwong.net>
+Date:   Tue Nov 12 00:00:41 2013 -0500
+
+    Init of several classes. Copied mostly from Google samples.
+
+[33mcommit b0ede79d0798e167953675257eb9375dffae5167[m
+Author: Gabriel Wong <contact@gabrielwong.net>
+Date:   Mon Nov 11 14:39:51 2013 -0500
+
+    Improved login screen
+
+[33mcommit 073cdf204dab5e3d3d66743658c3905e93f944e4[m
+Author: Gabriel Wong <contact@gabrielwong.net>
+Date:   Mon Nov 11 11:44:58 2013 -0500
+
+    Fix login issue
+
+[33mcommit f1a0193ffddd67b71ab9e20a88f1b973e4ef0301[m
+Author: Gabriel Wong <contact@gabrielwong.net>
+Date:   Mon Nov 11 11:32:19 2013 -0500
+
+    Added missing package
+
+[33mcommit 9e8cce45e68948b773fdb3d34a4f834096d4a591[m
+Author: Gabriel Wong <contact@gabrielwong.net>
+Date:   Mon Nov 11 01:29:48 2013 -0500
+
+    Changed com.enghack.watcard to com.enghack.uwallet.watcard
+
+[33mcommit 11cc19afdd20473a2d9ee85af2e171fd8143192f[m
+Author: Gabriel Wong <contact@gabrielwong.net>
+Date:   Mon Nov 11 01:11:57 2013 -0500
+
+    Improved login process.
+    Clears the login fields when log in happens.
+
+[33mcommit ffd6bdf541b3ab18eff701f16d76ed437e1e3eaa[m
+Author: Gabriel Wong <contact@gabrielwong.net>
+Date:   Mon Nov 11 00:22:38 2013 -0500
+
+    Fixed login to allow for non-numeric entries
+
+[33mcommit 339fce34789712a4ea03d644172212c48b4a879b[m
+Author: Gabriel Wong <contact@gabrielwong.net>
+Date:   Sun Nov 10 23:17:30 2013 -0500
+
+    Added missing files
+
+[33mcommit 6f85a07dffd375917659a861007c5ec1382c68aa[m
+Author: Gabriel Wong <contact@gabrielwong.net>
+Date:   Sun Nov 10 22:06:46 2013 -0500
+
+    Removed gen and bin
+
+[33mcommit 3df713fe1c0cf7ced3dbbdbdbca6a2c057eefebe[m
+Author: Gabriel Wong <contact@gabrielwong.net>
+Date:   Sun Nov 10 22:03:22 2013 -0500
+
+    Removed useless files
+
+[33mcommit 2b41925c36610ba0a595956bdacfa71130bf7953[m
+Merge: 6222ab3 0d3d3eb
+Author: Gabriel Wong <contact@gabrielwong.net>
+Date:   Sun Nov 10 21:53:02 2013 -0500
+
+    Merge branch 'fragment' into dev
+    
+    Conflicts:
+    	.metadata/.plugins/org.eclipse.cdt.core/.log
+
+[33mcommit 0d3d3ebb684a052d7bdf60459565cd1f185f707a[m
+Author: Gabriel Wong <contact@gabrielwong.net>
+Date:   Sun Nov 10 21:47:32 2013 -0500
+
+    Added .gitignore
+
+[33mcommit 2c1cb5f55c7be432f6ed9a8d25e104f4662af652[m
+Author: Gabriel Wong <contact@gabrielwong.net>
+Date:   Sun Nov 10 21:45:11 2013 -0500
+
+    removed pop transition
+
+[33mcommit 68d26dd350661288f07adfa4e811ae5d67af82e0[m
+Author: Gabriel Wong <contact@gabrielwong.net>
+Date:   Sun Nov 10 16:04:36 2013 -0500
+
+    new about page
+
+[33mcommit 32039dd36a7d6c16a341c51afc5c22bd804aa412[m
+Author: Gabriel Wong <contact@gabrielwong.net>
+Date:   Sun Nov 10 15:59:39 2013 -0500
+
+    Pie chart moved to separate page
+
+[33mcommit d87ee4639b5689d95235fd60d612c370bbbfb7c1[m
+Author: Gabriel Wong <contact@gabrielwong.net>
+Date:   Sun Nov 10 15:39:02 2013 -0500
+
+    Pie chart in balance page
+
+[33mcommit f5d3b65163240091b6e85b55552862316053a3bf[m
+Merge: 5fac86f adbd063
+Author: Gabriel Wong <contact@gabrielwong.net>
+Date:   Sun Nov 10 15:17:24 2013 -0500
+
+    Merge branch 'fragment' of https://github.com/monkeyCee/UWallet into fragment
+    
+    Conflicts:
+    	UWallet/bin/UWallet.apk
+    	UWallet/bin/classes.dex
+    	UWallet/bin/classes/com/enghack/uwallet/BalanceFragment.class
+    	UWallet/bin/classes/com/enghack/uwallet/R$string.class
+    	UWallet/bin/classes/com/enghack/uwallet/R$style.class
+    	UWallet/bin/classes/com/enghack/uwallet/R$styleable.class
+    	UWallet/bin/resources.ap_
+    	UWallet/gen/com/enghack/uwallet/R.java
+    	UWallet/res/layout/fragment_balance.xml
+    	UWallet/res/values/strings.xml
+    	UWallet/src/com/enghack/uwallet/BalanceFragment.java
+
+[33mcommit 5fac86f21e1541f2a3d2f782b761003c69911d55[m
+Author: Gabriel Wong <contact@gabrielwong.net>
+Date:   Sun Nov 10 15:11:23 2013 -0500
+
+    Changed TableLayout to LinearLayout
+
+[33mcommit adbd0633cee710efb7c23b4b2f36c3a0fe384dc8[m
+Merge: 41059bd a6be68b
+Author: Seikun Kambashi <seikun_lee@hotmail.com>
+Date:   Sun Nov 10 15:09:12 2013 -0500
+
+    m
+
+[33mcommit 41059bd34504cec25fe10d810647325032f5e53d[m
+Author: Seikun Kambashi <seikun_lee@hotmail.com>
+Date:   Sun Nov 10 15:07:47 2013 -0500
+
+    more format stuffs
+
+[33mcommit a6be68b8c66dd1fd623e50f7a34a667699b2d0af[m
+Author: Andy <zhangandy94@gmail.com>
+Date:   Sun Nov 10 14:00:12 2013 -0500
+
+    Parsed the date into the Transaction History. Improved the layout
+
+[33mcommit 20cba4c20f0a8cb8275ab88fd57f131c14f771bb[m
+Merge: e50ebeb f475754
+Author: Andy <zhangandy94@gmail.com>
+Date:   Sun Nov 10 13:36:19 2013 -0500
+
+    a
+
+[33mcommit e50ebeb32557cd2fb644de671a13e6d08895e829[m
+Author: Andy <zhangandy94@gmail.com>
+Date:   Sun Nov 10 13:35:13 2013 -0500
+
+    Commiting before changes
+
+[33mcommit f47575429dbf6f736277988222ff3cfe320b8aa7[m
+Author: Seikun Kambashi <seikun_lee@hotmail.com>
+Date:   Sun Nov 10 13:30:07 2013 -0500
+
+    fixed merge conflicts
+
+[33mcommit 8331da412c8271f3b3217ad8e441617b29cfdfa4[m
+Merge: cd5d48a 1213b76
+Author: Seikun Kambashi <seikun_lee@hotmail.com>
+Date:   Sun Nov 10 13:24:10 2013 -0500
+
+    Merge branch 'optimize' of https://github.com/monkeyCee/UWallet into optimize
+    
+    Conflicts:
+    	UWallet/bin/UWallet.apk
+    	UWallet/bin/classes.dex
+    	UWallet/bin/classes/com/enghack/uwallet/MainActivity.class
+    	UWallet/bin/resources.ap_
+    	UWallet/src/com/enghack/uwallet/MainActivity.java
+
+[33mcommit 1213b7670c9b23fe44a14bae442469d6f0b95621[m
+Author: Andy <zhangandy94@gmail.com>
+Date:   Sun Nov 10 13:22:58 2013 -0500
+
+    Optimized the datastructure with Hashmaps and arraylists
+
+[33mcommit cd5d48adb0c2ba1174c18fd93536a94bb838b934[m
+Merge: 4c6f566 2627c37
+Author: Seikun Kambashi <seikun_lee@hotmail.com>
+Date:   Sun Nov 10 13:13:52 2013 -0500
+
+    login now persistently saves info
+
+[33mcommit 4c6f566c3b28944116a6e888eebf86039498bb9e[m
+Author: Seikun Kambashi <seikun_lee@hotmail.com>
+Date:   Sun Nov 10 13:10:01 2013 -0500
+
+    finally fixed login, logout function -seikun
+
+[33mcommit 8df1b295af0c1cfd624fd470fb57d231f736cab0[m
+Author: Andy <zhangandy94@gmail.com>
+Date:   Sun Nov 10 13:03:21 2013 -0500
+
+    Optimized the datastructure of the transaction by a LOT
+
+[33mcommit 6222ab3f514d45464a61f2a4a2b170a5438b8d0e[m
+Author: Andy <zhangandy94@gmail.com>
+Date:   Sun Nov 10 11:37:41 2013 -0500
+
+    Working version number 1
+
+[33mcommit 2627c37ccf2748e0a681a8233643f7da8686bc34[m
+Author: Andy <zhangandy94@gmail.com>
+Date:   Sun Nov 10 11:37:07 2013 -0500
+
+    Comminting
+
+[33mcommit 99d1886078510f67df1ef55131caff29dd10b5b4[m
+Merge: f66c3b6 bae1263
+Author: Andy <zhangandy94@gmail.com>
+Date:   Sun Nov 10 10:46:56 2013 -0500
+
+    Merge branch 'fragment' of https://github.com/monkeyCee/UWallet into fragment
+
+[33mcommit bae1263f0aee4fe89a399b0006141c85948d07c2[m
+Author: Seikun Kambashi <seikun_lee@hotmail.com>
+Date:   Sun Nov 10 10:36:54 2013 -0500
+
+    formats
+
+[33mcommit f66c3b62717eb7f5a3a027d1d9f9f111982499a8[m
+Merge: a5b29f9 552895d
+Author: Andy <zhangandy94@gmail.com>
+Date:   Sun Nov 10 10:33:34 2013 -0500
+
+    No changes made
+
+[33mcommit a5b29f9225d4b056a66bba51a89ac6fa77224172[m
+Author: Andy <zhangandy94@gmail.com>
+Date:   Sun Nov 10 10:28:16 2013 -0500
+
+    wtf
+
+[33mcommit 552895db89802ffd6d272bd68e982c0d8c6d17af[m
+Author: Seikun Kambashi <seikun_lee@hotmail.com>
+Date:   Sun Nov 10 10:27:29 2013 -0500
+
+    fixed transaction, logout - still need to clear edit text, fixed backstack on fragments
+
+[33mcommit db9ff79420406ffe4f994ff9f5d59d1f523244fa[m
+Merge: 64f296b a902e22
+Author: Seikun Kambashi <seikun_lee@hotmail.com>
+Date:   Sun Nov 10 08:54:13 2013 -0500
+
+    merging trandview to frag
+
+[33mcommit a902e22b28b87417437874173143f6badb6abe52[m
+Merge: 237697e bf261d4
+Author: Seikun Kambashi <seikun_lee@hotmail.com>
+Date:   Sun Nov 10 08:53:39 2013 -0500
+
+    pulling from transview
+
+[33mcommit 64f296becf0d311b9ef00adfa9422943e04be77f[m
+Author: Seikun Kambashi <seikun_lee@hotmail.com>
+Date:   Sun Nov 10 08:51:17 2013 -0500
+
+    made login pretties, logout still needs fix
+
+[33mcommit bf261d4b7c9a458795d10f329dcea7443d6dc877[m
+Author: Andy <zhangandy94@gmail.com>
+Date:   Sun Nov 10 08:34:44 2013 -0500
+
+    Finished to get transaction history to display. Design needed
+
+[33mcommit 2d2e4b97d18085d9cf110ea41b653d128262a3a9[m
+Author: Andy <zhangandy94@gmail.com>
+Date:   Sun Nov 10 08:32:58 2013 -0500
+
+    Got transaction history displayed
+
+[33mcommit f9d9ab8f215b82a6d1b634a0a85a4c6e3db7f7f8[m
+Author: Seikun Kambashi <seikun_lee@hotmail.com>
+Date:   Sun Nov 10 07:41:19 2013 -0500
+
+    working buttons in menu
+
+[33mcommit 25e5bcdbd28392d81688621472e4a816f096073b[m
+Merge: 5100667 237697e
+Author: Seikun Kambashi <seikun_lee@hotmail.com>
+Date:   Sun Nov 10 07:38:01 2013 -0500
+
+    mergetest
+
+[33mcommit 5100667169478f5dbea9751503da0178e75522c2[m
+Author: Seikun Kambashi <seikun_lee@hotmail.com>
+Date:   Sun Nov 10 07:37:21 2013 -0500
+
+    test
+
+[33mcommit 237697e5f210b15b3950a92218c75a0e89d2eca5[m
+Author: Seikun Kambashi <seikun_lee@hotmail.com>
+Date:   Sun Nov 10 07:34:55 2013 -0500
+
+    frag
+
+[33mcommit 026fe939acc1231e54de08d91e9eeff2bfe3a658[m
+Merge: a9e55f8 dac3fba
+Author: Seikun Kambashi <seikun_lee@hotmail.com>
+Date:   Sun Nov 10 07:30:37 2013 -0500
+
+    test
+
+[33mcommit a9e55f88d26cfa1b7b30078d3a011fa5428e89c6[m
+Author: Seikun Kambashi <seikun_lee@hotmail.com>
+Date:   Sun Nov 10 07:29:57 2013 -0500
+
+    asdf
+
+[33mcommit dac3fba3484c0fce43e764564102818977da52d7[m
+Author: Andy <zhangandy94@gmail.com>
+Date:   Sun Nov 10 07:29:29 2013 -0500
+
+    Final authentication
+
+[33mcommit a191628c354836a02cd4c73a01dc719e1d4ea238[m
+Author: Andy <zhangandy94@gmail.com>
+Date:   Sun Nov 10 07:23:12 2013 -0500
+
+    Fixed the authentication
+
+[33mcommit 6c45056fa3d6cf351beaed722e5a0930f8327ef2[m
+Author: Seikun Kambashi <seikun_lee@hotmail.com>
+Date:   Sun Nov 10 07:20:13 2013 -0500
+
+    cleaning
+
+[33mcommit 079a66c0cfd82f7720eb17f8473c0d152ffc3873[m
+Merge: a2e11bb 095ddc9
+Author: Seikun Kambashi <seikun_lee@hotmail.com>
+Date:   Sun Nov 10 07:19:49 2013 -0500
+
+    transaction frag view needs rework
+
+[33mcommit 095ddc9805415d32e74359b2659db16c7a307150[m
+Author: Andy <zhangandy94@gmail.com>
+Date:   Sun Nov 10 07:17:20 2013 -0500
+
+    Changed some authentication exceptions
+
+[33mcommit a2e11bb0decafd1c71f10facefacefe059909e10[m
+Author: Seikun Kambashi <seikun_lee@hotmail.com>
+Date:   Sun Nov 10 07:12:05 2013 -0500
+
+    transactionFragment onCreateView needs fixing
+
+[33mcommit b03ff47b6ac730385c9c78113e0434b8264ba8c9[m
+Author: Andy <zhangandy94@gmail.com>
+Date:   Sun Nov 10 06:55:48 2013 -0500
+
+    Added toast to check for error
+
+[33mcommit 94a82c87bb78226ca6de9c1860223c5952257985[m
+Author: Seikun Kambashi <seikun_lee@hotmail.com>
+Date:   Sun Nov 10 06:04:00 2013 -0500
+
+    logout still
+
+[33mcommit 19632ce9b0260307f26dade43d4885b1902a0296[m
+Author: Seikun Kambashi <seikun_lee@hotmail.com>
+Date:   Sun Nov 10 05:54:31 2013 -0500
+
+    implementing authentication
+
+[33mcommit b021f8825f358f2a6984f5ff05a41be6b7fdc9aa[m
+Author: Andy <zhangandy94@gmail.com>
+Date:   Sun Nov 10 05:54:15 2013 -0500
+
+    Added progress dialog
+
+[33mcommit b2c10523efcf86fafdcb4088612fa8587999e5a6[m
+Merge: 74f6d55 5d27554
+Author: Seikun Kambashi <seikun_lee@hotmail.com>
+Date:   Sun Nov 10 05:51:59 2013 -0500
+
+    working on logout
+
+[33mcommit 74f6d554248629ad044e823f2dfb663b64971fab[m
+Author: Seikun Kambashi <seikun_lee@hotmail.com>
+Date:   Sun Nov 10 05:48:42 2013 -0500
+
+    fixed a few fragment switches, logout button needs work
+
+[33mcommit 5d2755499fb2b9ddd6be15d683595419d83386d2[m
+Author: Andy <zhangandy94@gmail.com>
+Date:   Sun Nov 10 05:46:21 2013 -0500
+
+    Add authentication
+
+[33mcommit 8c71c1104196aea9e9fa399cd10366d056a71f6d[m
+Merge: bbe9c23 a2094eb
+Author: Andy <zhangandy94@gmail.com>
+Date:   Sun Nov 10 05:34:50 2013 -0500
+
+    Just commintting
+
+[33mcommit a2094eb75d2f523ee884e0be8341f0e25b4437de[m
+Merge: d6ef2ba 1ca0c6d
+Author: Andy <zhangandy94@gmail.com>
+Date:   Sun Nov 10 05:33:29 2013 -0500
+
+    Merge branch 'fragment' of https://github.com/monkeyCee/UWallet into fragment
+
+[33mcommit d6ef2ba690a561e77454b1fee5e9ec4d225e8b27[m
+Author: Andy <zhangandy94@gmail.com>
+Date:   Sun Nov 10 05:33:16 2013 -0500
+
+    useless commit
+
+[33mcommit 1ca0c6dfacaf4cad6bf2245c5e96fec0bf075690[m
+Author: Seikun Kambashi <seikun_lee@hotmail.com>
+Date:   Sun Nov 10 05:31:25 2013 -0500
+
+    Added all fragments and respective xml files, finally finished converting loginFragment from activity to fragment. Implemented Scott and Jesslayout features. Fragment switching still in progress.
+
+[33mcommit bbe9c23e23278264487e7020d3c1cda5745639eb[m
+Author: Andy <zhangandy94@gmail.com>
+Date:   Sun Nov 10 05:30:41 2013 -0500
+
+    Quick save of any changes
+
+[33mcommit 492139afc93538461533b601fd8eb666c2f1f4d0[m
+Author: Andy <zhangandy94@gmail.com>
+Date:   Sun Nov 10 05:26:40 2013 -0500
+
+    Adding a date filter
+
+[33mcommit b149a47979090c891f28da5221b487c8f63e514c[m
+Author: Andy <zhangandy94@gmail.com>
+Date:   Sun Nov 10 05:18:20 2013 -0500
+
+    Dynamically creating table rows to display data
+
+[33mcommit 2344066a16e3b77f069e133d9472a6d1e150072d[m
+Merge: 7d2220c a4e4050
+Author: Andy <zhangandy94@gmail.com>
+Date:   Sun Nov 10 03:55:13 2013 -0500
+
+    Merge branch 'fragment' into transactionView
+
+[33mcommit 7d2220c2a0dd1867a175c946806a460d53408ca3[m
+Author: Andy <zhangandy94@gmail.com>
+Date:   Sun Nov 10 03:55:05 2013 -0500
+
+    Wtf
+
+[33mcommit a4e405035e259833cd9eab1f00f2faca2ff7df10[m
+Author: Seikun Kambashi <seikun_lee@hotmail.com>
+Date:   Sun Nov 10 03:51:22 2013 -0500
+
+    fragments in progress
+
+[33mcommit 1f9a065bc91658cb5bc038282576b4f1e982ddd9[m
+Author: Andy <zhangandy94@gmail.com>
+Date:   Sun Nov 10 03:46:40 2013 -0500
+
+    First commit in transaction View
+
+[33mcommit f3b2c290bd7d8bd5fa5dcade8abb5761235dca8e[m
+Merge: 8dae698 f127bbc
+Author: Seikun Kambashi <seikun_lee@hotmail.com>
+Date:   Sun Nov 10 03:34:59 2013 -0500
+
+    fragment in progress
+
+[33mcommit 8dae698fe4090d538bbc91d5bdbd6a93fef4d499[m
+Author: Seikun Kambashi <seikun_lee@hotmail.com>
+Date:   Sun Nov 10 03:34:16 2013 -0500
+
+    added all fragment classes
+
+[33mcommit f127bbc45a7952f3e3df393a6bd874818a77349b[m
+Author: Andy <zhangandy94@gmail.com>
+Date:   Sun Nov 10 03:25:12 2013 -0500
+
+    Convertede activity into a fragment
+
+[33mcommit c256580405c3827125ffcbba5b5b958e304e2b28[m
+Author: Andy <zhangandy94@gmail.com>
+Date:   Sun Nov 10 03:15:00 2013 -0500
+
+    Adding everything to fragment
+
+[33mcommit 1cdf7c090b4a2e96b291cfc884dd199ef1ccb350[m
+Merge: 4fb066c d5a7fcf
+Author: Andy <zhangandy94@gmail.com>
+Date:   Sun Nov 10 03:08:18 2013 -0500
+
+    Adjusted the string filtering method
+
+[33mcommit 4fb066c6fe679f29e98f0024bf50a84ba158c7d7[m
+Author: Andy <zhangandy94@gmail.com>
+Date:   Sun Nov 10 03:05:45 2013 -0500
+
+    Adjusted a bit of the String filtering system to minimize numbers
+
+[33mcommit d5a7fcff963422bdfce361a01763f48d584a5a9c[m
+Author: Seikun Kambashi <seikun_lee@hotmail.com>
+Date:   Sun Nov 10 02:38:42 2013 -0500
+
+    added databasehandler
+
+[33mcommit b91fc8fe758154144cd1805896303e05fb6f9397[m
+Merge: bd40f0c e8ab6bd
+Author: Seikun Kambashi <seikun_lee@hotmail.com>
+Date:   Sun Nov 10 02:36:52 2013 -0500
+
+    trying to merge
+
+[33mcommit bd40f0c6d89328400cac110c0db3abf7fa7e9a2c[m
+Author: Andy <zhangandy94@gmail.com>
+Date:   Sun Nov 10 02:34:13 2013 -0500
+
+    Changed minor stuff
+
+[33mcommit e8ab6bdb31dd59f8323df0dd92afbac3aa5ddefb[m
+Author: Seikun Kambashi <seikun_lee@hotmail.com>
+Date:   Sun Nov 10 02:33:26 2013 -0500
+
+    working out git
+
+[33mcommit f250ce2db91e1f109b2ffcd67e3ec3560a8af144[m
+Author: Andy <zhangandy94@gmail.com>
+Date:   Sun Nov 10 02:16:00 2013 -0500
+
+    Completed the status of the watcard
+
+[33mcommit 444c287f2fa5a86860921080185a988ece66a484[m
+Author: Seikun Kambashi <seikun_lee@hotmail.com>
+Date:   Sun Nov 10 01:58:03 2013 -0500
+
+    test
+
+[33mcommit 8f920e61d03b96ef0f3d1d24bef7a5e60dc25888[m
+Author: Andy <zhangandy94@gmail.com>
+Date:   Sun Nov 10 01:42:39 2013 -0500
+
+    Added balance status of watcard
+
+[33mcommit 29834d48f19efaae151c50cf05c3323d4a0ddd4f[m
+Merge: 0337e43 b57f188
+Author: Andy <zhangandy94@gmail.com>
+Date:   Sun Nov 10 00:38:11 2013 -0500
+
+    Merge branch 'dev' of https://github.com/monkeyCee/UWallet into dev
+
+[33mcommit 0337e43c6607ee2d005fdd0ee61db5eacc861629[m
+Author: Andy <zhangandy94@gmail.com>
+Date:   Sun Nov 10 00:35:55 2013 -0500
+
+    Added the WatcardInfo class
+
+[33mcommit 397845a67300059ba5ee31528d6e51dc9bd2e814[m
+Author: Andy <zhangandy94@gmail.com>
+Date:   Sun Nov 10 00:34:33 2013 -0500
+
+    Added the WatcardHolder object and the transactions
+
+[33mcommit 8194c1349b2c9ce39d4c470aa970f19158fe7987[m
+Author: Andy <zhangandy94@gmail.com>
+Date:   Sun Nov 10 00:14:38 2013 -0500
+
+    Created the class for parsing HTML data
+
+[33mcommit b57f1885b0e03c3c93c4ab0dd8771b4152388f6d[m
+Merge: 35bbc9c fd84448
+Author: Seikun Kambashi <seikun_lee@hotmail.com>
+Date:   Sat Nov 9 23:37:09 2013 -0500
+
+    test commit
+
+[33mcommit 35bbc9c506172759d96e26df440e139f1f5fa1cf[m
+Author: Seikun Kambashi <seikun_lee@hotmail.com>
+Date:   Sat Nov 9 23:35:37 2013 -0500
+
+    test
+
+[33mcommit fd84448c58753e5788e7212684f97a5f3fc539eb[m
+Author: Andy <zhangandy94@gmail.com>
+Date:   Sat Nov 9 23:31:52 2013 -0500
+
+    Added an XML made by Jessicawoot
+
+[33mcommit aaa37a31bcb18bfa84dc03b15eb0f70819253bc8[m
+Author: Andy <zhangandy94@gmail.com>
+Date:   Sat Nov 9 23:20:58 2013 -0500
+
+    Final few changes for network, time to parse
+
+[33mcommit a34bc77d263c9c512eb4a168394415749296cdd4[m
+Author: Andy <zhangandy94@gmail.com>
+Date:   Sat Nov 9 23:12:28 2013 -0500
+
+    Finished getting the element for the table
+
+[33mcommit d8b9ad32665226dc318974ad5babd0c9505c1cc7[m
+Author: Andy <zhangandy94@gmail.com>
+Date:   Sat Nov 9 21:17:46 2013 -0500
+
+    Fixed the setup bugs
+
+[33mcommit 11179ce6e88017d2e623ce44eecd13c6ff15fb11[m
+Merge: 83fa05e ba5fa0c
+Author: Andy <zhangandy94@gmail.com>
+Date:   Sat Nov 9 21:10:04 2013 -0500
+
+    Retry
+
+[33mcommit 83fa05ebb3c34a002585cd6693b09100385a19dd[m
+Author: Andy <zhangandy94@gmail.com>
+Date:   Sat Nov 9 21:06:35 2013 -0500
+
+    Network login still buggy
+
+[33mcommit ba5fa0cb92753ed9b254b65913eddc0bc1de2796[m
+Author: Seikun Kambashi <seikun_lee@hotmail.com>
+Date:   Sat Nov 9 19:37:02 2013 -0500
+
+    working enum, commit test
+
+[33mcommit 497403f6cd7f05725819843ce278df59b7e5f002[m
+Author: Andy <zhangandy94@gmail.com>
+Date:   Sat Nov 9 19:14:51 2013 -0500
+
+    Create the workspace
+
+[33mcommit 13467b41650e06fbece2bde3f18cac262c9d08ac[m
+Author: Andy <zhangandy94@gmail.com>
+Date:   Sat Nov 9 18:26:47 2013 -0500
+
+    Added a text file to read
+
+[33mcommit 500dec9661670f363f2d3124001150827a8e0bc0[m
+Author: Andy Zhang <andzhng@gmail.com>
+Date:   Sat Nov 9 15:21:29 2013 -0800
+
+    Initial commit
