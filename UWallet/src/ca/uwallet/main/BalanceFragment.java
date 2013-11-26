@@ -55,7 +55,7 @@ public class BalanceFragment extends Fragment implements LoaderCallbacks<Cursor>
 		super.onStart();
 	}
 	
-	private void updateLabels(View v, int[] amounts){
+	private void updateLabels(View v, Cursor cursor){
 		if (v == null)
 			return;
 		String mealLabel;
@@ -63,21 +63,15 @@ public class BalanceFragment extends Fragment implements LoaderCallbacks<Cursor>
 		String totalLabel;
 		Resources res = getResources();
 		
-		// Check if amounts is null or of length 0
-		boolean noData = amounts == null;
-		if (amounts != null)
-			noData = amounts.length == 0;
-		
-		if (noData){ // Not synced yet
+		if (cursor.getCount() < ProviderUtils.BALANCE_CURSOR_COUNT){ // Not synced yet
 			mealLabel = res.getString(R.string.meal_plan) + " " + res.getString(R.string.unknown);
 			flexLabel = res.getString(R.string.flex_dollars) + " " + res.getString(R.string.unknown);
 			totalLabel = res.getString(R.string.total) + " " + res.getString(R.string.unknown);
 		}else{ // Show the data
-			int mealAmount = ProviderUtils.getMealBalance(amounts);
-			int flexAmount = ProviderUtils.getFlexBalance(amounts);
-			mealLabel = res.getString(R.string.meal_plan) + " " + ProviderUtils.amountToString(mealAmount);
-			flexLabel = res.getString(R.string.flex_dollars) + " " +ProviderUtils.amountToString(flexAmount);
-			totalLabel = res.getString(R.string.total) + " " +ProviderUtils.amountToString(mealAmount + flexAmount);
+			int[] amounts = ProviderUtils.getBalanceAmounts(cursor);
+			mealLabel = res.getString(R.string.meal_plan) + " " + ProviderUtils.formatCurrency(amounts[ProviderUtils.MEAL_PLAN]);
+			flexLabel = res.getString(R.string.flex_dollars) + " " +ProviderUtils.formatCurrency(amounts[ProviderUtils.FLEX_DOLLAR]);
+			totalLabel = res.getString(R.string.total) + " " +ProviderUtils.formatCurrency(amounts[ProviderUtils.TOTAL]);
 		}
 		((TextView)v.findViewById(R.id.meal_plan_label)).setText(mealLabel);
 		((TextView)v.findViewById(R.id.flex_dollars_label)).setText(flexLabel);
@@ -93,8 +87,7 @@ public class BalanceFragment extends Fragment implements LoaderCallbacks<Cursor>
 
 	@Override
 	public void onLoadFinished(Loader<Cursor> loader, Cursor data) {
-		int[] amounts = ProviderUtils.getBalanceAmounts(data);
-		updateLabels(getView(), amounts);
+		updateLabels(getView(), data);
 	}
 
 	@Override

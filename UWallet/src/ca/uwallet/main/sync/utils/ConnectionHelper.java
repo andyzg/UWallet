@@ -1,4 +1,4 @@
-package ca.uwallet.main.provider.utils;
+package ca.uwallet.main.sync.utils;
 
 import java.io.IOException;
 

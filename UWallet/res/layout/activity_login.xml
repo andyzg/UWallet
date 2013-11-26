@@ -30,13 +30,12 @@
     </LinearLayout>
 
     <!-- Login form -->
-
-    <ScrollView
-        android:id="@+id/login_form"
-        android:layout_width="match_parent"
-        android:layout_height="match_parent" >
-
+	<ScrollView
+	    android:layout_width="match_parent"
+	    android:layout_height="match_parent">
+        
 	    <LinearLayout
+	        android:id="@+id/login_form"
 		    android:layout_width="match_parent"
 		    android:layout_height="match_parent"
 		    android:orientation="vertical">
@@ -65,10 +64,10 @@
 		        android:layout_height="wrap_content"
 		        android:layout_gravity="center"
 		        android:imeActionId="@+id/login"
-                android:imeActionLabel="@string/action_sign_in_short"
-                android:imeOptions="actionUnspecified"
-                android:maxLines="1"
-                android:singleLine="true"
+	               android:imeActionLabel="@string/action_sign_in_short"
+	               android:imeOptions="actionUnspecified"
+	               android:maxLines="1"
+	               android:singleLine="true"
 		        android:hint="@string/password_prompt"
 		        android:inputType="textPassword" />
 		    
@@ -81,8 +80,8 @@
 		        android:typeface="sans"
 		        android:textSize="17sp"
 		        android:text="@string/login_button" />
-
+	
 		</LinearLayout>
-    </ScrollView>
+	</ScrollView>
 
 </merge>
