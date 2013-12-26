@@ -1,6 +1,7 @@
 package ca.uwallet.main;
 
 import android.app.Activity;
+import android.graphics.Typeface;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
 import android.view.LayoutInflater;
@@ -15,6 +16,7 @@ import android.view.ViewGroup;
 
 public class MenuFragment extends Fragment implements OnClickListener {
 
+	
 	private Listener mListener;
 
 	public interface Listener {
@@ -32,6 +34,7 @@ public class MenuFragment extends Fragment implements OnClickListener {
 	@Override
 	public void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
+		
 	}
 
 	@Override

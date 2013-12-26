@@ -3,22 +3,21 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:orientation="vertical"
+    
     tools:context=".LoginFragment" >
 
     <ImageView
-        android:id="@+id/logo"
+        android:id="@+id/imageView1"
         android:layout_width="200dp"
         android:layout_height="300dp"
         android:layout_gravity="center"
-        android:src="@drawable/uwallet2" />
+        android:src="@drawable/uwallet_logo" />
 
     <EditText
         android:id="@+id/username_input"
         android:layout_width="250dp"
         android:layout_height="wrap_content"
         android:layout_gravity="center"
-        android:lines="1"
-        android:inputType="number"
         android:typeface="sans"
         android:hint="@string/username_prompt" />
 

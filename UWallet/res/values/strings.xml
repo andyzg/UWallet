@@ -23,4 +23,9 @@
 	<string name="statistics_button">Statistics</string>
 	<string name="logout_button">Logout</string>
     
+	<color name="LightBlueGrey">#D1D0CE</color>
+	<color name="balanceBackground">#1485CC</color>
+	<color name="balanceBackground_click">#0971B2</color>
+	<color name="transactionsBackground">#CC4A14</color>
+	
 </resources>

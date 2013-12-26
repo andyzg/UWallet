@@ -27,12 +27,14 @@ public class StatsFragment extends Fragment implements LoaderCallbacks<Cursor>{
 	private static final int BALANCE_CHART_ID = 123456;
 
 	public StatsFragment() {
+		
 		// Required empty public constructor
 	}
 
 	@Override
 	public View onCreateView(LayoutInflater inflater, ViewGroup container,
 			Bundle savedInstanceState) {
+		
 		View v = inflater.inflate(R.layout.fragment_stats, container,
 				false);
 
@@ -41,6 +43,7 @@ public class StatsFragment extends Fragment implements LoaderCallbacks<Cursor>{
 	
 	@Override
 	public void onActivityCreated(Bundle savedInstanceState){
+		
 		super.onActivityCreated(savedInstanceState);
 		getLoaderManager().initLoader(LOADER_BALANCES_ID, null, this);
 	}

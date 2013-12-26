@@ -3,8 +3,13 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:orientation="vertical"
-    tools:context=".MenuFragment" >
+    android:background="#262626"
+    tools:context=".MenuFragment" 
+    
+    >
 
+   
+    
     <!-- Image logo below -->
     <ImageView
         android:id="@+id/main_menu_logo"
@@ -13,8 +18,10 @@
         android:layout_marginBottom="50dp"
         android:scaleType="fitCenter"
         android:src="@drawable/main_menu_logo" />
-    
-     <Button
+
+
+     <Button    
+         
         android:id="@+id/balance_button"
         android:layout_width="250dp"
         android:layout_height="45dp"
@@ -23,20 +30,21 @@
         android:text="@string/balance_button"
         android:textSize="25sp"
         android:typeface="sans"
-        android:background="@android:color/transparent"
-        android:textColor="#FFFFFF" />
+        android:background="@drawable/balance_rectangle"
+        android:textColor="#ffffff" />
+     
 
     <Button
         android:id="@+id/transactions_button"
         android:layout_width="250dp"
         android:layout_height="45dp"
         android:layout_gravity="center"
-        android:layout_marginTop="30dp"
+        android:layout_marginTop="2dp"
         android:text="@string/transactions_button"
         android:textSize="25sp"
         android:typeface="sans"
-        android:background="@android:color/transparent"
-        android:textColor="#FFFFFF"
+        android:background="@drawable/transaction_rectangle"
+        android:textColor="#ffffff"
 	 />
 
     <Button
@@ -44,24 +52,25 @@
         android:layout_width="250dp"
         android:layout_height="45dp"
         android:layout_gravity="center"
-        android:layout_marginTop="30dp"
+        android:layout_marginTop="2dp"
         android:text="@string/statistics_button"
         android:textSize="25sp"
         android:typeface="sans"
-        android:background="@android:color/transparent"
-        android:textColor="#FFFFFF" />
+        android:background="@drawable/stats_rectangle"
+        android:textColor="#ffffff" 
+       />
 
     <Button
         android:id="@+id/logout_button"
         android:layout_width="250dp"
         android:layout_height="45dp"
         android:layout_gravity="center"
-        android:layout_marginTop="30dp"
+        android:layout_marginTop="2dp"
         android:text="@string/logout_button"
         android:textSize="25sp"
         android:typeface="sans"
-        android:background="@android:color/transparent"
-        android:textColor="#FFFFFF" />
+        android:background="@drawable/logout_rectangle"
+        android:textColor="#ffffff" />
 
   
 </LinearLayout>
