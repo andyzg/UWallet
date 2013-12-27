@@ -3,7 +3,7 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:orientation="vertical"
-    android:background="#262626"
+    android:background="@color/background"
     tools:context=".MenuFragment" 
     
     >
@@ -30,7 +30,7 @@
         android:text="@string/balance_button"
         android:textSize="25sp"
         android:typeface="sans"
-        android:background="@drawable/balance_rectangle"
+        android:background="@drawable/button_balance"
         android:textColor="#ffffff" />
      
 
@@ -43,7 +43,7 @@
         android:text="@string/transactions_button"
         android:textSize="25sp"
         android:typeface="sans"
-        android:background="@drawable/transaction_rectangle"
+        android:background="@drawable/button_transaction"
         android:textColor="#ffffff"
 	 />
 
@@ -56,7 +56,7 @@
         android:text="@string/statistics_button"
         android:textSize="25sp"
         android:typeface="sans"
-        android:background="@drawable/stats_rectangle"
+        android:background="@drawable/button_stats"
         android:textColor="#ffffff" 
        />
 
@@ -69,7 +69,7 @@
         android:text="@string/logout_button"
         android:textSize="25sp"
         android:typeface="sans"
-        android:background="@drawable/logout_rectangle"
+        android:background="@drawable/button_logout"
         android:textColor="#ffffff" />
 
   

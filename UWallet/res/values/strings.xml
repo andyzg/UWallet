@@ -23,9 +23,15 @@
 	<string name="statistics_button">Statistics</string>
 	<string name="logout_button">Logout</string>
     
-	<color name="LightBlueGrey">#D1D0CE</color>
+	<color name="background">#27282B</color>
 	<color name="balanceBackground">#1485CC</color>
-	<color name="balanceBackground_click">#0971B2</color>
+	<color name="balanceBackground_click">#0C537F</color>
 	<color name="transactionsBackground">#CC4A14</color>
+	<color name="transactionsBackground_click">#7F2E0C</color>
+	<color name="statisticsBackground">#70CCAF</color>
+	<color name="statisticsBackground_click">#467F6D</color>
+	<color name="logoutBackground">#FFC01E</color>
+	<color name="logoutBackground_click">#7F600F</color>
+	
 	
 </resources>
