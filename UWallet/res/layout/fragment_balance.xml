@@ -3,7 +3,8 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:background="#1485CC"
-    android:orientation="vertical" >
+    android:orientation="vertical"
+    android:theme="@style/AppBaseTheme1" >
 
     <TextView
         android:id="@+id/custom_font"
@@ -23,7 +24,7 @@
         android:layout_marginTop="80dp"
         android:text="@string/meal_plan"
         android:layout_gravity="center"
-        android:textColor="#ffffff"
+        android:textColor="@color/gray"
         android:textSize="20sp" />
 
     <TextView
@@ -34,7 +35,7 @@
         android:gravity="right"
         android:text="@string/flex_dollars"
         android:layout_gravity="center"
-        android:textColor="#ffffff"
+        android:textColor="@color/gray"
         android:textSize="20sp" />
 
     <TextView
@@ -45,7 +46,7 @@
         android:gravity="right"
         android:text="@string/total"
         android:layout_gravity="center"
-        android:textColor="#ffffff"
+        android:textColor="@color/gray"
         android:textSize="35sp" />
 
 

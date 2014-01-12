@@ -1,0 +1,72 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources xmlns:tools="http://schemas.android.com/tools">
+    
+    <!-- the theme applied to the application or activity -->
+    <style name="AppBaseTheme"
+           parent="@style/Theme.AppCompat">
+        <item name="android:actionBarStyle" tools:targetApi="11">@style/CustomActionBar</item>
+        <item name="actionBarStyle">@style/CustomActionBar</item>
+        <item name="android:actionMenuTextColor" tools:targetApi="11">@color/gray</item>
+        <item name="actionMenuTextColor">@color/gray</item>
+        
+
+        <!-- Support library compatibility -->
+        <item name="actionBarStyle">@style/CustomActionBar</item>
+        <item name="actionMenuTextColor">@color/gray</item>
+    </style>
+
+    <!-- ActionBar styles -->
+    <style name="CustomActionBar"
+           parent="@style/Widget.AppCompat.ActionBar.Solid">
+        <item name="android:background">@drawable/actionbar_background</item>
+        <item name="android:titleTextStyle" tools:targetApi="11">@style/ActionBarTitleText</item>
+        <item name="titleTextStyle">@style/ActionBarTitleText</item>
+
+        <!-- Support library compatibility -->
+        <item name="titleTextStyle">@style/ActionBarTitleText</item>
+        <item name="background">@drawable/actionbar_background</item>
+    </style>
+    
+     <!-- ActionBar title text -->
+    <style name="ActionBarTitleText"
+           parent="@style/TextAppearance.AppCompat.Widget.ActionBar.Title">
+        <item name="android:textColor">@color/gray</item>
+    </style>
+    
+    
+    
+    
+    
+    <!-- the theme applied to the application or activity -->
+    <style name="AppBaseTheme1"
+           parent="@style/Theme.AppCompat">
+        <item name="android:actionBarStyle" tools:targetApi="11">@style/CustomActionBar1</item>
+        <item name="actionBarStyle">@style/CustomActionBar1</item>
+        <item name="android:actionMenuTextColor" tools:targetApi="11">@color/yellow</item>
+        <item name="actionMenuTextColor">@color/yellow</item>
+        
+
+        <!-- Support library compatibility -->
+        <item name="actionBarStyle">@style/CustomActionBar1</item>
+        <item name="actionMenuTextColor">@color/yellow</item>
+    </style>
+
+    <!-- ActionBar styles -->
+    <style name="CustomActionBar1"
+           parent="@style/Widget.AppCompat.ActionBar.Solid">
+        <item name="android:background">@drawable/actionbar_background1</item>
+        <item name="android:titleTextStyle" tools:targetApi="11">@style/ActionBarTitleText1</item>
+        <item name="titleTextStyle">@style/ActionBarTitleText1</item>
+
+        <!-- Support library compatibility -->
+        <item name="titleTextStyle">@style/ActionBarTitleText1</item>
+        <item name="background">@drawable/actionbar_background1</item>
+    </style>
+    
+    <!-- ActionBar title text -->
+    <style name="ActionBarTitleText1"
+           parent="@style/TextAppearance.AppCompat.Widget.ActionBar.Title">
+        <item name="android:textColor">@color/yellow</item>
+    </style>
+    
+</resources>

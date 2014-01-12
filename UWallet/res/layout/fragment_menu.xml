@@ -3,7 +3,7 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:orientation="vertical"
-    android:background="@color/background"
+    android:background="#F1F2FA"
     tools:context=".MenuFragment" 
     
     >
@@ -14,63 +14,80 @@
     <ImageView
         android:id="@+id/main_menu_logo"
         style="@style/ImageButton"
-        android:layout_height="100dp"
-        android:layout_marginBottom="50dp"
+        android:layout_width="150dp"
+        android:layout_height="150dp"
+        android:layout_gravity="center"
+        android:layout_weight="0.04"
+        
         android:scaleType="fitCenter"
-        android:src="@drawable/main_menu_logo" />
+        android:src="@drawable/uwallet_logo" />
 
 
      <Button    
-         
+        android:layout_weight="0.05"
         android:id="@+id/balance_button"
-        android:layout_width="250dp"
-        android:layout_height="45dp"
+        android:layout_width="match_parent"
+        android:layout_marginRight="20dp"
+        android:layout_marginLeft="20dp"
+        android:layout_height="50dp"
+        android:layout_marginBottom="5dp"
         android:layout_gravity="center"
-        android:layout_marginTop="30dp"
         android:text="@string/balance_button"
         android:textSize="25sp"
         android:typeface="sans"
         android:background="@drawable/button_balance"
-        android:textColor="#ffffff" />
+        android:textColor="@color/gray" />
      
 
     <Button
+        android:layout_weight="0.05"
         android:id="@+id/transactions_button"
-        android:layout_width="250dp"
-        android:layout_height="45dp"
+        android:layout_width="match_parent"
+        android:layout_height="50dp"
         android:layout_gravity="center"
-        android:layout_marginTop="2dp"
+        android:layout_marginRight="20dp"
+        android:layout_marginLeft="20dp"
+        android:layout_marginTop="5dp"
+        android:layout_marginBottom="5dp"
         android:text="@string/transactions_button"
         android:textSize="25sp"
         android:typeface="sans"
         android:background="@drawable/button_transaction"
-        android:textColor="#ffffff"
+        android:textColor="@color/gray"
 	 />
 
     <Button
+        android:layout_weight="0.05"
         android:id="@+id/statistics_button"
-        android:layout_width="250dp"
-        android:layout_height="45dp"
+        android:layout_width="match_parent"
+        android:layout_height="50dp"
         android:layout_gravity="center"
-        android:layout_marginTop="2dp"
+        android:layout_marginRight="20dp"
+        android:layout_marginLeft="20dp"
+        android:layout_marginTop="5dp"
+        android:layout_marginBottom="5dp"
         android:text="@string/statistics_button"
         android:textSize="25sp"
         android:typeface="sans"
         android:background="@drawable/button_stats"
-        android:textColor="#ffffff" 
+        android:textColor="@color/gray" 
        />
 
     <Button
+        android:layout_weight="0.05"
         android:id="@+id/logout_button"
-        android:layout_width="250dp"
-        android:layout_height="45dp"
+        android:layout_width="match_parent"
+        android:layout_height="50dp"
+        android:layout_marginTop="5dp"
+        android:layout_marginRight="20dp"
+        android:layout_marginLeft="20dp"
+        android:layout_marginBottom="20dp"
         android:layout_gravity="center"
-        android:layout_marginTop="2dp"
         android:text="@string/logout_button"
         android:textSize="25sp"
         android:typeface="sans"
         android:background="@drawable/button_logout"
-        android:textColor="#ffffff" />
+        android:textColor="@color/gray" />
 
   
 </LinearLayout>

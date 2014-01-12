@@ -1,17 +1,26 @@
 package ca.uwallet.main;
 
+
+
 import ca.uwallet.main.util.ProviderUtils;
 import android.accounts.Account;
 import android.accounts.AccountManager;
 import android.content.Context;
 import android.content.Intent;
+import android.content.res.Configuration;
 import android.os.Bundle;
+import android.support.v4.app.ActionBarDrawerToggle;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentManager;
 import android.support.v4.app.FragmentTransaction;
+import android.support.v4.widget.DrawerLayout;
 import android.support.v7.app.ActionBarActivity;
 import android.util.Log;
 import android.view.Menu;
+import android.view.View;
+import android.widget.AdapterView;
+import android.widget.ArrayAdapter;
+import android.widget.ListView;
 
 /**
  * Activity that is launched from the launcher. We switch between screens using fragments.
@@ -24,13 +33,15 @@ public class MainActivity extends ActionBarActivity implements
 	TransactionFragment.Listener, MenuFragment.Listener{
 	
 	private static final String TAG = "MainActivity";
+	private String[] mMenuOptions;
+    private DrawerLayout mDrawerLayout;
+    private ListView mDrawerList;
+    private ActionBarDrawerToggle mDrawerToggle;
 	
 	private static final int RC_LOGIN = 17; // Response code for LoginActivity
 	
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
-		
-		
 		
 		super.onCreate(savedInstanceState);
 		setContentView(R.layout.activity_main);
@@ -41,9 +52,110 @@ public class MainActivity extends ActionBarActivity implements
 		if (numAccounts == 0){
 			doLogin();
 		}
-				
-		switchToFragment(new MenuFragment(), false);
+		
+		switchToFragment(new BalanceFragment(), false);
+		
+		
+		// Sets up the drawer options
+		mMenuOptions = getResources().getStringArray(R.array.options_array);
+        mDrawerLayout = (DrawerLayout) findViewById(R.id.fragment_container);
+        mDrawerList = (ListView) findViewById(R.id.left_drawer);
+
+        // Set the adapter for the list view
+        mDrawerList.setAdapter(new ArrayAdapter<String>(this,
+                R.layout.drawer_list_item, mMenuOptions));
+        
+        // Set the list's click listener
+        mDrawerList.setOnItemClickListener(new DrawerItemClickListener());
+        
+        
+     
+        //Action bar icon tap to open drawer
+        getSupportActionBar().setDisplayHomeAsUpEnabled(true);
+        getSupportActionBar().setHomeButtonEnabled(true);
+        
+        
+     // ActionBarDrawerToggle ties together the the proper interactions
+        // between the sliding drawer and the action bar app icon
+        mDrawerToggle = new ActionBarDrawerToggle(
+                this,                  /* host Activity */
+                mDrawerLayout,         /* DrawerLayout object */
+                R.drawable.ic_drawer,  /* nav drawer image to replace 'Up' caret */
+                R.string.drawer_open,  /* "open drawer" description for accessibility */
+                R.string.drawer_close  /* "close drawer" description for accessibility */
+                ) {
+            public void onDrawerClosed(View view) {
+                supportInvalidateOptionsMenu(); // creates call to onPrepareOptionsMenu()
+            }
+
+            public void onDrawerOpened(View drawerView) {
+                
+                supportInvalidateOptionsMenu(); // creates call to onPrepareOptionsMenu()
+            }
+        };
+        mDrawerLayout.setDrawerListener(mDrawerToggle);
+    	
 	}
+	
+	
+	private class DrawerItemClickListener implements ListView.OnItemClickListener {
+	    @Override
+	    public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
+	    	selectItem(position);
+	    	
+	        
+	    }
+	}
+	
+	
+	/** Swaps fragments in the main content view */
+	private void selectItem(int position) {
+		switch(position) {
+		case 0:
+			switchToFragment (new BalanceFragment());
+			break;
+		case 1:
+			switchToFragment (new TransactionFragment());
+			break;
+		case 2:
+			switchToFragment (new StatsFragment());
+			break;
+		case 3:
+			onLogOutButtonClicked();
+			break;
+		}
+
+		
+	    // Highlight the selected item, close the drawer
+	    mDrawerList.setItemChecked(position, true);
+	    mDrawerLayout.closeDrawer(mDrawerList);
+	}
+
+	/**
+     * When using the ActionBarDrawerToggle, you must call it during
+     * onPostCreate() and onConfigurationChanged()...
+     */
+
+    @Override
+    protected void onPostCreate(Bundle savedInstanceState) {
+        super.onPostCreate(savedInstanceState);
+        // Sync the toggle state after onRestoreInstanceState has occurred.
+        mDrawerToggle.syncState();
+    }
+
+    @Override
+    public void onConfigurationChanged(Configuration newConfig) {
+        super.onConfigurationChanged(newConfig);
+        // Pass any configuration change to the drawer toggles
+        mDrawerToggle.onConfigurationChanged(newConfig);
+    }
+	
+	
+	
+	
+	
+	
+	
 	
 	@Override
 	public void onActivityResult(int requestCode, int responseCode, Intent data){
@@ -79,13 +191,14 @@ public class MainActivity extends ActionBarActivity implements
 	 */
 	private void switchToFragment(Fragment newFrag, boolean addToBackStack) {
 		FragmentTransaction transaction = getSupportFragmentManager().beginTransaction();
-		transaction.replace(R.id.fragment_container, newFrag);
+		transaction.replace(R.id.content_frame, newFrag);
 		if (addToBackStack)
 			transaction.addToBackStack(null);
 		transaction.commit();
 
 	}
 
+	
 	@Override
 	public boolean onCreateOptionsMenu(Menu menu) {
 		// Inflate the menu; this adds items to the action bar if it is present.

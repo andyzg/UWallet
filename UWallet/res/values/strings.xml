@@ -33,5 +33,15 @@
 	<color name="logoutBackground">#FFC01E</color>
 	<color name="logoutBackground_click">#7F600F</color>
 	
+	<string name="drawer_open">Open</string>
+    <string name="drawer_close">Close</string>
+	
+	<string-array name="options_array">
+        <item>Balance</item>
+        <item>Transactions</item>
+        <item>Statistics</item>
+        <item>Logout</item>
+    </string-array>
+	
 	
 </resources>
