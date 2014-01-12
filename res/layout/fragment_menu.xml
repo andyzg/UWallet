@@ -1,0 +1,66 @@
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical"
+    tools:context=".MenuFragment" >
+
+    <ImageView
+        android:id="@+id/main_menu_logo"
+        style="@style/ImageButton"
+        android:layout_height="100dp"
+        android:layout_marginBottom="50dp"
+        android:scaleType="fitCenter"
+        android:src="@drawable/main_menu_logo" />
+    
+     <Button
+        android:id="@+id/balance_button"
+        android:layout_width="250dp"
+        android:layout_height="45dp"
+        android:layout_gravity="center"
+        android:layout_marginTop="30dp"
+        android:text="@string/balance_button"
+        android:textSize="25sp"
+        android:typeface="sans"
+        android:background="@android:color/transparent"
+        android:textColor="#FFFFFF" />
+
+    <Button
+        android:id="@+id/transactions_button"
+        android:layout_width="250dp"
+        android:layout_height="45dp"
+        android:layout_gravity="center"
+        android:layout_marginTop="30dp"
+        android:text="@string/transactions_button"
+        android:textSize="25sp"
+        android:typeface="sans"
+        android:background="@android:color/transparent"
+        android:textColor="#FFFFFF"
+	 />
+
+    <Button
+        android:id="@+id/statistics_button"
+        android:layout_width="250dp"
+        android:layout_height="45dp"
+        android:layout_gravity="center"
+        android:layout_marginTop="30dp"
+        android:text="@string/statistics_button"
+        android:textSize="25sp"
+        android:typeface="sans"
+        android:background="@android:color/transparent"
+        android:textColor="#FFFFFF" />
+
+    <Button
+        android:id="@+id/logout_button"
+        android:layout_width="250dp"
+        android:layout_height="45dp"
+        android:layout_gravity="center"
+        android:layout_marginTop="30dp"
+        android:text="@string/logout_button"
+        android:textSize="25sp"
+        android:typeface="sans"
+        android:background="@android:color/transparent"
+        android:textColor="#FFFFFF" />
+
+  
+</LinearLayout>
