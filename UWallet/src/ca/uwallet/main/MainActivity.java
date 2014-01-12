@@ -5,6 +5,7 @@ package ca.uwallet.main;
 import ca.uwallet.main.util.ProviderUtils;
 import android.accounts.Account;
 import android.accounts.AccountManager;
+import android.app.SearchManager;
 import android.content.Context;
 import android.content.Intent;
 import android.content.res.Configuration;
@@ -17,10 +18,12 @@ import android.support.v4.widget.DrawerLayout;
 import android.support.v7.app.ActionBarActivity;
 import android.util.Log;
 import android.view.Menu;
+import android.view.MenuItem;
 import android.view.View;
 import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.ListView;
+import android.widget.Toast;
 
 /**
  * Activity that is launched from the launcher. We switch between screens using fragments.
@@ -67,8 +70,6 @@ public class MainActivity extends ActionBarActivity implements
         
         // Set the list's click listener
         mDrawerList.setOnItemClickListener(new DrawerItemClickListener());
-        
-        
      
         //Action bar icon tap to open drawer
         getSupportActionBar().setDisplayHomeAsUpEnabled(true);
@@ -150,7 +151,16 @@ public class MainActivity extends ActionBarActivity implements
         mDrawerToggle.onConfigurationChanged(newConfig);
     }
 	
-	
+    @Override
+    public boolean onOptionsItemSelected(MenuItem item) {
+         // The action bar home/up action should open or close the drawer.
+         // ActionBarDrawerToggle will take care of this.
+        if (mDrawerToggle.onOptionsItemSelected(item)) {
+            return true;
+        }
+		return false;
+        
+    }
 	
 	
 	
@@ -169,6 +179,7 @@ public class MainActivity extends ActionBarActivity implements
 				Log.i(TAG, "User cancelled login. Closing down.");
 				finish();
 			} else{
+			// Continue to home page
 				Account account = data.getParcelableExtra(LoginActivity.KEY_ACCOUNT);
 				ProviderUtils.onRefresh(account);
 			}
@@ -221,7 +232,6 @@ public class MainActivity extends ActionBarActivity implements
 		// Remove account from AccountManager
 		removeAllAccounts();
 		ProviderUtils.clearData(this);
-		
 		doLogin();
 	}
 
@@ -257,6 +267,7 @@ public class MainActivity extends ActionBarActivity implements
 		intent.putExtra(LoginActivity.EXTRA_IS_ADDING_NEW_ACCOUNT, true);
 		Log.v(TAG, "Starting login activity");
 		startActivityForResult(intent, RC_LOGIN);
+		switchToFragment(new BalanceFragment(), false);
 	}
 	
 	@Override

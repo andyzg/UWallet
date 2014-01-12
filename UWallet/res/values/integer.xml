@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
-    <item format="integer" type="integer" name="card_flip_time_half">250</item>
-    <item format="integer" type="integer" name="card_flip_time_full">500</item>
+    <item format="integer" type="integer" name="card_flip_time_half">0</item>
+    <item format="integer" type="integer" name="card_flip_time_full">0</item>
     
 </resources>
