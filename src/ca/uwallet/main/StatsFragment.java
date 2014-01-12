@@ -8,7 +8,6 @@ import org.achartengine.renderer.SimpleSeriesRenderer;
 
 import android.content.Context;
 import android.database.Cursor;
-import android.graphics.Color;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.LoaderManager.LoaderCallbacks;
@@ -28,14 +27,12 @@ public class StatsFragment extends Fragment implements LoaderCallbacks<Cursor>{
 	private static final int BALANCE_CHART_ID = 123456;
 
 	public StatsFragment() {
-		
 		// Required empty public constructor
 	}
 
 	@Override
 	public View onCreateView(LayoutInflater inflater, ViewGroup container,
 			Bundle savedInstanceState) {
-		
 		View v = inflater.inflate(R.layout.fragment_stats, container,
 				false);
 
@@ -44,7 +41,6 @@ public class StatsFragment extends Fragment implements LoaderCallbacks<Cursor>{
 	
 	@Override
 	public void onActivityCreated(Bundle savedInstanceState){
-		
 		super.onActivityCreated(savedInstanceState);
 		getLoaderManager().initLoader(LOADER_BALANCES_ID, null, this);
 	}
@@ -61,16 +57,15 @@ public class StatsFragment extends Fragment implements LoaderCallbacks<Cursor>{
 		renderer.setZoomEnabled(false);
 		renderer.setLabelsTextSize(30);
 		renderer.setShowLegend(false);
-		renderer.setLabelsColor(Color.BLACK);
 	    return renderer;
 	}
 	
-	private GraphicalView getBalanceChart(Cursor cursor){
+	private GraphicalView getBalanceChart(int[] amounts){
 		Context context = getActivity();
 		CategorySeries series = new CategorySeries("Balance");
 		
-		series.add("Meal Plan", ProviderUtils.getBalanceAmount(cursor, ProviderUtils.MEAL_PLAN));
-		series.add("Flex Dollars", ProviderUtils.getBalanceAmount(cursor, ProviderUtils.FLEX_DOLLAR));
+		series.add("Meal Plan", ProviderUtils.getMealBalance(amounts));
+		series.add("Flex Dollars", ProviderUtils.getFlexBalance(amounts));
 		
 		int[] colors = {0xFF00FF00, 0xFFFFFF00};
 		DefaultRenderer renderer = buildRenderer(colors);
@@ -97,7 +92,8 @@ public class StatsFragment extends Fragment implements LoaderCallbacks<Cursor>{
 
 	@Override
 	public void onLoadFinished(Loader<Cursor> loader, Cursor data) {
-		GraphicalView pieChart = getBalanceChart(data);
+		int[] amounts = ProviderUtils.getBalanceAmounts(data);
+		GraphicalView pieChart = getBalanceChart(amounts);
 		appendView(pieChart, BALANCE_CHART_ID);
 	}
 
