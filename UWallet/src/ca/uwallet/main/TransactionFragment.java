@@ -55,7 +55,7 @@ public class TransactionFragment extends ListFragment implements LoaderCallbacks
 				R.layout.simple_list_transactions, null,
 				from, to, 0);
 		mAdapter.setViewBinder(this); // So that dates are displayed correctly
-		setListAdapter(mAdapter);
+		setListAdapter(mAdapter);        
 		
 		// Create the transaction loader
 		getLoaderManager().initLoader(LOADER_TRANSACTION_ID, null, this);

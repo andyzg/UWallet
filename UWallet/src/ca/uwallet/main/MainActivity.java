@@ -76,7 +76,7 @@ public class MainActivity extends ActionBarActivity implements
         getSupportActionBar().setHomeButtonEnabled(true);
         
         
-     // ActionBarDrawerToggle ties together the the proper interactions
+        // ActionBarDrawerToggle ties together the the proper interactions
         // between the sliding drawer and the action bar app icon
         mDrawerToggle = new ActionBarDrawerToggle(
                 this,                  /* host Activity */
@@ -103,8 +103,6 @@ public class MainActivity extends ActionBarActivity implements
 	    @Override
 	    public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
 	    	selectItem(position);
-	    	
-	        
 	    }
 	}
 	
@@ -163,10 +161,7 @@ public class MainActivity extends ActionBarActivity implements
     }
 	
 	
-	
-	
-	
-	
+
 	@Override
 	public void onActivityResult(int requestCode, int responseCode, Intent data){
 		Log.i(TAG, "onActivityResult, requestCode: " + requestCode + " responseCode: " + responseCode);
@@ -279,9 +274,12 @@ public class MainActivity extends ActionBarActivity implements
 		// DDMS indicates that there are 9 MB bitmap iamges
 		// Possibly because of large drawables for ImageButton
 		FragmentManager manager = getSupportFragmentManager();
-		if (manager.getBackStackEntryCount() == 0)
-			super.onBackPressed();
-		else
+		if (manager.getBackStackEntryCount() == 0){
+			super.onBackPressed(); // Closes the app
+		}
+		else{
+			// There is something to pop
 			manager.popBackStack();
+		}
 	}
 }
